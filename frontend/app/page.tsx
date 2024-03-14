@@ -1,6 +1,9 @@
 'use client'
+import { GetUsersQuery, Users } from "@/src/gql/graphql";
 import { SignInButton, SignOutButton, SignedIn, SignedOut, UserButton, useAuth, useUser } from "@clerk/nextjs";
 import useSWR from 'swr';
+import gql from 'graphql'
+import { graphql } from "@/src/gql";
  
 export default function Home() {
   return (
@@ -18,10 +21,13 @@ export default function Home() {
   )
 }
 
+/** ooggie boogie **/
+const query = graphql(`query GetUsers { users { id, name } }`)
+
+
 const SI = () => {
   const { getToken } = useAuth();
   const endpoint = process.env.NEXT_PUBLIC_HASURA_GRAPHQL_API;
-  const query = `query { users { id, name } }`;
 
   type Data = {
     data: {
@@ -43,12 +49,12 @@ const SI = () => {
       body: JSON.stringify({ query })
     }).then(res => res.json());
   }
- 
-  const { data, isLoading, error } = useSWR<Data>(endpoint, fetcher);
+
+  const { data, isLoading, error } = useSWR<{data?: GetUsersQuery}>(endpoint, fetcher);
 
   console.log({data, isLoading, error})
 
   if (isLoading) return <>loading</>
  
-  return <p>{data?.data.users[0].name}</p>;
+  return <p>{data?.data?.users[0].name}</p>;
 };
