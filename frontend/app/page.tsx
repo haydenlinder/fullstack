@@ -19,14 +19,9 @@ export default function Home() {
 }
 
 const SI = () => {
-  const { getToken, userId } = useAuth();
+  const { getToken } = useAuth();
   const endpoint = process.env.NEXT_PUBLIC_HASURA_GRAPHQL_API;
   const query = `query { users { id, name } }`;
-  const user = useUser()
-
-  console.log(user) 
-
-  if (!userId) return <>loading</>
 
   type Data = {
     data: {
@@ -55,5 +50,5 @@ const SI = () => {
 
   if (isLoading) return <>loading</>
  
-  return <p>GraphQL schema has {data?.data.users[0].name} types</p>;
+  return <p>{data?.data.users[0].name}</p>;
 };
