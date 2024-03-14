@@ -15,6 +15,7 @@ export type Scalars = {
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
   timestamptz: { input: any; output: any; }
+  uuid: { input: any; output: any; }
 };
 
 /** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
@@ -61,20 +62,46 @@ export enum Cursor_Ordering {
 /** mutation root */
 export type Mutation_Root = {
   __typename?: 'mutation_root';
+  /** delete data from the table: "posts" */
+  delete_posts?: Maybe<Posts_Mutation_Response>;
+  /** delete single row from the table: "posts" */
+  delete_posts_by_pk?: Maybe<Posts>;
   /** delete data from the table: "users" */
   delete_users?: Maybe<Users_Mutation_Response>;
   /** delete single row from the table: "users" */
   delete_users_by_pk?: Maybe<Users>;
+  /** insert data into the table: "posts" */
+  insert_posts?: Maybe<Posts_Mutation_Response>;
+  /** insert a single row into the table: "posts" */
+  insert_posts_one?: Maybe<Posts>;
   /** insert data into the table: "users" */
   insert_users?: Maybe<Users_Mutation_Response>;
   /** insert a single row into the table: "users" */
   insert_users_one?: Maybe<Users>;
+  /** update data of the table: "posts" */
+  update_posts?: Maybe<Posts_Mutation_Response>;
+  /** update single row of the table: "posts" */
+  update_posts_by_pk?: Maybe<Posts>;
+  /** update multiples rows of table: "posts" */
+  update_posts_many?: Maybe<Array<Maybe<Posts_Mutation_Response>>>;
   /** update data of the table: "users" */
   update_users?: Maybe<Users_Mutation_Response>;
   /** update single row of the table: "users" */
   update_users_by_pk?: Maybe<Users>;
   /** update multiples rows of table: "users" */
   update_users_many?: Maybe<Array<Maybe<Users_Mutation_Response>>>;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_PostsArgs = {
+  where: Posts_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Posts_By_PkArgs = {
+  id: Scalars['uuid']['input'];
 };
 
 
@@ -91,6 +118,20 @@ export type Mutation_RootDelete_Users_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_PostsArgs = {
+  objects: Array<Posts_Insert_Input>;
+  on_conflict?: InputMaybe<Posts_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Posts_OneArgs = {
+  object: Posts_Insert_Input;
+  on_conflict?: InputMaybe<Posts_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_UsersArgs = {
   objects: Array<Users_Insert_Input>;
   on_conflict?: InputMaybe<Users_On_Conflict>;
@@ -101,6 +142,26 @@ export type Mutation_RootInsert_UsersArgs = {
 export type Mutation_RootInsert_Users_OneArgs = {
   object: Users_Insert_Input;
   on_conflict?: InputMaybe<Users_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_PostsArgs = {
+  _set?: InputMaybe<Posts_Set_Input>;
+  where: Posts_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Posts_By_PkArgs = {
+  _set?: InputMaybe<Posts_Set_Input>;
+  pk_columns: Posts_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Posts_ManyArgs = {
+  updates: Array<Posts_Updates>;
 };
 
 
@@ -139,14 +200,225 @@ export enum Order_By {
   DescNullsLast = 'desc_nulls_last'
 }
 
+/** columns and relationships of "posts" */
+export type Posts = {
+  __typename?: 'posts';
+  body: Scalars['String']['output'];
+  created_at: Scalars['timestamptz']['output'];
+  creator_id: Scalars['String']['output'];
+  id: Scalars['uuid']['output'];
+  title: Scalars['String']['output'];
+  updated_at: Scalars['timestamptz']['output'];
+};
+
+/** aggregated selection of "posts" */
+export type Posts_Aggregate = {
+  __typename?: 'posts_aggregate';
+  aggregate?: Maybe<Posts_Aggregate_Fields>;
+  nodes: Array<Posts>;
+};
+
+/** aggregate fields of "posts" */
+export type Posts_Aggregate_Fields = {
+  __typename?: 'posts_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Posts_Max_Fields>;
+  min?: Maybe<Posts_Min_Fields>;
+};
+
+
+/** aggregate fields of "posts" */
+export type Posts_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Posts_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Boolean expression to filter rows from the table "posts". All fields are combined with a logical 'AND'. */
+export type Posts_Bool_Exp = {
+  _and?: InputMaybe<Array<Posts_Bool_Exp>>;
+  _not?: InputMaybe<Posts_Bool_Exp>;
+  _or?: InputMaybe<Array<Posts_Bool_Exp>>;
+  body?: InputMaybe<String_Comparison_Exp>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  creator_id?: InputMaybe<String_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  title?: InputMaybe<String_Comparison_Exp>;
+  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "posts" */
+export enum Posts_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  PostsPkey = 'posts_pkey'
+}
+
+/** input type for inserting data into table "posts" */
+export type Posts_Insert_Input = {
+  body?: InputMaybe<Scalars['String']['input']>;
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  creator_id?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** aggregate max on columns */
+export type Posts_Max_Fields = {
+  __typename?: 'posts_max_fields';
+  body?: Maybe<Scalars['String']['output']>;
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  creator_id?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  updated_at?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** aggregate min on columns */
+export type Posts_Min_Fields = {
+  __typename?: 'posts_min_fields';
+  body?: Maybe<Scalars['String']['output']>;
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  creator_id?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  updated_at?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** response of any mutation on the table "posts" */
+export type Posts_Mutation_Response = {
+  __typename?: 'posts_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Posts>;
+};
+
+/** on_conflict condition type for table "posts" */
+export type Posts_On_Conflict = {
+  constraint: Posts_Constraint;
+  update_columns?: Array<Posts_Update_Column>;
+  where?: InputMaybe<Posts_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "posts". */
+export type Posts_Order_By = {
+  body?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  creator_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  title?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: posts */
+export type Posts_Pk_Columns_Input = {
+  id: Scalars['uuid']['input'];
+};
+
+/** select columns of table "posts" */
+export enum Posts_Select_Column {
+  /** column name */
+  Body = 'body',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  CreatorId = 'creator_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Title = 'title',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "posts" */
+export type Posts_Set_Input = {
+  body?: InputMaybe<Scalars['String']['input']>;
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  creator_id?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** Streaming cursor of the table "posts" */
+export type Posts_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Posts_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Posts_Stream_Cursor_Value_Input = {
+  body?: InputMaybe<Scalars['String']['input']>;
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  creator_id?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** update columns of table "posts" */
+export enum Posts_Update_Column {
+  /** column name */
+  Body = 'body',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  CreatorId = 'creator_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Title = 'title',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+export type Posts_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Posts_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Posts_Bool_Exp;
+};
+
 export type Query_Root = {
   __typename?: 'query_root';
+  /** fetch data from the table: "posts" */
+  posts: Array<Posts>;
+  /** fetch aggregated fields from the table: "posts" */
+  posts_aggregate: Posts_Aggregate;
+  /** fetch data from the table: "posts" using primary key columns */
+  posts_by_pk?: Maybe<Posts>;
   /** fetch data from the table: "users" */
   users: Array<Users>;
   /** fetch aggregated fields from the table: "users" */
   users_aggregate: Users_Aggregate;
   /** fetch data from the table: "users" using primary key columns */
   users_by_pk?: Maybe<Users>;
+};
+
+
+export type Query_RootPostsArgs = {
+  distinct_on?: InputMaybe<Array<Posts_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Posts_Order_By>>;
+  where?: InputMaybe<Posts_Bool_Exp>;
+};
+
+
+export type Query_RootPosts_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Posts_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Posts_Order_By>>;
+  where?: InputMaybe<Posts_Bool_Exp>;
+};
+
+
+export type Query_RootPosts_By_PkArgs = {
+  id: Scalars['uuid']['input'];
 };
 
 
@@ -174,6 +446,14 @@ export type Query_RootUsers_By_PkArgs = {
 
 export type Subscription_Root = {
   __typename?: 'subscription_root';
+  /** fetch data from the table: "posts" */
+  posts: Array<Posts>;
+  /** fetch aggregated fields from the table: "posts" */
+  posts_aggregate: Posts_Aggregate;
+  /** fetch data from the table: "posts" using primary key columns */
+  posts_by_pk?: Maybe<Posts>;
+  /** fetch data from the table in a streaming manner: "posts" */
+  posts_stream: Array<Posts>;
   /** fetch data from the table: "users" */
   users: Array<Users>;
   /** fetch aggregated fields from the table: "users" */
@@ -182,6 +462,36 @@ export type Subscription_Root = {
   users_by_pk?: Maybe<Users>;
   /** fetch data from the table in a streaming manner: "users" */
   users_stream: Array<Users>;
+};
+
+
+export type Subscription_RootPostsArgs = {
+  distinct_on?: InputMaybe<Array<Posts_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Posts_Order_By>>;
+  where?: InputMaybe<Posts_Bool_Exp>;
+};
+
+
+export type Subscription_RootPosts_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Posts_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Posts_Order_By>>;
+  where?: InputMaybe<Posts_Bool_Exp>;
+};
+
+
+export type Subscription_RootPosts_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootPosts_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Posts_Stream_Cursor_Input>>;
+  where?: InputMaybe<Posts_Bool_Exp>;
 };
 
 
@@ -373,10 +683,23 @@ export type Users_Updates = {
   where: Users_Bool_Exp;
 };
 
-export type GetUsersQueryVariables = Exact<{ [key: string]: never; }>;
+/** Boolean expression to compare columns of type "uuid". All fields are combined with logical 'AND'. */
+export type Uuid_Comparison_Exp = {
+  _eq?: InputMaybe<Scalars['uuid']['input']>;
+  _gt?: InputMaybe<Scalars['uuid']['input']>;
+  _gte?: InputMaybe<Scalars['uuid']['input']>;
+  _in?: InputMaybe<Array<Scalars['uuid']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['uuid']['input']>;
+  _lte?: InputMaybe<Scalars['uuid']['input']>;
+  _neq?: InputMaybe<Scalars['uuid']['input']>;
+  _nin?: InputMaybe<Array<Scalars['uuid']['input']>>;
+};
+
+export type GetPostsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetUsersQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', id: string, name: string }> };
+export type GetPostsQuery = { __typename?: 'query_root', posts: Array<{ __typename?: 'posts', id: any, body: string, title: string }> };
 
 
-export const GetUsersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUsers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<GetUsersQuery, GetUsersQueryVariables>;
+export const GetPostsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPosts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"posts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]} as unknown as DocumentNode<GetPostsQuery, GetPostsQueryVariables>;

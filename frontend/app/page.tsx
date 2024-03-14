@@ -1,8 +1,7 @@
 'use client'
-import { GetUsersQuery, Users } from "@/src/gql/graphql";
-import { SignInButton, SignOutButton, SignedIn, SignedOut, UserButton, useAuth, useUser } from "@clerk/nextjs";
+import { GetPostsQuery } from "@/src/gql/graphql";
+import { SignInButton, SignOutButton, SignedIn, SignedOut, UserButton, useAuth } from "@clerk/nextjs";
 import useSWR from 'swr';
-import gql from 'graphql'
 import { graphql } from "@/src/gql";
  
 export default function Home() {
@@ -22,8 +21,9 @@ export default function Home() {
 }
 
 /** ooggie boogie **/
-const query = graphql(`query GetUsers { users { id, name } }`)
-
+const q = graphql(`query GetPosts { posts { id, body, title } }`)
+// const query = `query GetUsers { users { id, name } }`
+const query = `query GetPosts { posts { id, body, title } }`
 
 const SI = () => {
   const { getToken } = useAuth();
@@ -50,11 +50,11 @@ const SI = () => {
     }).then(res => res.json());
   }
 
-  const { data, isLoading, error } = useSWR<{data?: GetUsersQuery}>(endpoint, fetcher);
+  const { data, isLoading, error } = useSWR<{data?: GetPostsQuery}>(endpoint, fetcher);
 
   console.log({data, isLoading, error})
 
   if (isLoading) return <>loading</>
  
-  return <p>{data?.data?.users[0].name}</p>;
+  return <p>{data?.data?.posts[0]?.title}</p>;
 };
