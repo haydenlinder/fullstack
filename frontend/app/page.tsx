@@ -1,8 +1,9 @@
 'use client'
 import { GetPostsQuery } from "@/src/gql/graphql";
 import { SignInButton, SignOutButton, SignedIn, SignedOut, UserButton, useAuth } from "@clerk/nextjs";
-import useSWR from 'swr';
+import { Button, FormControl, TextField } from "@mui/material";
 import { graphql } from "@/src/gql";
+import useSWR from 'swr';
  
 export default function Home() {
   return (
@@ -56,5 +57,15 @@ const SI = () => {
 
   if (isLoading) return <>loading</>
  
-  return <p>{data?.data?.posts[0]?.title}</p>;
+  return (
+    <>
+      <p>{data?.data?.posts[0]?.title}</p>
+      <FormControl >
+        <TextField helperText="please enter a banana" label='banana' required={true} value={''}/>
+        <Button variant="contained">
+          Send
+        </Button>
+      </FormControl>
+    </>
+  )
 };
