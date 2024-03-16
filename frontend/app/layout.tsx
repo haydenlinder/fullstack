@@ -12,7 +12,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body >
+        <body className='flex flex-col items-center'>
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
             {children}

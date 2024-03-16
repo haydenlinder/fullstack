@@ -23,7 +23,7 @@ import useSWR from "swr";
 
 export default function Home() {
   return (
-    <div className="h-screen">
+    <div className="h-screen pt-10">
       <SignedOut>
         <div>Welcome</div>
         <SignInButton />
@@ -86,18 +86,7 @@ const SI = () => {
 
   return (
     <>
-      <>
-        {data?.data?.posts.map((p) => (
-          <Card key={p.id} className="w-96 flex justify-center p-10 my-10">
-            <CardHeader></CardHeader>
-            <CardContent>
-              <Typography fontSize={24}>{p.title}</Typography>
-              <Typography>{p.body}</Typography>
-            </CardContent>
-          </Card>
-        ))}
-      </>
-      <Card className="w-96 flex justify-center p-10">
+      <Card className="w-96 flex justify-center p-10 my-10">
         <form onSubmit={() => console.log("submit")}>
           <FormControl>
             <FormLabel>New Post</FormLabel>
@@ -112,6 +101,17 @@ const SI = () => {
           </FormControl>
         </form>
       </Card>
+      <>
+        {data?.data?.posts.map((p) => (
+          <Card key={p.id} className="w-96 flex justify-center p-10 my-10">
+            <CardHeader></CardHeader>
+            <CardContent>
+              <Typography fontSize={24}>{p.title}</Typography>
+              <Typography>{p.body}</Typography>
+            </CardContent>
+          </Card>
+        ))}
+      </>
     </>
   );
 };
