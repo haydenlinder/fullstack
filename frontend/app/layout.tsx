@@ -1,25 +1,23 @@
-import { ClerkProvider } from '@clerk/nextjs'
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
-import { ThemeProvider } from '@mui/material/styles';
-import theme from '../src/theme';
-import './globals.css'
- 
+import { ClerkProvider } from "@clerk/nextjs";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "../src/theme";
+import "./globals.css";
+
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className='flex flex-col items-center'>
-        <AppRouterCacheProvider>
-          <ThemeProvider theme={theme}>
-            {children}
-          </ThemeProvider>
-        </AppRouterCacheProvider>
+        <body className="flex flex-col items-center">
+          <AppRouterCacheProvider>
+            <ThemeProvider theme={theme}>{children}</ThemeProvider>
+          </AppRouterCacheProvider>
         </body>
       </html>
     </ClerkProvider>
-  )
+  );
 }

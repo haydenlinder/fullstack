@@ -91,8 +91,8 @@ const SI = () => {
           <FormControl>
             <FormLabel>New Post</FormLabel>
             <TextField
-              helperText="please enter a banana"
-              label="banana"
+              helperText="what's on your mind?"
+              label="body"
               required
             />
             <Button type="submit" variant="contained">
