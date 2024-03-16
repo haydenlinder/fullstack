@@ -1,7 +1,7 @@
 'use client'
 import { GetPostsQuery } from "@/src/gql/graphql";
 import { SignInButton, SignOutButton, SignedIn, SignedOut, UserButton, useAuth } from "@clerk/nextjs";
-import { Button, FormControl, TextField } from "@mui/material";
+import { Button, Card, FormControl, FormLabel, TextField } from "@mui/material";
 import { graphql } from "@/src/gql";
 import useSWR from 'swr';
  
@@ -60,12 +60,17 @@ const SI = () => {
   return (
     <>
       <p>{data?.data?.posts[0]?.title}</p>
-      <FormControl >
-        <TextField helperText="please enter a banana" label='banana' required={true} value={''}/>
-        <Button variant="contained">
-          Send
-        </Button>
-      </FormControl>
+      <Card className="w-96 flex justify-center p-10">
+      <form onSubmit={() => console.log('submit')}>
+        <FormControl>
+          <FormLabel>New Post</FormLabel>
+          <TextField helperText="please enter a banana" label='banana' required/>
+          <Button type="submit"  variant="contained">
+            Send
+          </Button>
+        </FormControl>
+      </form>
+      </Card>
     </>
   )
 };
