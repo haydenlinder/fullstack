@@ -9,17 +9,22 @@ import {
   useAuth,
 } from "@clerk/nextjs";
 import {
-  Button,
   Card,
   CardContent,
   CardHeader,
-  FormControl,
   FormLabel,
-  TextField,
   Typography,
 } from "@mui/material";
 import { graphql } from "@/src/gql";
 import useSWR from "swr";
+import {
+  FormRenderer,
+  componentTypes,
+  Schema,
+  FormRendererProps,
+} from "@data-driven-forms/react-form-renderer";
+import { componentMapper } from "@data-driven-forms/mui-component-mapper";
+import FormTemplate from "@data-driven-forms/mui-component-mapper/form-template";
 
 export default function Home() {
   return (
@@ -80,26 +85,39 @@ const SI = () => {
     fetcher,
   );
 
-  console.log({ data, isLoading, error });
+  const schema: Schema = {
+    title: <FormLabel>New Post</FormLabel>,
+    fields: [
+      {
+        component: componentTypes.TEXTAREA,
+        name: "body",
+        label: "body",
+        validate: [{ type: "required" }],
+        // validateOnMount: true,
+        helperText: "What's on your mind?",
+      },
+    ],
+  };
+
+  const onSubmit: FormRendererProps<{ body: string }>["onSubmit"] = (
+    values,
+    api,
+    onError,
+  ) => console.log({ values, api, onError });
 
   if (isLoading) return <>loading</>;
 
   return (
     <>
       <Card className="w-96 flex justify-center p-10 my-10">
-        <form onSubmit={() => console.log("submit")}>
-          <FormControl>
-            <FormLabel>New Post</FormLabel>
-            <TextField
-              helperText="what's on your mind?"
-              label="body"
-              required
-            />
-            <Button type="submit" variant="contained">
-              Send
-            </Button>
-          </FormControl>
-        </form>
+        <FormRenderer
+          {...{
+            FormTemplate,
+            componentMapper,
+            schema,
+            onSubmit,
+          }}
+        />
       </Card>
       <>
         {data?.data?.posts.map((p) => (
