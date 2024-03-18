@@ -4,10 +4,6 @@ import { WebhookEvent } from "@clerk/nextjs/server";
 import { createUser } from "@/gql/users";
 import { CreateUserMutationVariables } from "@/src/gql/graphql";
 
-export async function GET(request: Request) {
-  return new Response("hello", { status: 200 });
-}
-
 export async function POST(req: Request) {
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the webhook
   const CLERK_WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET;
