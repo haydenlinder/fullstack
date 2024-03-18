@@ -10,44 +10,15 @@ import { Button, FormLabel } from "@mui/material";
 import FormTemplateCommonProps from "@data-driven-forms/common/form-template";
 import FormSpy from "@data-driven-forms/react-form-renderer/form-spy";
 import {
-  InsertPostsMutation,
-  InsertPostsMutationVariables,
+  CreatePostMutation,
+  CreatePostMutationVariables,
+  UpdatePostMutation,
+  UpdatePostMutationVariables,
 } from "@/src/gql/graphql";
 import { useMutation } from "@apollo/client";
-import { graphql } from "@/src/gql";
 import { useAuth } from "@clerk/nextjs";
-import { GET_POSTS } from "@/gql/posts";
+import { CREATE_POST, GET_POSTS, UPDATE_POST } from "@/gql/posts";
 import { ComponentType } from "react";
-
-const schema: Schema = {
-  title: <FormLabel>New Post</FormLabel>,
-  fields: [
-    {
-      component: componentTypes.TEXTAREA,
-      name: "body",
-      label: "body",
-      validate: [{ type: "required" }],
-      // validateOnMount: true,
-      helperText: "What's on your mind?",
-    },
-  ],
-};
-
-const mutation = graphql(`
-  mutation InsertPosts(
-    $body: String = ""
-    $creator_id: String = ""
-    $title: String = ""
-  ) {
-    insert_posts(
-      objects: { body: $body, creator_id: $creator_id, title: $title }
-    ) {
-      returning {
-        id
-      }
-    }
-  }
-`);
 
 const FormTemplate: ComponentType<
   FormTemplateCommonProps & { submitting: boolean }
@@ -75,37 +46,76 @@ const FormTemplate: ComponentType<
   );
 };
 
-export const PostForm = () => {
+type Props = {
+  type?: "New" | "Edit";
+  initialValues?: {
+    body?: string;
+    id?: string;
+    title?: string;
+  };
+  after?: () => void;
+};
+
+export const PostForm = ({ type = "New", initialValues, after }: Props) => {
   const { userId } = useAuth();
 
-  const [mutate, { loading: posting }] = useMutation<
-    InsertPostsMutation,
-    InsertPostsMutationVariables
-  >(mutation);
+  const [createPost, { loading: posting }] = useMutation<
+    CreatePostMutation,
+    CreatePostMutationVariables
+  >(CREATE_POST);
+
+  const [updatePost, { loading: updating }] = useMutation<
+    UpdatePostMutation,
+    UpdatePostMutationVariables
+  >(UPDATE_POST);
 
   const onSubmit: FormRendererProps<{ body: string }>["onSubmit"] = async (
     values,
     api,
   ) => {
-    mutate({
-      variables: {
-        creator_id: userId,
-        ...values,
+    console.log({ initialValues, values, type });
+    type === "New"
+      ? createPost({
+          variables: {
+            creator_id: userId,
+            ...values,
+          },
+          refetchQueries: [GET_POSTS],
+          onCompleted: () => api.reset(),
+        })
+      : updatePost({
+          variables: {
+            ...values,
+          },
+          refetchQueries: [GET_POSTS],
+          onCompleted: after,
+        });
+  };
+
+  const schema: Schema = {
+    title: <FormLabel>{type} Post</FormLabel>,
+    fields: [
+      {
+        component: componentTypes.TEXTAREA,
+        name: "body",
+        label: "body",
+        validate: [{ type: "required" }],
+        // validateOnMount: true,
+        helperText: "What's on your mind?",
       },
-      refetchQueries: [GET_POSTS],
-      onCompleted: () => api.reset(),
-    });
+    ],
   };
 
   return (
     <FormRenderer
       {...{
         FormTemplate: (props) => (
-          <FormTemplate submitting={posting} {...props} />
+          <FormTemplate submitting={posting || updating} {...props} />
         ),
         componentMapper,
         schema,
         onSubmit,
+        initialValues,
       }}
     />
   );
