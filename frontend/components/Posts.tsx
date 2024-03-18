@@ -47,10 +47,12 @@ const Post = ({ post }: Props) => {
   const { userId } = useAuth();
 
   const [edit, setEdit] = useState(false);
+
   if (edit)
     return (
       <PostForm after={() => setEdit(false)} initialValues={post} type="Edit" />
     );
+
   return (
     <Card key={post.id} className="w-96 flex justify-center my-10">
       <CardContent className="w-full">
