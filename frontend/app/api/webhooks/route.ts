@@ -64,6 +64,7 @@ export async function POST(req: Request) {
   }
 
   await fetch(process.env.NEXT_PUBLIC_HASURA_GRAPHQL_API || "", {
+    method: "POST",
     headers: {
       "x-hasura-admin-secret": process.env.HASURA_SECRET || "",
     },
