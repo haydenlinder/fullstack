@@ -13,8 +13,9 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "\n  query GetPosts {\n    posts {\n      id\n      body\n      title\n    }\n  }\n": types.GetPostsDocument,
     "\n  mutation InsertPosts(\n    $body: String = \"\"\n    $creator_id: String = \"\"\n    $title: String = \"\"\n  ) {\n    insert_posts(\n      objects: { body: $body, creator_id: $creator_id, title: $title }\n    ) {\n      returning {\n        id\n      }\n    }\n  }\n": types.InsertPostsDocument,
+    "\n  query GetPosts {\n    posts(limit: 10, order_by: { created_at: desc }) {\n      id\n      body\n      created_at\n      creator_id\n      title\n      updated_at\n    }\n  }\n": types.GetPostsDocument,
+    "\n  mutation DeletePost($id: uuid = \"\") {\n    delete_posts_by_pk(id: $id) {\n      creator_id\n    }\n  }\n": types.DeletePostDocument,
 };
 
 /**
@@ -34,11 +35,15 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query GetPosts {\n    posts {\n      id\n      body\n      title\n    }\n  }\n"): (typeof documents)["\n  query GetPosts {\n    posts {\n      id\n      body\n      title\n    }\n  }\n"];
+export function graphql(source: "\n  mutation InsertPosts(\n    $body: String = \"\"\n    $creator_id: String = \"\"\n    $title: String = \"\"\n  ) {\n    insert_posts(\n      objects: { body: $body, creator_id: $creator_id, title: $title }\n    ) {\n      returning {\n        id\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation InsertPosts(\n    $body: String = \"\"\n    $creator_id: String = \"\"\n    $title: String = \"\"\n  ) {\n    insert_posts(\n      objects: { body: $body, creator_id: $creator_id, title: $title }\n    ) {\n      returning {\n        id\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  mutation InsertPosts(\n    $body: String = \"\"\n    $creator_id: String = \"\"\n    $title: String = \"\"\n  ) {\n    insert_posts(\n      objects: { body: $body, creator_id: $creator_id, title: $title }\n    ) {\n      returning {\n        id\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation InsertPosts(\n    $body: String = \"\"\n    $creator_id: String = \"\"\n    $title: String = \"\"\n  ) {\n    insert_posts(\n      objects: { body: $body, creator_id: $creator_id, title: $title }\n    ) {\n      returning {\n        id\n      }\n    }\n  }\n"];
+export function graphql(source: "\n  query GetPosts {\n    posts(limit: 10, order_by: { created_at: desc }) {\n      id\n      body\n      created_at\n      creator_id\n      title\n      updated_at\n    }\n  }\n"): (typeof documents)["\n  query GetPosts {\n    posts(limit: 10, order_by: { created_at: desc }) {\n      id\n      body\n      created_at\n      creator_id\n      title\n      updated_at\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation DeletePost($id: uuid = \"\") {\n    delete_posts_by_pk(id: $id) {\n      creator_id\n    }\n  }\n"): (typeof documents)["\n  mutation DeletePost($id: uuid = \"\") {\n    delete_posts_by_pk(id: $id) {\n      creator_id\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

@@ -1,111 +1,50 @@
-import { graphql } from "@/src/gql";
-
 import {
+  Button,
   Card,
   CardContent,
-  CardHeader,
-  FormLabel,
+  CircularProgress,
   Typography,
 } from "@mui/material";
 
-import {
-  FormRenderer,
-  componentTypes,
-  Schema,
-  FormRendererProps,
-} from "@data-driven-forms/react-form-renderer";
-import { componentMapper } from "@data-driven-forms/mui-component-mapper";
-
-import FormTemplate from "@data-driven-forms/mui-component-mapper/form-template";
 import { useMutation, useQuery } from "@apollo/client";
 import {
+  DeletePostMutation,
+  DeletePostMutationVariables,
   GetPostsQuery,
-  InsertPostsMutation,
-  InsertPostsMutationVariables,
 } from "../src/gql/graphql";
-import { useAuth } from "@clerk/nextjs";
+import { DELETE_POST, GET_POSTS } from "@/gql/posts";
+import { PostForm } from "./PostForm";
 
-const query = graphql(`
-  query GetPosts {
-    posts {
-      id
-      body
-      title
-    }
-  }
-`);
-
-const mutation = graphql(`
-  mutation InsertPosts(
-    $body: String = ""
-    $creator_id: String = ""
-    $title: String = ""
-  ) {
-    insert_posts(
-      objects: { body: $body, creator_id: $creator_id, title: $title }
-    ) {
-      returning {
-        id
-      }
-    }
-  }
-`);
-
-const schema: Schema = {
-  title: <FormLabel>New Post</FormLabel>,
-  fields: [
-    {
-      component: componentTypes.TEXTAREA,
-      name: "body",
-      label: "body",
-      validate: [{ type: "required" }],
-      // validateOnMount: true,
-      helperText: "What's on your mind?",
-    },
-  ],
-};
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export const Posts = () => {
-  const { data, loading, error } = useQuery<GetPostsQuery>(query);
-  const { userId } = useAuth();
-  const [mutate] = useMutation<
-    InsertPostsMutation,
-    InsertPostsMutationVariables
-  >(mutation);
+  const { data, loading, error } = useQuery<GetPostsQuery>(GET_POSTS);
 
-  const onSubmit: FormRendererProps<{ body: string }>["onSubmit"] = (
-    values,
-    api,
-    onError,
-  ) => {
-    mutate({
-      variables: {
-        creator_id: userId,
-        ...values,
-      },
-      refetchQueries: [query],
-    });
-  };
-
-  if (loading) return <>loading</>;
+  const [mutate, { loading: deleting }] = useMutation<
+    DeletePostMutation,
+    DeletePostMutationVariables
+  >(DELETE_POST);
 
   return (
     <>
       <Card className="w-96 flex justify-center p-10 my-10">
-        <FormRenderer
-          {...{
-            FormTemplate,
-            componentMapper,
-            schema,
-            onSubmit,
-          }}
-        />
+        <PostForm />
       </Card>
+      {loading && <CircularProgress />}
       <>
         {data?.posts.map((p) => (
           <Card key={p.id} className="w-96 flex justify-center p-10 my-10">
-            <CardHeader></CardHeader>
             <CardContent>
+              <Button
+                onClick={() =>
+                  mutate({
+                    variables: { id: p.id },
+                    refetchQueries: [GET_POSTS],
+                  })
+                }
+              >
+                <DeleteIcon />
+              </Button>
               <Typography fontSize={24}>{p.title}</Typography>
               <Typography>{p.body}</Typography>
             </CardContent>
