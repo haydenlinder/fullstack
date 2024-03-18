@@ -17,6 +17,7 @@ const documents = {
     "\n  mutation DeletePost($id: uuid = \"\") {\n    delete_posts_by_pk(id: $id) {\n      creator_id\n    }\n  }\n": types.DeletePostDocument,
     "\n  mutation UpdatePost($id: uuid = \"\", $body: String = \"\", $title: String = \"\") {\n    update_posts_by_pk(\n      pk_columns: { id: $id }\n      _set: { body: $body, title: $title }\n    ) {\n      id\n    }\n  }\n": types.UpdatePostDocument,
     "\n  mutation CreatePost(\n    $body: String = \"\"\n    $creator_id: String = \"\"\n    $title: String = \"\"\n  ) {\n    insert_posts(\n      objects: { body: $body, creator_id: $creator_id, title: $title }\n    ) {\n      returning {\n        id\n      }\n    }\n  }\n": types.CreatePostDocument,
+    "\n  mutation CreateUser($id: String = \"\", $name: String = \"\") {\n    insert_users_one(object: { id: $id, name: $name }) {\n      id\n    }\n  }\n": types.CreateUserDocument,
 };
 
 /**
@@ -49,6 +50,10 @@ export function graphql(source: "\n  mutation UpdatePost($id: uuid = \"\", $body
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  mutation CreatePost(\n    $body: String = \"\"\n    $creator_id: String = \"\"\n    $title: String = \"\"\n  ) {\n    insert_posts(\n      objects: { body: $body, creator_id: $creator_id, title: $title }\n    ) {\n      returning {\n        id\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation CreatePost(\n    $body: String = \"\"\n    $creator_id: String = \"\"\n    $title: String = \"\"\n  ) {\n    insert_posts(\n      objects: { body: $body, creator_id: $creator_id, title: $title }\n    ) {\n      returning {\n        id\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation CreateUser($id: String = \"\", $name: String = \"\") {\n    insert_users_one(object: { id: $id, name: $name }) {\n      id\n    }\n  }\n"): (typeof documents)["\n  mutation CreateUser($id: String = \"\", $name: String = \"\") {\n    insert_users_one(object: { id: $id, name: $name }) {\n      id\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};
