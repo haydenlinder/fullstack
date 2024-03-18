@@ -87,7 +87,7 @@ export const PostForm = () => {
     values,
     api,
   ) => {
-    return await mutate({
+    mutate({
       variables: {
         creator_id: userId,
         ...values,
