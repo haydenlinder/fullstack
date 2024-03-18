@@ -15,7 +15,7 @@ export default function RootLayout({
       <html lang="en">
         <body className="flex flex-col items-center">
           <ApolloWrapper>
-            <AppRouterCacheProvider>
+            <AppRouterCacheProvider options={{}}>
               <ThemeProvider theme={theme}>{children}</ThemeProvider>
             </AppRouterCacheProvider>
           </ApolloWrapper>
