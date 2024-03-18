@@ -25,9 +25,8 @@ export const Posts = () => {
 
   return (
     <>
-      <Card className="w-96 flex justify-center p-10 my-10">
-        <PostForm />
-      </Card>
+      <PostForm />
+
       {loading && <CircularProgress />}
       <>{data?.posts.map((p) => <Post key={p.id} post={p} />)}</>
     </>
@@ -51,10 +50,15 @@ const Post = ({ post }: Props) => {
       <PostForm after={() => setEdit(false)} initialValues={post} type="Edit" />
     );
   return (
-    <Card key={post.id} className="w-96 flex justify-center p-10 my-10">
-      <CardContent>
+    <Card key={post.id} className="w-96 flex justify-center my-10">
+      <CardContent className="w-full">
+        <Typography fontSize={24}>{post.title}</Typography>
+        <Typography>{post.body}</Typography>
         {post.creator_id === userId && (
-          <>
+          <div className="mt-5 w-full flex justify-end">
+            <Button disabled={deleting} onClick={() => setEdit(!edit)}>
+              <EditIcon />
+            </Button>
             <Button
               disabled={deleting}
               onClick={async () => {
@@ -66,13 +70,8 @@ const Post = ({ post }: Props) => {
             >
               <DeleteIcon />
             </Button>
-            <Button disabled={deleting} onClick={() => setEdit(!edit)}>
-              <EditIcon />
-            </Button>
-          </>
+          </div>
         )}
-        <Typography fontSize={24}>{post.title}</Typography>
-        <Typography>{post.body}</Typography>
       </CardContent>
     </Card>
   );

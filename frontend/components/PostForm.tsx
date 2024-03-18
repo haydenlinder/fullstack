@@ -6,7 +6,7 @@ import {
   useFormApi,
 } from "@data-driven-forms/react-form-renderer";
 import { componentMapper } from "@data-driven-forms/mui-component-mapper";
-import { Button, FormLabel } from "@mui/material";
+import { Button, Card, FormLabel } from "@mui/material";
 import FormTemplateCommonProps from "@data-driven-forms/common/form-template";
 import FormSpy from "@data-driven-forms/react-form-renderer/form-spy";
 import {
@@ -21,8 +21,8 @@ import { CREATE_POST, GET_POSTS, UPDATE_POST } from "@/gql/posts";
 import { ComponentType } from "react";
 
 const FormTemplate: ComponentType<
-  FormTemplateCommonProps & { submitting: boolean }
-> = ({ schema, formFields, submitting }) => {
+  FormTemplateCommonProps & { submitting: boolean; after?: () => void }
+> = ({ schema, formFields, submitting, after }) => {
   const { handleSubmit, getState } = useFormApi();
 
   const s = getState();
@@ -33,13 +33,21 @@ const FormTemplate: ComponentType<
       <>{formFields}</>
       <FormSpy>
         {() => (
-          <Button
-            disabled={submitting || !s.valid}
-            type="submit"
-            variant="contained"
-          >
-            Submit
-          </Button>
+          <>
+            <Button
+              style={{ marginRight: "15px" }}
+              disabled={submitting || !s.valid}
+              type="submit"
+              variant="contained"
+            >
+              Submit
+            </Button>
+            {after && (
+              <Button onClick={after} variant="contained">
+                Cancel
+              </Button>
+            )}
+          </>
         )}
       </FormSpy>
     </form>
@@ -88,8 +96,8 @@ export const PostForm = ({ type = "New", initialValues, after }: Props) => {
             ...values,
           },
           refetchQueries: [GET_POSTS],
-          onCompleted: after,
         });
+    after && after();
   };
 
   const schema: Schema = {
@@ -107,16 +115,22 @@ export const PostForm = ({ type = "New", initialValues, after }: Props) => {
   };
 
   return (
-    <FormRenderer
-      {...{
-        FormTemplate: (props) => (
-          <FormTemplate submitting={posting || updating} {...props} />
-        ),
-        componentMapper,
-        schema,
-        onSubmit,
-        initialValues,
-      }}
-    />
+    <Card className="w-96 flex justify-center p-10 my-10">
+      <FormRenderer
+        {...{
+          FormTemplate: (props) => (
+            <FormTemplate
+              after={after}
+              submitting={posting || updating}
+              {...props}
+            />
+          ),
+          componentMapper,
+          schema,
+          onSubmit,
+          initialValues,
+        }}
+      />
+    </Card>
   );
 };
