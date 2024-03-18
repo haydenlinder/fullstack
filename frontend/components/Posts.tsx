@@ -80,17 +80,17 @@ const Post = ({ post }: Props) => {
       <PostForm after={() => setEdit(false)} initialValues={post} type="Edit" />
     );
 
-  const didReact = (type: Post_Reaction_Types_Enum) => {
-    return post.post_reactions.find(
-      (r) => r.author_id === userId && r.type === type,
-    );
+  const getReaction = (type?: Post_Reaction_Types_Enum) => {
+    return post.post_reactions.find((r) => r.author_id === userId);
   };
 
-  const onReact = (type: Post_Reaction_Types_Enum) => {
-    const reaction = didReact(type);
+  const onReact = async (type: Post_Reaction_Types_Enum) => {
+    if (creating || removing) return;
+    const reaction = getReaction();
     if (reaction) {
-      deleteReaction({ variables: { id: reaction.id } });
-    } else {
+      await deleteReaction({ variables: { id: reaction.id } });
+    }
+    if (type !== reaction?.type) {
       createReaction({
         variables: { type, post_id: post.id, author_id: userId },
       });
@@ -103,13 +103,12 @@ const Post = ({ post }: Props) => {
         <Typography fontSize={24}>{post.title}</Typography>
         <Typography>{post.body}</Typography>
         <div className="mt-5 w-full flex justify-between">
-          <div>
+          <div className="flex items-center">
             <Button
               disabled={creating || removing}
               onClick={() => onReact(Post_Reaction_Types_Enum.ThumbsUp)}
             >
-              {post.post_reactions_aggregate.aggregate?.count}
-              {didReact(Post_Reaction_Types_Enum.ThumbsUp) ? (
+              {getReaction()?.type === Post_Reaction_Types_Enum.ThumbsUp ? (
                 <ThumbUpAltIcon />
               ) : (
                 <ThumbUpOffAltIcon />
@@ -119,12 +118,15 @@ const Post = ({ post }: Props) => {
               disabled={creating || removing}
               onClick={() => onReact(Post_Reaction_Types_Enum.ThumbsDown)}
             >
-              {didReact(Post_Reaction_Types_Enum.ThumbsDown) ? (
+              {getReaction()?.type == Post_Reaction_Types_Enum.ThumbsDown ? (
                 <ThumbDownAltIcon />
               ) : (
                 <ThumbDownOffAltIcon />
               )}
             </Button>
+            <div className="ml-2">
+              {post.post_reactions_aggregate.aggregate?.count}
+            </div>
           </div>
           {post.creator_id === userId && (
             <div className="">
