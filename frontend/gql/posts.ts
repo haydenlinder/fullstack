@@ -9,6 +9,16 @@ export const GET_POSTS = graphql(`
       creator_id
       title
       updated_at
+      post_reactions {
+        author_id
+        type
+        id
+      }
+      post_reactions_aggregate {
+        aggregate {
+          count
+        }
+      }
     }
   }
 `);
@@ -43,6 +53,28 @@ export const CREATE_POST = graphql(`
       returning {
         id
       }
+    }
+  }
+`);
+
+export const CREATE_REACTION = graphql(`
+  mutation CreateReaction(
+    $author_id: String = ""
+    $post_id: uuid = ""
+    $type: post_reaction_types_enum = THUMBS_UP
+  ) {
+    insert_post_reactions_one(
+      object: { author_id: $author_id, post_id: $post_id, type: $type }
+    ) {
+      id
+    }
+  }
+`);
+
+export const DELETE_REACTION = graphql(`
+  mutation DeleteReaction($id: uuid = "") {
+    delete_post_reactions_by_pk(id: $id) {
+      id
     }
   }
 `);
