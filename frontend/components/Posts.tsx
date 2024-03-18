@@ -19,6 +19,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { useState } from "react";
 import { useAuth } from "@clerk/nextjs";
+import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
+import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
 
 export const Posts = () => {
   const { data, loading, error } = useQuery<GetPostsQuery>(GET_POSTS);
@@ -54,24 +56,26 @@ const Post = ({ post }: Props) => {
       <CardContent className="w-full">
         <Typography fontSize={24}>{post.title}</Typography>
         <Typography>{post.body}</Typography>
-        {post.creator_id === userId && (
-          <div className="mt-5 w-full flex justify-end">
-            <Button disabled={deleting} onClick={() => setEdit(!edit)}>
-              <EditIcon />
-            </Button>
-            <Button
-              disabled={deleting}
-              onClick={async () => {
-                await deletePost({
-                  variables: { id: post.id },
-                  refetchQueries: [GET_POSTS],
-                });
-              }}
-            >
-              <DeleteIcon />
-            </Button>
-          </div>
-        )}
+        <div className="mt-5 w-full flex justify-between">
+          {post.creator_id === userId && (
+            <div className="">
+              <Button disabled={deleting} onClick={() => setEdit(!edit)}>
+                <EditIcon />
+              </Button>
+              <Button
+                disabled={deleting}
+                onClick={async () => {
+                  await deletePost({
+                    variables: { id: post.id },
+                    refetchQueries: [GET_POSTS],
+                  });
+                }}
+              >
+                <DeleteIcon />
+              </Button>
+            </div>
+          )}
+        </div>
       </CardContent>
     </Card>
   );
