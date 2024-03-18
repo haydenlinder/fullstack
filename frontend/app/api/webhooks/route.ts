@@ -70,5 +70,5 @@ export async function POST(req: Request) {
     body: JSON.stringify({ query: createUser, variables }),
   });
 
-  return new Response("", { status: 200 });
+  return new Response("User created successfully", { status: 200 });
 }
