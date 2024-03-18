@@ -15,7 +15,7 @@ const config: CodegenConfig = {
       },
     },
   },
-  documents: ["app/**/*.tsx"],
+  documents: ["app/**/*.tsx", "src/components/**/*.tsx"],
   ignoreNoDocuments: true, // for better experience with the watcher
   generates: {
     "./src/gql/": {
