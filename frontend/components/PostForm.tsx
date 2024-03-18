@@ -81,7 +81,6 @@ export const PostForm = ({ type = "New", initialValues, after }: Props) => {
     values,
     api,
   ) => {
-    console.log({ initialValues, values, type });
     type === "New"
       ? createPost({
           variables: {
