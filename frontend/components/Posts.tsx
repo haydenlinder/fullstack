@@ -22,7 +22,7 @@ import {
   GetPostsQuery,
   InsertPostsMutation,
   InsertPostsMutationVariables,
-} from "../gql/graphql";
+} from "../src/gql/graphql";
 import { useAuth } from "@clerk/nextjs";
 
 const query = graphql(`
@@ -91,7 +91,7 @@ export const Posts = () => {
 
   return (
     <>
-      <Card classes={{ root: "w-96 flex justify-center p-10 my-10" }}>
+      <Card className="w-96 flex justify-center p-10 my-10">
         <FormRenderer
           {...{
             FormTemplate,
@@ -103,10 +103,7 @@ export const Posts = () => {
       </Card>
       <>
         {data?.posts.map((p) => (
-          <Card
-            key={p.id}
-            classes={{ root: "w-96 flex justify-center p-10 my-10" }}
-          >
+          <Card key={p.id} className="w-96 flex justify-center p-10 my-10">
             <CardHeader></CardHeader>
             <CardContent>
               <Typography fontSize={24}>{p.title}</Typography>

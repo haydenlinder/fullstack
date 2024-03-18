@@ -1,6 +1,6 @@
 "use client";
 
-import { Posts } from "@/src/components/Posts";
+import { Posts } from "@/components/Posts";
 import {
   SignInButton,
   SignOutButton,
