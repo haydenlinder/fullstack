@@ -96,7 +96,7 @@ const Post = ({ post }: Props) => {
       });
     }
   };
-
+  //
   return (
     <Card key={post.id} className="w-96 flex justify-center my-10">
       <CardContent className="w-full">
