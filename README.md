@@ -25,10 +25,17 @@ Use the Hasura console to make Database changes. You may need to refresh the met
 - Create a jwt template named 'hasura'.
 - Create a webhook for user creation pointed at https://your-app.vercel.app/api/webhooks
 
+### Code Generation for API types
+
+When you make changes to files in `./frontend/gql`, run 
+```
+npm run codegen
+```
+to generate types automatically. Be sure to fix any compiler errors before running this command or it won't work.
+
 ## Deployment
 
 The easiest way to deploy is using [Vercel](vercel.com).
-
 
 
 ## Environment Variables
