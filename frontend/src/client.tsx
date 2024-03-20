@@ -1,5 +1,3 @@
-"use client";
-
 import { ApolloLink, HttpLink, from } from "@apollo/client";
 import {
   ApolloNextAppProvider,
@@ -21,11 +19,13 @@ export function ApolloWrapper({ children }: React.PropsWithChildren) {
   const makeClient = useMemo(() => {
     const authMiddleware = setContext(async (operation, { headers }) => {
       const token = await getToken({ template: "hasura" });
+      const newHeaders: typeof headers = {};
+      if (token) newHeaders.authorization = `Bearer ${token}`;
 
       return {
         headers: {
           ...headers,
-          authorization: `Bearer ${token}`,
+          ...newHeaders,
         },
       };
     });

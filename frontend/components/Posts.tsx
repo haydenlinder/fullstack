@@ -39,8 +39,6 @@ export const Posts = () => {
 
   return (
     <>
-      <PostForm />
-
       {loading && <CircularProgress />}
       <>{data?.posts.map((p) => <Post key={p.id} post={p} />)}</>
     </>
@@ -52,50 +50,22 @@ type Props = {
 };
 
 const Post = ({ post }: Props) => {
-  const [deletePost, { loading: deleting }] = useMutation<
-    DeletePostMutation,
-    DeletePostMutationVariables
-  >(DELETE_POST);
-
-  const [createReaction, { loading: creating }] = useMutation<
-    CreateReactionMutation,
-    CreateReactionMutationVariables
-  >(CREATE_REACTION, {
-    refetchQueries: [GET_POSTS],
-  });
-
-  const [deleteReaction, { loading: removing }] = useMutation<
-    DeleteReactionMutation,
-    DeleteReactionMutationVariables
-  >(DELETE_REACTION, {
-    refetchQueries: [GET_POSTS],
-  });
-
-  const { userId } = useAuth();
-
-  const [edit, setEdit] = useState(false);
+  const {
+    userId,
+    creating,
+    removing,
+    edit,
+    deleting,
+    getReaction,
+    setEdit,
+    onReact,
+    deletePost,
+  } = usePost({ post });
 
   if (edit)
     return (
       <PostForm after={() => setEdit(false)} initialValues={post} type="Edit" />
     );
-
-  const getReaction = (type?: Post_Reaction_Types_Enum) => {
-    return post.post_reactions.find((r) => r.author_id === userId);
-  };
-
-  const onReact = async (type: Post_Reaction_Types_Enum) => {
-    if (creating || removing) return;
-    const reaction = getReaction();
-    if (reaction) {
-      await deleteReaction({ variables: { id: reaction.id } });
-    }
-    if (type !== reaction?.type) {
-      createReaction({
-        variables: { type, post_id: post.id, author_id: userId },
-      });
-    }
-  };
 
   return (
     <Card key={post.id} className="w-96 flex justify-center my-10">
@@ -151,4 +121,58 @@ const Post = ({ post }: Props) => {
       </CardContent>
     </Card>
   );
+};
+
+const usePost = ({ post }: Props) => {
+  const { userId } = useAuth();
+
+  const [deletePost, { loading: deleting }] = useMutation<
+    DeletePostMutation,
+    DeletePostMutationVariables
+  >(DELETE_POST);
+
+  const [createReaction, { loading: creating }] = useMutation<
+    CreateReactionMutation,
+    CreateReactionMutationVariables
+  >(CREATE_REACTION, {
+    refetchQueries: [GET_POSTS],
+  });
+
+  const [deleteReaction, { loading: removing }] = useMutation<
+    DeleteReactionMutation,
+    DeleteReactionMutationVariables
+  >(DELETE_REACTION, {
+    refetchQueries: [GET_POSTS],
+  });
+
+  const [edit, setEdit] = useState(false);
+
+  const getReaction = (type?: Post_Reaction_Types_Enum) => {
+    return post.post_reactions.find((r) => r.author_id === userId);
+  };
+
+  const onReact = async (type: Post_Reaction_Types_Enum) => {
+    if (creating || removing) return;
+    const reaction = getReaction();
+    if (reaction) {
+      await deleteReaction({ variables: { id: reaction.id } });
+    }
+    if (type !== reaction?.type) {
+      createReaction({
+        variables: { type, post_id: post.id, author_id: userId },
+      });
+    }
+  };
+
+  return {
+    creating,
+    removing,
+    getReaction,
+    onReact,
+    deleting,
+    setEdit,
+    edit,
+    deletePost,
+    userId,
+  };
 };
