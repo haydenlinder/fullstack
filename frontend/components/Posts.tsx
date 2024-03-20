@@ -3,6 +3,7 @@ import {
   Card,
   CardContent,
   CircularProgress,
+  IconButton,
   Typography,
 } from "@mui/material";
 
@@ -68,14 +69,15 @@ const Post = ({ post }: Props) => {
     );
 
   return (
-    <Card key={post.id} className="w-96 flex justify-center my-10">
+    <Card key={post.id} className=" w-[400px] flex justify-center my-10">
       <CardContent className="w-full">
         <Typography fontSize={24}>{post?.author?.name}</Typography>
         <Typography fontSize={24}>{post?.title}</Typography>
         <Typography>{post.body}</Typography>
         <div className="mt-5 w-full flex justify-between">
           <div className="flex items-center">
-            <Button
+            <IconButton
+              color="primary"
               disabled={creating || removing}
               onClick={() => onReact(Post_Reaction_Types_Enum.ThumbsUp)}
             >
@@ -84,8 +86,9 @@ const Post = ({ post }: Props) => {
               ) : (
                 <ThumbUpOffAltIcon />
               )}
-            </Button>
-            <Button
+            </IconButton>
+            <IconButton
+              color="primary"
               disabled={creating || removing}
               onClick={() => onReact(Post_Reaction_Types_Enum.ThumbsDown)}
             >
@@ -94,17 +97,22 @@ const Post = ({ post }: Props) => {
               ) : (
                 <ThumbDownOffAltIcon />
               )}
-            </Button>
+            </IconButton>
             <div className="ml-2">
               {post.post_reactions_aggregate.aggregate?.count}
             </div>
           </div>
           {post.creator_id === userId && (
             <div className="">
-              <Button disabled={deleting} onClick={() => setEdit(!edit)}>
+              <IconButton
+                color="primary"
+                disabled={deleting}
+                onClick={() => setEdit(!edit)}
+              >
                 <EditIcon />
-              </Button>
-              <Button
+              </IconButton>
+              <IconButton
+                color="primary"
                 disabled={deleting}
                 onClick={async () => {
                   await deletePost({
@@ -114,7 +122,7 @@ const Post = ({ post }: Props) => {
                 }}
               >
                 <DeleteIcon />
-              </Button>
+              </IconButton>
             </div>
           )}
         </div>

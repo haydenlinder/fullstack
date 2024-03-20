@@ -114,7 +114,7 @@ export const PostForm = ({ type = "New", initialValues, after }: Props) => {
   };
 
   return (
-    <Card className="w-96 flex justify-center p-10 my-10">
+    <Card className="w-[400px] flex justify-center p-10 my-10">
       <FormRenderer
         {...{
           FormTemplate: (props) => (

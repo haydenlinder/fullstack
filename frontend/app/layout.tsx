@@ -5,7 +5,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import theme from "../src/theme";
 import "./globals.css";
 import { ApolloWrapper } from "@/src/client";
-import AnchorTemporaryDrawer from "@/components/LeftDrawer";
+import AnchorTemporaryDrawer, { drawerWidth } from "@/components/LeftDrawer";
 
 export default function RootLayout({
   children,
@@ -15,7 +15,9 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className="flex flex-col items-center mt-10">
+        <body
+          className={`flex flex-col items-center mt-10 ml-[190px] container`}
+        >
           <ApolloWrapper>
             <AppRouterCacheProvider options={{}}>
               <ThemeProvider theme={theme}>

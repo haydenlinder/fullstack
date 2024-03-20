@@ -17,9 +17,11 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { SignInButton } from "@clerk/nextjs";
 import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
-import { Button } from "@mui/material";
+import { Button, Paper } from "@mui/material";
+import Search from "./Search";
+import Link from "next/link";
 
-const drawerWidth = 240;
+export const drawerWidth = 240;
 
 interface Props {
   /**
@@ -52,7 +54,9 @@ export default function ResponsiveDrawer(props: Props) {
   const drawerInner = (
     <div>
       <Toolbar>
-        <Typography variant="h6">Band App</Typography>
+        <Link className="-ml-2" href="/">
+          <Typography variant="h6">Band App</Typography>
+        </Link>
       </Toolbar>
       <Divider />
       <List>
@@ -106,9 +110,10 @@ export default function ResponsiveDrawer(props: Props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Posts
-          </Typography>
+          <div></div>
+          <div className="mr-5">
+            <Search />
+          </div>
           <SignedOut>
             <SignInButton>
               <Button variant="contained">Sign in</Button>
