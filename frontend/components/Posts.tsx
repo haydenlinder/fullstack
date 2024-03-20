@@ -96,11 +96,12 @@ const Post = ({ post }: Props) => {
       });
     }
   };
-  //
+
   return (
     <Card key={post.id} className="w-96 flex justify-center my-10">
       <CardContent className="w-full">
-        <Typography fontSize={24}>{post.title}</Typography>
+        <Typography fontSize={24}>{post?.author?.name}</Typography>
+        <Typography fontSize={24}>{post?.title}</Typography>
         <Typography>{post.body}</Typography>
         <div className="mt-5 w-full flex justify-between">
           <div className="flex items-center">

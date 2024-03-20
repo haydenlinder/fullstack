@@ -9,6 +9,10 @@ export const GET_POSTS = graphql(`
       creator_id
       title
       updated_at
+      author {
+        name
+        id
+      }
       post_reactions {
         author_id
         type
