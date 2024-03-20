@@ -28,7 +28,7 @@ const FormTemplate: ComponentType<
   const s = getState();
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="w-full" onSubmit={handleSubmit}>
       {schema.title}
       <>{formFields}</>
       <FormSpy>
@@ -114,7 +114,7 @@ export const PostForm = ({ type = "New", initialValues, after }: Props) => {
   };
 
   return (
-    <Card className="w-[400px] flex justify-center p-10 my-10">
+    <Card className="flex justify-center p-10 my-10">
       <FormRenderer
         {...{
           FormTemplate: (props) => (
