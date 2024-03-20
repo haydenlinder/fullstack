@@ -17,6 +17,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { SignInButton } from "@clerk/nextjs";
 import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
+import { Button } from "@mui/material";
 
 const drawerWidth = 240;
 
@@ -108,7 +109,9 @@ export default function ResponsiveDrawer(props: Props) {
             Responsive drawer
           </Typography>
           <SignedOut>
-            <SignInButton />
+            <SignInButton>
+              <Button variant="contained">Sign in</Button>
+            </SignInButton>
           </SignedOut>
           <SignedIn>
             <UserButton afterSignOutUrl="/" />
