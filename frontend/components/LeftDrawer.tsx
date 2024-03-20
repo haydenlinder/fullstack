@@ -49,12 +49,14 @@ export default function ResponsiveDrawer(props: Props) {
     }
   };
 
-  const drawer = (
+  const drawerInner = (
     <div>
-      <Toolbar />
+      <Toolbar>
+        <Typography variant="h6">Band App</Typography>
+      </Toolbar>
       <Divider />
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
+        {["Posts", "Openings", "Send email", "Drafts"].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -87,7 +89,6 @@ export default function ResponsiveDrawer(props: Props) {
 
   return (
     <Box sx={{ display: "flex" }}>
-      <CssBaseline />
       <AppBar
         position="fixed"
         sx={{
@@ -106,7 +107,7 @@ export default function ResponsiveDrawer(props: Props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Responsive drawer
+            Posts
           </Typography>
           <SignedOut>
             <SignInButton>
@@ -141,7 +142,7 @@ export default function ResponsiveDrawer(props: Props) {
             },
           }}
         >
-          {drawer}
+          {drawerInner}
         </Drawer>
         <Drawer
           variant="permanent"
@@ -154,7 +155,7 @@ export default function ResponsiveDrawer(props: Props) {
           }}
           open
         >
-          {drawer}
+          {drawerInner}
         </Drawer>
       </Box>
     </Box>
