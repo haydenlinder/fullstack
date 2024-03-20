@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={`mt-16 m-10 sm:ml-[240px] p-10`}>
+        <body className={`mt-16 m-10 sm:ml-[240px] p-10 flex justify-center`}>
           <div className="container">
             <ApolloWrapper>
               <AppRouterCacheProvider options={{}}>
