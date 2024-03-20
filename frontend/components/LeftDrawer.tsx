@@ -1,23 +1,24 @@
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
+
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
+import HomeIcon from "@mui/icons-material/Home";
+import MessageIcon from "@mui/icons-material/MessageRounded";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import MailIcon from "@mui/icons-material/Mail";
+
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { SignInButton } from "@clerk/nextjs";
 import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
-import { Button, Paper } from "@mui/material";
+import { Button } from "@mui/material";
 import Search from "./Search";
 import Link from "next/link";
 
@@ -51,6 +52,19 @@ export default function ResponsiveDrawer(props: Props) {
     }
   };
 
+  const listMap = [
+    {
+      title: "Home",
+      route: "/",
+      icon: <HomeIcon />,
+    },
+    {
+      title: "Messages",
+      route: "/messages",
+      icon: <MessageIcon />,
+    },
+  ];
+
   const drawerInner = (
     <div>
       <Toolbar>
@@ -60,28 +74,15 @@ export default function ResponsiveDrawer(props: Props) {
       </Toolbar>
       <Divider />
       <List>
-        {["Posts", "Openings", "Send email", "Drafts"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
+        {listMap.map(({ title, icon, route }) => (
+          <Link href={route} key={title}>
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>{icon}</ListItemIcon>
+                <ListItemText primary={title} />
+              </ListItemButton>
+            </ListItem>
+          </Link>
         ))}
       </List>
     </div>
@@ -114,14 +115,17 @@ export default function ResponsiveDrawer(props: Props) {
           <div className="mr-5">
             <Search />
           </div>
-          <SignedOut>
-            <SignInButton>
-              <Button variant="contained">Sign in</Button>
-            </SignInButton>
-          </SignedOut>
-          <SignedIn>
-            <UserButton afterSignOutUrl="/" />
-          </SignedIn>
+          <div className="w-24">
+            <SignedOut>
+              <SignInButton>
+                <Button variant="contained">Sign in</Button>
+              </SignInButton>
+            </SignedOut>
+
+            <SignedIn>
+              <UserButton afterSignOutUrl="/" />
+            </SignedIn>
+          </div>
         </Toolbar>
       </AppBar>
       <Box
