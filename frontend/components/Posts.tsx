@@ -39,10 +39,10 @@ export const Posts = () => {
   const { data, loading, error } = useQuery<GetPostsQuery>(GET_POSTS);
 
   return (
-    <>
+    <div className="w-full">
       {loading && <CircularProgress />}
       <>{data?.posts.map((p) => <Post key={p.id} post={p} />)}</>
-    </>
+    </div>
   );
 };
 
@@ -69,7 +69,7 @@ const Post = ({ post }: Props) => {
     );
 
   return (
-    <Card key={post.id} className=" w-[400px] flex justify-center my-10">
+    <Card key={post.id} className="flex justify-center my-10 w-full">
       <CardContent className="w-full">
         <Typography fontSize={24}>{post?.author?.name}</Typography>
         <Typography fontSize={24}>{post?.title}</Typography>

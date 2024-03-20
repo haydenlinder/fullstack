@@ -15,17 +15,17 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body
-          className={`flex flex-col items-center mt-10 sm:ml-[160px] container`}
-        >
-          <ApolloWrapper>
-            <AppRouterCacheProvider options={{}}>
-              <ThemeProvider theme={theme}>
-                <AnchorTemporaryDrawer />
-                {children}
-              </ThemeProvider>
-            </AppRouterCacheProvider>
-          </ApolloWrapper>
+        <body className={`mt-16 m-10 sm:ml-[240px] p-10`}>
+          <div className="container">
+            <ApolloWrapper>
+              <AppRouterCacheProvider options={{}}>
+                <ThemeProvider theme={theme}>
+                  <AnchorTemporaryDrawer />
+                  {children}
+                </ThemeProvider>
+              </AppRouterCacheProvider>
+            </ApolloWrapper>
+          </div>
         </body>
       </html>
     </ClerkProvider>

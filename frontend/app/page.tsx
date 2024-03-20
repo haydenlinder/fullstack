@@ -6,7 +6,7 @@ import { SignedIn } from "@clerk/nextjs";
 
 export default function Home() {
   return (
-    <div className="h-screen pt-10">
+    <div className="w-full">
       <SignedIn>
         <PostForm />
       </SignedIn>

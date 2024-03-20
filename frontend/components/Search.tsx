@@ -8,7 +8,7 @@ import SearchIcon from "@mui/icons-material/Search";
 
 export default function Search() {
   return (
-    <div className="relative w-full flex">
+    <div className="relative w-40 md:w-96 flex">
       <Paper
         component="form"
         sx={{ p: "2px 4px", display: "flex", alignItems: "center", width: 400 }}
