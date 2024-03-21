@@ -88,7 +88,12 @@ const Post = ({ post }: Props) => {
         <Typography>{post.body}</Typography>
         <div className="my-5">
           {post.post_tags.map(({ tag }) => (
-            <Chip key={tag.id} label={tag.id} variant="outlined" />
+            <Chip
+              key={tag.id}
+              label={tag.id}
+              variant="outlined"
+              className="mr-2"
+            />
           ))}
         </div>
         {/* FOOTER */}
