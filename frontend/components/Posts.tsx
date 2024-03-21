@@ -53,7 +53,6 @@ export const Posts = () => {
       _regex: query,
     },
   });
-  console.log(query, search?.posts);
 
   return (
     <div className="w-full">
