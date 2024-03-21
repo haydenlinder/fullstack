@@ -220,6 +220,7 @@ const usePost = ({ post }: Props) => {
   };
 
   const parse = (text?: string) => {
+    if (!query) return text;
     const regEscape = (v: string) =>
       v.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 
