@@ -77,6 +77,7 @@ const Post = ({ post }: Props) => {
     setEdit,
     onReact,
     deletePost,
+    parse,
   } = usePost({ post });
 
   const initialValues = {
@@ -100,11 +101,11 @@ const Post = ({ post }: Props) => {
       <CardContent className="w-full">
         <div className="flex items-center">
           <UserIcon className="mr-2" />
-          <Typography fontSize={16}>{post?.author?.name}</Typography>
+          <Typography fontSize={16}>{parse(post?.author?.name)}</Typography>
         </div>
         <div className="my-4">
-          <Typography fontSize={24}>{post?.title}</Typography>
-          <Typography>{post.body}</Typography>
+          <Typography fontSize={24}>{parse(post?.title)}</Typography>
+          <Typography>{parse(post.body)}</Typography>
         </div>
         <div className="my-5">
           {post.post_tags.map(({ tag }) => (
@@ -178,6 +179,7 @@ const Post = ({ post }: Props) => {
 
 const usePost = ({ post }: Props) => {
   const { userId } = useAuth();
+  const { query } = useQueryStore();
 
   const [deletePost, { loading: deleting }] = useMutation<
     DeletePostMutation,
@@ -217,6 +219,26 @@ const usePost = ({ post }: Props) => {
     }
   };
 
+  const parse = (text?: string) => {
+    const regEscape = (v: string) =>
+      v.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+
+    const chunks = text?.split(new RegExp(`(${regEscape(query)})`, "ig"));
+    const regex = new RegExp(regEscape(query), "ig");
+
+    return chunks?.map((chunk) => {
+      return (
+        <>
+          {regex.test(chunk) ? (
+            <span className="bg-yellow-800">{chunk}</span>
+          ) : (
+            <span>{chunk}</span>
+          )}
+        </>
+      );
+    });
+  };
+
   return {
     creating,
     removing,
@@ -227,5 +249,6 @@ const usePost = ({ post }: Props) => {
     edit,
     deletePost,
     userId,
+    parse,
   };
 };
