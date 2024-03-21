@@ -187,7 +187,6 @@ const useDrawer = () => {
   };
 
   return {
-    window,
     mobileOpen,
     setMobileOpen,
     setIsClosing,
