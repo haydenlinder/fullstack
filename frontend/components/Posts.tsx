@@ -50,7 +50,7 @@ export const Posts = () => {
   >(SEARCH_POSTS, {
     skip: !query,
     variables: {
-      _regex: query,
+      _regex: `%${query}%`,
     },
   });
 

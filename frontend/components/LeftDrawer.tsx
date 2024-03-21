@@ -42,7 +42,7 @@ const Header = () => {
   const client = useApolloClient();
 
   const onChange = (q: string) => {
-    update(`%${q}%`);
+    update(q);
     client.refetchQueries({
       include: [SEARCH_POSTS],
     });
@@ -68,7 +68,7 @@ const Header = () => {
         </IconButton>
         <div></div>
         <div className="mr-5">
-          <Search onChange={onChange} />
+          <Search value={query} onChange={onChange} />
         </div>
         <div className="w-24">
           <SignedOut>
