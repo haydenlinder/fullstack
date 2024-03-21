@@ -60,58 +60,16 @@ type Props = {
     body?: string;
     id?: string;
     title?: string;
+    tags?: string[];
   };
   after?: () => void;
 };
 
 export const PostForm = ({ type = "New", initialValues, after }: Props) => {
-  const { userId } = useAuth();
-
-  const [createPost, { loading: posting }] = useMutation<
-    CreatePostMutation,
-    CreatePostMutationVariables
-  >(CREATE_POST);
-
-  const [updatePost, { loading: updating }] = useMutation<
-    UpdatePostMutation,
-    UpdatePostMutationVariables
-  >(UPDATE_POST);
-
-  const onSubmit: FormRendererProps<{ body: string }>["onSubmit"] = async (
-    values,
-    api,
-  ) => {
-    type === "New"
-      ? createPost({
-          variables: {
-            creator_id: userId,
-            ...values,
-          },
-          refetchQueries: [GET_POSTS],
-          onCompleted: () => api.reset(),
-        })
-      : updatePost({
-          variables: {
-            ...values,
-          },
-          refetchQueries: [GET_POSTS],
-        });
-    after && after();
-  };
-
-  const schema: Schema = {
-    title: <FormLabel>{type} Post</FormLabel>,
-    fields: [
-      {
-        component: componentTypes.TEXTAREA,
-        name: "body",
-        label: "body",
-        validate: [{ type: "required" }],
-        // validateOnMount: true,
-        helperText: "What's on your mind?",
-      },
-    ],
-  };
+  const { posting, schema, onSubmit, updating } = usePost({
+    type,
+    after,
+  });
 
   return (
     <Card className="flex justify-center p-10 my-10">
@@ -132,4 +90,98 @@ export const PostForm = ({ type = "New", initialValues, after }: Props) => {
       />
     </Card>
   );
+};
+
+const usePost = ({ type, after }: Props) => {
+  const { userId } = useAuth();
+
+  const [createPost, { loading: posting }] = useMutation<
+    CreatePostMutation,
+    CreatePostMutationVariables
+  >(CREATE_POST);
+
+  const [updatePost, { loading: updating }] = useMutation<
+    UpdatePostMutation,
+    UpdatePostMutationVariables
+  >(UPDATE_POST);
+
+  const onSubmit: FormRendererProps<{
+    tags: string[];
+    body: string;
+    title: string;
+    id?: string;
+  }>["onSubmit"] = async ({ tags, body, title, id }, api) => {
+    // return
+    type === "New"
+      ? createPost({
+          variables: {
+            creator_id: userId,
+            body,
+            title,
+            data: tags.map((tag) => ({
+              tag_id: tag,
+            })),
+          },
+          refetchQueries: [GET_POSTS],
+          onCompleted: () => api.reset(),
+        })
+      : updatePost({
+          variables: {
+            body,
+            title,
+            id,
+            // data: tags.map(tag => ({
+            //   tag_id: tag,
+            // }))
+          },
+          refetchQueries: [GET_POSTS],
+        });
+    after && after();
+  };
+
+  const schema: Schema = {
+    title: (
+      <div className="mb-5">
+        <FormLabel>{type} Post</FormLabel>
+      </div>
+    ),
+    fields: [
+      {
+        component: componentTypes.TEXT_FIELD,
+        className: "mb-10",
+        name: "title",
+        label: "title",
+        validate: [{ type: "required" }],
+        // validateOnMount: true,
+        helperText: "Title",
+      },
+      {
+        component: componentTypes.TEXTAREA,
+        name: "body",
+        label: "body",
+        validate: [{ type: "required" }],
+        // validateOnMount: true,
+        helperText: "Description",
+      },
+      {
+        component: componentTypes.SELECT,
+        options: [
+          {
+            label: "bass",
+            value: "bass",
+          },
+        ],
+        name: "tags",
+        label: "tags",
+        validate: [{ type: "required" }],
+        // validateOnMount: true,
+        helperText: "What's on your mind?",
+        isMulti: true,
+        isSearchable: true,
+        isClearable: true,
+      },
+    ],
+  };
+
+  return { userId, updatePost, updating, posting, onSubmit, schema };
 };

@@ -83,10 +83,18 @@ export type Mutation_Root = {
   delete_post_reactions?: Maybe<Post_Reactions_Mutation_Response>;
   /** delete single row from the table: "post_reactions" */
   delete_post_reactions_by_pk?: Maybe<Post_Reactions>;
+  /** delete data from the table: "post_tags" */
+  delete_post_tags?: Maybe<Post_Tags_Mutation_Response>;
+  /** delete single row from the table: "post_tags" */
+  delete_post_tags_by_pk?: Maybe<Post_Tags>;
   /** delete data from the table: "posts" */
   delete_posts?: Maybe<Posts_Mutation_Response>;
   /** delete single row from the table: "posts" */
   delete_posts_by_pk?: Maybe<Posts>;
+  /** delete data from the table: "tags" */
+  delete_tags?: Maybe<Tags_Mutation_Response>;
+  /** delete single row from the table: "tags" */
+  delete_tags_by_pk?: Maybe<Tags>;
   /** delete data from the table: "users" */
   delete_users?: Maybe<Users_Mutation_Response>;
   /** delete single row from the table: "users" */
@@ -99,10 +107,18 @@ export type Mutation_Root = {
   insert_post_reactions?: Maybe<Post_Reactions_Mutation_Response>;
   /** insert a single row into the table: "post_reactions" */
   insert_post_reactions_one?: Maybe<Post_Reactions>;
+  /** insert data into the table: "post_tags" */
+  insert_post_tags?: Maybe<Post_Tags_Mutation_Response>;
+  /** insert a single row into the table: "post_tags" */
+  insert_post_tags_one?: Maybe<Post_Tags>;
   /** insert data into the table: "posts" */
   insert_posts?: Maybe<Posts_Mutation_Response>;
   /** insert a single row into the table: "posts" */
   insert_posts_one?: Maybe<Posts>;
+  /** insert data into the table: "tags" */
+  insert_tags?: Maybe<Tags_Mutation_Response>;
+  /** insert a single row into the table: "tags" */
+  insert_tags_one?: Maybe<Tags>;
   /** insert data into the table: "users" */
   insert_users?: Maybe<Users_Mutation_Response>;
   /** insert a single row into the table: "users" */
@@ -119,12 +135,24 @@ export type Mutation_Root = {
   update_post_reactions_by_pk?: Maybe<Post_Reactions>;
   /** update multiples rows of table: "post_reactions" */
   update_post_reactions_many?: Maybe<Array<Maybe<Post_Reactions_Mutation_Response>>>;
+  /** update data of the table: "post_tags" */
+  update_post_tags?: Maybe<Post_Tags_Mutation_Response>;
+  /** update single row of the table: "post_tags" */
+  update_post_tags_by_pk?: Maybe<Post_Tags>;
+  /** update multiples rows of table: "post_tags" */
+  update_post_tags_many?: Maybe<Array<Maybe<Post_Tags_Mutation_Response>>>;
   /** update data of the table: "posts" */
   update_posts?: Maybe<Posts_Mutation_Response>;
   /** update single row of the table: "posts" */
   update_posts_by_pk?: Maybe<Posts>;
   /** update multiples rows of table: "posts" */
   update_posts_many?: Maybe<Array<Maybe<Posts_Mutation_Response>>>;
+  /** update data of the table: "tags" */
+  update_tags?: Maybe<Tags_Mutation_Response>;
+  /** update single row of the table: "tags" */
+  update_tags_by_pk?: Maybe<Tags>;
+  /** update multiples rows of table: "tags" */
+  update_tags_many?: Maybe<Array<Maybe<Tags_Mutation_Response>>>;
   /** update data of the table: "users" */
   update_users?: Maybe<Users_Mutation_Response>;
   /** update single row of the table: "users" */
@@ -159,6 +187,18 @@ export type Mutation_RootDelete_Post_Reactions_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDelete_Post_TagsArgs = {
+  where: Post_Tags_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Post_Tags_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
 export type Mutation_RootDelete_PostsArgs = {
   where: Posts_Bool_Exp;
 };
@@ -167,6 +207,18 @@ export type Mutation_RootDelete_PostsArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Posts_By_PkArgs = {
   id: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_TagsArgs = {
+  where: Tags_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Tags_By_PkArgs = {
+  id: Scalars['String']['input'];
 };
 
 
@@ -211,6 +263,20 @@ export type Mutation_RootInsert_Post_Reactions_OneArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_Post_TagsArgs = {
+  objects: Array<Post_Tags_Insert_Input>;
+  on_conflict?: InputMaybe<Post_Tags_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Post_Tags_OneArgs = {
+  object: Post_Tags_Insert_Input;
+  on_conflict?: InputMaybe<Post_Tags_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_PostsArgs = {
   objects: Array<Posts_Insert_Input>;
   on_conflict?: InputMaybe<Posts_On_Conflict>;
@@ -221,6 +287,20 @@ export type Mutation_RootInsert_PostsArgs = {
 export type Mutation_RootInsert_Posts_OneArgs = {
   object: Posts_Insert_Input;
   on_conflict?: InputMaybe<Posts_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_TagsArgs = {
+  objects: Array<Tags_Insert_Input>;
+  on_conflict?: InputMaybe<Tags_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Tags_OneArgs = {
+  object: Tags_Insert_Input;
+  on_conflict?: InputMaybe<Tags_On_Conflict>;
 };
 
 
@@ -279,6 +359,26 @@ export type Mutation_RootUpdate_Post_Reactions_ManyArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Post_TagsArgs = {
+  _set?: InputMaybe<Post_Tags_Set_Input>;
+  where: Post_Tags_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Post_Tags_By_PkArgs = {
+  _set?: InputMaybe<Post_Tags_Set_Input>;
+  pk_columns: Post_Tags_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Post_Tags_ManyArgs = {
+  updates: Array<Post_Tags_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_PostsArgs = {
   _set?: InputMaybe<Posts_Set_Input>;
   where: Posts_Bool_Exp;
@@ -295,6 +395,26 @@ export type Mutation_RootUpdate_Posts_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_Posts_ManyArgs = {
   updates: Array<Posts_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_TagsArgs = {
+  _set?: InputMaybe<Tags_Set_Input>;
+  where: Tags_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Tags_By_PkArgs = {
+  _set?: InputMaybe<Tags_Set_Input>;
+  pk_columns: Tags_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Tags_ManyArgs = {
+  updates: Array<Tags_Updates>;
 };
 
 
@@ -716,6 +836,201 @@ export type Post_Reactions_Updates = {
   where: Post_Reactions_Bool_Exp;
 };
 
+/** columns and relationships of "post_tags" */
+export type Post_Tags = {
+  __typename?: 'post_tags';
+  id: Scalars['uuid']['output'];
+  /** An object relationship */
+  post: Posts;
+  post_id: Scalars['uuid']['output'];
+  /** An object relationship */
+  tag: Tags;
+  tag_id: Scalars['String']['output'];
+};
+
+/** aggregated selection of "post_tags" */
+export type Post_Tags_Aggregate = {
+  __typename?: 'post_tags_aggregate';
+  aggregate?: Maybe<Post_Tags_Aggregate_Fields>;
+  nodes: Array<Post_Tags>;
+};
+
+export type Post_Tags_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Post_Tags_Aggregate_Bool_Exp_Count>;
+};
+
+export type Post_Tags_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Post_Tags_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Post_Tags_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "post_tags" */
+export type Post_Tags_Aggregate_Fields = {
+  __typename?: 'post_tags_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Post_Tags_Max_Fields>;
+  min?: Maybe<Post_Tags_Min_Fields>;
+};
+
+
+/** aggregate fields of "post_tags" */
+export type Post_Tags_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Post_Tags_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "post_tags" */
+export type Post_Tags_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Post_Tags_Max_Order_By>;
+  min?: InputMaybe<Post_Tags_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "post_tags" */
+export type Post_Tags_Arr_Rel_Insert_Input = {
+  data: Array<Post_Tags_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Post_Tags_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "post_tags". All fields are combined with a logical 'AND'. */
+export type Post_Tags_Bool_Exp = {
+  _and?: InputMaybe<Array<Post_Tags_Bool_Exp>>;
+  _not?: InputMaybe<Post_Tags_Bool_Exp>;
+  _or?: InputMaybe<Array<Post_Tags_Bool_Exp>>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  post?: InputMaybe<Posts_Bool_Exp>;
+  post_id?: InputMaybe<Uuid_Comparison_Exp>;
+  tag?: InputMaybe<Tags_Bool_Exp>;
+  tag_id?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "post_tags" */
+export enum Post_Tags_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  PostTagsPkey = 'post_tags_pkey'
+}
+
+/** input type for inserting data into table "post_tags" */
+export type Post_Tags_Insert_Input = {
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  post?: InputMaybe<Posts_Obj_Rel_Insert_Input>;
+  post_id?: InputMaybe<Scalars['uuid']['input']>;
+  tag?: InputMaybe<Tags_Obj_Rel_Insert_Input>;
+  tag_id?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate max on columns */
+export type Post_Tags_Max_Fields = {
+  __typename?: 'post_tags_max_fields';
+  id?: Maybe<Scalars['uuid']['output']>;
+  post_id?: Maybe<Scalars['uuid']['output']>;
+  tag_id?: Maybe<Scalars['String']['output']>;
+};
+
+/** order by max() on columns of table "post_tags" */
+export type Post_Tags_Max_Order_By = {
+  id?: InputMaybe<Order_By>;
+  post_id?: InputMaybe<Order_By>;
+  tag_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Post_Tags_Min_Fields = {
+  __typename?: 'post_tags_min_fields';
+  id?: Maybe<Scalars['uuid']['output']>;
+  post_id?: Maybe<Scalars['uuid']['output']>;
+  tag_id?: Maybe<Scalars['String']['output']>;
+};
+
+/** order by min() on columns of table "post_tags" */
+export type Post_Tags_Min_Order_By = {
+  id?: InputMaybe<Order_By>;
+  post_id?: InputMaybe<Order_By>;
+  tag_id?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "post_tags" */
+export type Post_Tags_Mutation_Response = {
+  __typename?: 'post_tags_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Post_Tags>;
+};
+
+/** on_conflict condition type for table "post_tags" */
+export type Post_Tags_On_Conflict = {
+  constraint: Post_Tags_Constraint;
+  update_columns?: Array<Post_Tags_Update_Column>;
+  where?: InputMaybe<Post_Tags_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "post_tags". */
+export type Post_Tags_Order_By = {
+  id?: InputMaybe<Order_By>;
+  post?: InputMaybe<Posts_Order_By>;
+  post_id?: InputMaybe<Order_By>;
+  tag?: InputMaybe<Tags_Order_By>;
+  tag_id?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: post_tags */
+export type Post_Tags_Pk_Columns_Input = {
+  id: Scalars['uuid']['input'];
+};
+
+/** select columns of table "post_tags" */
+export enum Post_Tags_Select_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  PostId = 'post_id',
+  /** column name */
+  TagId = 'tag_id'
+}
+
+/** input type for updating data in table "post_tags" */
+export type Post_Tags_Set_Input = {
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  post_id?: InputMaybe<Scalars['uuid']['input']>;
+  tag_id?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Streaming cursor of the table "post_tags" */
+export type Post_Tags_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Post_Tags_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Post_Tags_Stream_Cursor_Value_Input = {
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  post_id?: InputMaybe<Scalars['uuid']['input']>;
+  tag_id?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** update columns of table "post_tags" */
+export enum Post_Tags_Update_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  PostId = 'post_id',
+  /** column name */
+  TagId = 'tag_id'
+}
+
+export type Post_Tags_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Post_Tags_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Post_Tags_Bool_Exp;
+};
+
 /** columns and relationships of "posts" */
 export type Posts = {
   __typename?: 'posts';
@@ -729,6 +1044,10 @@ export type Posts = {
   post_reactions: Array<Post_Reactions>;
   /** An aggregate relationship */
   post_reactions_aggregate: Post_Reactions_Aggregate;
+  /** An array relationship */
+  post_tags: Array<Post_Tags>;
+  /** An aggregate relationship */
+  post_tags_aggregate: Post_Tags_Aggregate;
   title: Scalars['String']['output'];
   updated_at: Scalars['timestamptz']['output'];
 };
@@ -751,6 +1070,26 @@ export type PostsPost_Reactions_AggregateArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Post_Reactions_Order_By>>;
   where?: InputMaybe<Post_Reactions_Bool_Exp>;
+};
+
+
+/** columns and relationships of "posts" */
+export type PostsPost_TagsArgs = {
+  distinct_on?: InputMaybe<Array<Post_Tags_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Post_Tags_Order_By>>;
+  where?: InputMaybe<Post_Tags_Bool_Exp>;
+};
+
+
+/** columns and relationships of "posts" */
+export type PostsPost_Tags_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Post_Tags_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Post_Tags_Order_By>>;
+  where?: InputMaybe<Post_Tags_Bool_Exp>;
 };
 
 /** aggregated selection of "posts" */
@@ -812,6 +1151,8 @@ export type Posts_Bool_Exp = {
   id?: InputMaybe<Uuid_Comparison_Exp>;
   post_reactions?: InputMaybe<Post_Reactions_Bool_Exp>;
   post_reactions_aggregate?: InputMaybe<Post_Reactions_Aggregate_Bool_Exp>;
+  post_tags?: InputMaybe<Post_Tags_Bool_Exp>;
+  post_tags_aggregate?: InputMaybe<Post_Tags_Aggregate_Bool_Exp>;
   title?: InputMaybe<String_Comparison_Exp>;
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
 };
@@ -830,6 +1171,7 @@ export type Posts_Insert_Input = {
   creator_id?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   post_reactions?: InputMaybe<Post_Reactions_Arr_Rel_Insert_Input>;
+  post_tags?: InputMaybe<Post_Tags_Arr_Rel_Insert_Input>;
   title?: InputMaybe<Scalars['String']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
 };
@@ -907,6 +1249,7 @@ export type Posts_Order_By = {
   creator_id?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   post_reactions_aggregate?: InputMaybe<Post_Reactions_Aggregate_Order_By>;
+  post_tags_aggregate?: InputMaybe<Post_Tags_Aggregate_Order_By>;
   title?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
 };
@@ -998,11 +1341,23 @@ export type Query_Root = {
   /** fetch data from the table: "post_reactions" using primary key columns */
   post_reactions_by_pk?: Maybe<Post_Reactions>;
   /** An array relationship */
+  post_tags: Array<Post_Tags>;
+  /** An aggregate relationship */
+  post_tags_aggregate: Post_Tags_Aggregate;
+  /** fetch data from the table: "post_tags" using primary key columns */
+  post_tags_by_pk?: Maybe<Post_Tags>;
+  /** An array relationship */
   posts: Array<Posts>;
   /** An aggregate relationship */
   posts_aggregate: Posts_Aggregate;
   /** fetch data from the table: "posts" using primary key columns */
   posts_by_pk?: Maybe<Posts>;
+  /** fetch data from the table: "tags" */
+  tags: Array<Tags>;
+  /** fetch aggregated fields from the table: "tags" */
+  tags_aggregate: Tags_Aggregate;
+  /** fetch data from the table: "tags" using primary key columns */
+  tags_by_pk?: Maybe<Tags>;
   /** fetch data from the table: "users" */
   users: Array<Users>;
   /** fetch aggregated fields from the table: "users" */
@@ -1058,6 +1413,29 @@ export type Query_RootPost_Reactions_By_PkArgs = {
 };
 
 
+export type Query_RootPost_TagsArgs = {
+  distinct_on?: InputMaybe<Array<Post_Tags_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Post_Tags_Order_By>>;
+  where?: InputMaybe<Post_Tags_Bool_Exp>;
+};
+
+
+export type Query_RootPost_Tags_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Post_Tags_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Post_Tags_Order_By>>;
+  where?: InputMaybe<Post_Tags_Bool_Exp>;
+};
+
+
+export type Query_RootPost_Tags_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
 export type Query_RootPostsArgs = {
   distinct_on?: InputMaybe<Array<Posts_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -1078,6 +1456,29 @@ export type Query_RootPosts_AggregateArgs = {
 
 export type Query_RootPosts_By_PkArgs = {
   id: Scalars['uuid']['input'];
+};
+
+
+export type Query_RootTagsArgs = {
+  distinct_on?: InputMaybe<Array<Tags_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Tags_Order_By>>;
+  where?: InputMaybe<Tags_Bool_Exp>;
+};
+
+
+export type Query_RootTags_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Tags_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Tags_Order_By>>;
+  where?: InputMaybe<Tags_Bool_Exp>;
+};
+
+
+export type Query_RootTags_By_PkArgs = {
+  id: Scalars['String']['input'];
 };
 
 
@@ -1122,6 +1523,14 @@ export type Subscription_Root = {
   /** fetch data from the table in a streaming manner: "post_reactions" */
   post_reactions_stream: Array<Post_Reactions>;
   /** An array relationship */
+  post_tags: Array<Post_Tags>;
+  /** An aggregate relationship */
+  post_tags_aggregate: Post_Tags_Aggregate;
+  /** fetch data from the table: "post_tags" using primary key columns */
+  post_tags_by_pk?: Maybe<Post_Tags>;
+  /** fetch data from the table in a streaming manner: "post_tags" */
+  post_tags_stream: Array<Post_Tags>;
+  /** An array relationship */
   posts: Array<Posts>;
   /** An aggregate relationship */
   posts_aggregate: Posts_Aggregate;
@@ -1129,6 +1538,14 @@ export type Subscription_Root = {
   posts_by_pk?: Maybe<Posts>;
   /** fetch data from the table in a streaming manner: "posts" */
   posts_stream: Array<Posts>;
+  /** fetch data from the table: "tags" */
+  tags: Array<Tags>;
+  /** fetch aggregated fields from the table: "tags" */
+  tags_aggregate: Tags_Aggregate;
+  /** fetch data from the table: "tags" using primary key columns */
+  tags_by_pk?: Maybe<Tags>;
+  /** fetch data from the table in a streaming manner: "tags" */
+  tags_stream: Array<Tags>;
   /** fetch data from the table: "users" */
   users: Array<Users>;
   /** fetch aggregated fields from the table: "users" */
@@ -1200,6 +1617,36 @@ export type Subscription_RootPost_Reactions_StreamArgs = {
 };
 
 
+export type Subscription_RootPost_TagsArgs = {
+  distinct_on?: InputMaybe<Array<Post_Tags_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Post_Tags_Order_By>>;
+  where?: InputMaybe<Post_Tags_Bool_Exp>;
+};
+
+
+export type Subscription_RootPost_Tags_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Post_Tags_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Post_Tags_Order_By>>;
+  where?: InputMaybe<Post_Tags_Bool_Exp>;
+};
+
+
+export type Subscription_RootPost_Tags_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootPost_Tags_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Post_Tags_Stream_Cursor_Input>>;
+  where?: InputMaybe<Post_Tags_Bool_Exp>;
+};
+
+
 export type Subscription_RootPostsArgs = {
   distinct_on?: InputMaybe<Array<Posts_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -1230,6 +1677,36 @@ export type Subscription_RootPosts_StreamArgs = {
 };
 
 
+export type Subscription_RootTagsArgs = {
+  distinct_on?: InputMaybe<Array<Tags_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Tags_Order_By>>;
+  where?: InputMaybe<Tags_Bool_Exp>;
+};
+
+
+export type Subscription_RootTags_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Tags_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Tags_Order_By>>;
+  where?: InputMaybe<Tags_Bool_Exp>;
+};
+
+
+export type Subscription_RootTags_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type Subscription_RootTags_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Tags_Stream_Cursor_Input>>;
+  where?: InputMaybe<Tags_Bool_Exp>;
+};
+
+
 export type Subscription_RootUsersArgs = {
   distinct_on?: InputMaybe<Array<Users_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -1257,6 +1734,175 @@ export type Subscription_RootUsers_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Users_Stream_Cursor_Input>>;
   where?: InputMaybe<Users_Bool_Exp>;
+};
+
+/** columns and relationships of "tags" */
+export type Tags = {
+  __typename?: 'tags';
+  created_at: Scalars['timestamptz']['output'];
+  id: Scalars['String']['output'];
+  /** An array relationship */
+  post_tags: Array<Post_Tags>;
+  /** An aggregate relationship */
+  post_tags_aggregate: Post_Tags_Aggregate;
+};
+
+
+/** columns and relationships of "tags" */
+export type TagsPost_TagsArgs = {
+  distinct_on?: InputMaybe<Array<Post_Tags_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Post_Tags_Order_By>>;
+  where?: InputMaybe<Post_Tags_Bool_Exp>;
+};
+
+
+/** columns and relationships of "tags" */
+export type TagsPost_Tags_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Post_Tags_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Post_Tags_Order_By>>;
+  where?: InputMaybe<Post_Tags_Bool_Exp>;
+};
+
+/** aggregated selection of "tags" */
+export type Tags_Aggregate = {
+  __typename?: 'tags_aggregate';
+  aggregate?: Maybe<Tags_Aggregate_Fields>;
+  nodes: Array<Tags>;
+};
+
+/** aggregate fields of "tags" */
+export type Tags_Aggregate_Fields = {
+  __typename?: 'tags_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Tags_Max_Fields>;
+  min?: Maybe<Tags_Min_Fields>;
+};
+
+
+/** aggregate fields of "tags" */
+export type Tags_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Tags_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Boolean expression to filter rows from the table "tags". All fields are combined with a logical 'AND'. */
+export type Tags_Bool_Exp = {
+  _and?: InputMaybe<Array<Tags_Bool_Exp>>;
+  _not?: InputMaybe<Tags_Bool_Exp>;
+  _or?: InputMaybe<Array<Tags_Bool_Exp>>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  id?: InputMaybe<String_Comparison_Exp>;
+  post_tags?: InputMaybe<Post_Tags_Bool_Exp>;
+  post_tags_aggregate?: InputMaybe<Post_Tags_Aggregate_Bool_Exp>;
+};
+
+/** unique or primary key constraints on table "tags" */
+export enum Tags_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  TagsPkey = 'tags_pkey'
+}
+
+/** input type for inserting data into table "tags" */
+export type Tags_Insert_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  post_tags?: InputMaybe<Post_Tags_Arr_Rel_Insert_Input>;
+};
+
+/** aggregate max on columns */
+export type Tags_Max_Fields = {
+  __typename?: 'tags_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+};
+
+/** aggregate min on columns */
+export type Tags_Min_Fields = {
+  __typename?: 'tags_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+};
+
+/** response of any mutation on the table "tags" */
+export type Tags_Mutation_Response = {
+  __typename?: 'tags_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Tags>;
+};
+
+/** input type for inserting object relation for remote table "tags" */
+export type Tags_Obj_Rel_Insert_Input = {
+  data: Tags_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Tags_On_Conflict>;
+};
+
+/** on_conflict condition type for table "tags" */
+export type Tags_On_Conflict = {
+  constraint: Tags_Constraint;
+  update_columns?: Array<Tags_Update_Column>;
+  where?: InputMaybe<Tags_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "tags". */
+export type Tags_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  post_tags_aggregate?: InputMaybe<Post_Tags_Aggregate_Order_By>;
+};
+
+/** primary key columns input for table: tags */
+export type Tags_Pk_Columns_Input = {
+  id: Scalars['String']['input'];
+};
+
+/** select columns of table "tags" */
+export enum Tags_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id'
+}
+
+/** input type for updating data in table "tags" */
+export type Tags_Set_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Streaming cursor of the table "tags" */
+export type Tags_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Tags_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Tags_Stream_Cursor_Value_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** update columns of table "tags" */
+export enum Tags_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id'
+}
+
+export type Tags_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Tags_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Tags_Bool_Exp;
 };
 
 /** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
@@ -1497,7 +2143,7 @@ export type Uuid_Comparison_Exp = {
 export type GetPostsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetPostsQuery = { __typename?: 'query_root', posts: Array<{ __typename?: 'posts', id: any, body: string, created_at: any, creator_id: string, title: string, updated_at: any, author: { __typename?: 'users', name: string, id: string }, post_reactions: Array<{ __typename?: 'post_reactions', author_id: string, type: Post_Reaction_Types_Enum, id: any }>, post_reactions_aggregate: { __typename?: 'post_reactions_aggregate', aggregate?: { __typename?: 'post_reactions_aggregate_fields', count: number } | null } }> };
+export type GetPostsQuery = { __typename?: 'query_root', posts: Array<{ __typename?: 'posts', id: any, body: string, created_at: any, creator_id: string, title: string, updated_at: any, author: { __typename?: 'users', name: string, id: string }, post_reactions: Array<{ __typename?: 'post_reactions', author_id: string, type: Post_Reaction_Types_Enum, id: any }>, post_reactions_aggregate: { __typename?: 'post_reactions_aggregate', aggregate?: { __typename?: 'post_reactions_aggregate_fields', count: number } | null }, post_tags: Array<{ __typename?: 'post_tags', tag: { __typename?: 'tags', id: string } }> }> };
 
 export type DeletePostMutationVariables = Exact<{
   id?: InputMaybe<Scalars['uuid']['input']>;
@@ -1519,6 +2165,7 @@ export type CreatePostMutationVariables = Exact<{
   body?: InputMaybe<Scalars['String']['input']>;
   creator_id?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
+  data?: InputMaybe<Array<Post_Tags_Insert_Input> | Post_Tags_Insert_Input>;
 }>;
 
 
@@ -1549,10 +2196,10 @@ export type CreateUserMutationVariables = Exact<{
 export type CreateUserMutation = { __typename?: 'mutation_root', insert_users_one?: { __typename?: 'users', id: string } | null };
 
 
-export const GetPostsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPosts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"posts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10"}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"creator_id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_reactions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"author_id"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_reactions_aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetPostsQuery, GetPostsQueryVariables>;
+export const GetPostsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPosts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"posts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10"}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"creator_id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_reactions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"author_id"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_reactions_aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_tags"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tag"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetPostsQuery, GetPostsQueryVariables>;
 export const DeletePostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeletePost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_posts_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"creator_id"}}]}}]}}]} as unknown as DocumentNode<DeletePostMutation, DeletePostMutationVariables>;
 export const UpdatePostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdatePost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"body"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"title"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_posts_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"body"},"value":{"kind":"Variable","name":{"kind":"Name","value":"body"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"title"},"value":{"kind":"Variable","name":{"kind":"Name","value":"title"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdatePostMutation, UpdatePostMutationVariables>;
-export const CreatePostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreatePost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"body"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"creator_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"title"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_posts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"body"},"value":{"kind":"Variable","name":{"kind":"Name","value":"body"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"creator_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"creator_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"title"},"value":{"kind":"Variable","name":{"kind":"Name","value":"title"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<CreatePostMutation, CreatePostMutationVariables>;
+export const CreatePostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreatePost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"body"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"creator_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"title"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"post_tags_insert_input"}}}},"defaultValue":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"post_id"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"tag_id"},"value":{"kind":"StringValue","value":"","block":false}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_posts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"body"},"value":{"kind":"Variable","name":{"kind":"Name","value":"body"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"creator_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"creator_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"title"},"value":{"kind":"Variable","name":{"kind":"Name","value":"title"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"post_tags"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<CreatePostMutation, CreatePostMutationVariables>;
 export const CreateReactionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateReaction"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"author_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"post_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"type"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"post_reaction_types_enum"}},"defaultValue":{"kind":"EnumValue","value":"THUMBS_UP"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_post_reactions_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"author_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"author_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"post_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"post_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"type"},"value":{"kind":"Variable","name":{"kind":"Name","value":"type"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateReactionMutation, CreateReactionMutationVariables>;
 export const DeleteReactionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteReaction"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_post_reactions_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<DeleteReactionMutation, DeleteReactionMutationVariables>;
 export const CreateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_users_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateUserMutation, CreateUserMutationVariables>;

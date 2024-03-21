@@ -2,6 +2,7 @@ import {
   Button,
   Card,
   CardContent,
+  Chip,
   CircularProgress,
   IconButton,
   Typography,
@@ -63,9 +64,20 @@ const Post = ({ post }: Props) => {
     deletePost,
   } = usePost({ post });
 
+  const initialValues = {
+    body: post.body,
+    title: post.title,
+    id: post.id,
+    tags: post.post_tags.map(({ tag }) => tag.id),
+  };
+
   if (edit)
     return (
-      <PostForm after={() => setEdit(false)} initialValues={post} type="Edit" />
+      <PostForm
+        after={() => setEdit(false)}
+        initialValues={initialValues}
+        type="Edit"
+      />
     );
 
   return (
@@ -74,7 +86,14 @@ const Post = ({ post }: Props) => {
         <Typography fontSize={24}>{post?.author?.name}</Typography>
         <Typography fontSize={24}>{post?.title}</Typography>
         <Typography>{post.body}</Typography>
+        <div className="my-5">
+          {post.post_tags.map(({ tag }) => (
+            <Chip key={tag.id} label={tag.id} />
+          ))}
+        </div>
+        {/* FOOTER */}
         <div className="mt-5 w-full flex justify-between">
+          {/* REACTIONS */}
           <div className="flex items-center">
             <IconButton
               color="primary"
@@ -102,6 +121,7 @@ const Post = ({ post }: Props) => {
               {post.post_reactions_aggregate.aggregate?.count}
             </div>
           </div>
+          {/* ACTIONS */}
           {post.creator_id === userId && (
             <div className="">
               <IconButton

@@ -23,6 +23,11 @@ export const GET_POSTS = graphql(`
           count
         }
       }
+      post_tags {
+        tag {
+          id
+        }
+      }
     }
   }
 `);
@@ -50,9 +55,15 @@ export const CREATE_POST = graphql(`
     $body: String = ""
     $creator_id: String = ""
     $title: String = ""
+    $data: [post_tags_insert_input!] = { post_id: "", tag_id: "" }
   ) {
     insert_posts(
-      objects: { body: $body, creator_id: $creator_id, title: $title }
+      objects: {
+        body: $body
+        creator_id: $creator_id
+        title: $title
+        post_tags: { data: $data }
+      }
     ) {
       returning {
         id
