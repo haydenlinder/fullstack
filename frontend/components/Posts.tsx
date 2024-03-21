@@ -111,7 +111,7 @@ const Post = ({ post }: Props) => {
           {post.post_tags.map(({ tag }) => (
             <Chip
               key={tag.id}
-              label={tag.id}
+              label={parse(tag.id)}
               variant="outlined"
               className="mr-2 mb-2"
             />
