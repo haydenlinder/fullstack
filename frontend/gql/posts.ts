@@ -40,12 +40,27 @@ export const DELETE_POST = graphql(`
   }
 `);
 export const UPDATE_POST = graphql(`
-  mutation UpdatePost($id: uuid = "", $body: String = "", $title: String = "") {
+  mutation UpdatePost(
+    $id: uuid = ""
+    $body: String = ""
+    $title: String = ""
+    $tags: [post_tags_insert_input!] = { post_id: "", tag_id: "" }
+  ) {
     update_posts_by_pk(
       pk_columns: { id: $id }
       _set: { body: $body, title: $title }
     ) {
       id
+    }
+    delete_post_tags(where: { post_id: { _eq: $id } }) {
+      returning {
+        id
+      }
+    }
+    insert_post_tags(objects: $tags) {
+      returning {
+        id
+      }
     }
   }
 `);

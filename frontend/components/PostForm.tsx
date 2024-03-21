@@ -149,9 +149,10 @@ const usePost = ({ type, after }: Props) => {
             body,
             title,
             id,
-            // data: tags.map(tag => ({
-            //   tag_id: tag,
-            // }))
+            tags: tags.map((tag) => ({
+              tag_id: tag,
+              post_id: id,
+            })),
           },
           refetchQueries: [GET_POSTS],
         });
