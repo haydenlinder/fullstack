@@ -32,6 +32,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useState } from "react";
 import { useAuth } from "@clerk/nextjs";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
+import UserIcon from "@mui/icons-material/AccountCircle";
 import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
@@ -83,9 +84,14 @@ const Post = ({ post }: Props) => {
   return (
     <Card key={post.id} className="flex justify-center my-10 w-full">
       <CardContent className="w-full">
-        <Typography fontSize={24}>{post?.author?.name}</Typography>
-        <Typography fontSize={24}>{post?.title}</Typography>
-        <Typography>{post.body}</Typography>
+        <div className="flex items-center">
+          <UserIcon className="mr-2" />
+          <Typography fontSize={16}>{post?.author?.name}</Typography>
+        </div>
+        <div className="my-4">
+          <Typography fontSize={24}>{post?.title}</Typography>
+          <Typography>{post.body}</Typography>
+        </div>
         <div className="my-5">
           {post.post_tags.map(({ tag }) => (
             <Chip
