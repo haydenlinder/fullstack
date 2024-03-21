@@ -95,6 +95,14 @@ export type Mutation_Root = {
   delete_tags?: Maybe<Tags_Mutation_Response>;
   /** delete single row from the table: "tags" */
   delete_tags_by_pk?: Maybe<Tags>;
+  /** delete data from the table: "team_users" */
+  delete_team_users?: Maybe<Team_Users_Mutation_Response>;
+  /** delete single row from the table: "team_users" */
+  delete_team_users_by_pk?: Maybe<Team_Users>;
+  /** delete data from the table: "teams" */
+  delete_teams?: Maybe<Teams_Mutation_Response>;
+  /** delete single row from the table: "teams" */
+  delete_teams_by_pk?: Maybe<Teams>;
   /** delete data from the table: "users" */
   delete_users?: Maybe<Users_Mutation_Response>;
   /** delete single row from the table: "users" */
@@ -119,6 +127,14 @@ export type Mutation_Root = {
   insert_tags?: Maybe<Tags_Mutation_Response>;
   /** insert a single row into the table: "tags" */
   insert_tags_one?: Maybe<Tags>;
+  /** insert data into the table: "team_users" */
+  insert_team_users?: Maybe<Team_Users_Mutation_Response>;
+  /** insert a single row into the table: "team_users" */
+  insert_team_users_one?: Maybe<Team_Users>;
+  /** insert data into the table: "teams" */
+  insert_teams?: Maybe<Teams_Mutation_Response>;
+  /** insert a single row into the table: "teams" */
+  insert_teams_one?: Maybe<Teams>;
   /** insert data into the table: "users" */
   insert_users?: Maybe<Users_Mutation_Response>;
   /** insert a single row into the table: "users" */
@@ -153,6 +169,18 @@ export type Mutation_Root = {
   update_tags_by_pk?: Maybe<Tags>;
   /** update multiples rows of table: "tags" */
   update_tags_many?: Maybe<Array<Maybe<Tags_Mutation_Response>>>;
+  /** update data of the table: "team_users" */
+  update_team_users?: Maybe<Team_Users_Mutation_Response>;
+  /** update single row of the table: "team_users" */
+  update_team_users_by_pk?: Maybe<Team_Users>;
+  /** update multiples rows of table: "team_users" */
+  update_team_users_many?: Maybe<Array<Maybe<Team_Users_Mutation_Response>>>;
+  /** update data of the table: "teams" */
+  update_teams?: Maybe<Teams_Mutation_Response>;
+  /** update single row of the table: "teams" */
+  update_teams_by_pk?: Maybe<Teams>;
+  /** update multiples rows of table: "teams" */
+  update_teams_many?: Maybe<Array<Maybe<Teams_Mutation_Response>>>;
   /** update data of the table: "users" */
   update_users?: Maybe<Users_Mutation_Response>;
   /** update single row of the table: "users" */
@@ -219,6 +247,30 @@ export type Mutation_RootDelete_TagsArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Tags_By_PkArgs = {
   id: Scalars['String']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Team_UsersArgs = {
+  where: Team_Users_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Team_Users_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_TeamsArgs = {
+  where: Teams_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Teams_By_PkArgs = {
+  id: Scalars['uuid']['input'];
 };
 
 
@@ -301,6 +353,34 @@ export type Mutation_RootInsert_TagsArgs = {
 export type Mutation_RootInsert_Tags_OneArgs = {
   object: Tags_Insert_Input;
   on_conflict?: InputMaybe<Tags_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Team_UsersArgs = {
+  objects: Array<Team_Users_Insert_Input>;
+  on_conflict?: InputMaybe<Team_Users_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Team_Users_OneArgs = {
+  object: Team_Users_Insert_Input;
+  on_conflict?: InputMaybe<Team_Users_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_TeamsArgs = {
+  objects: Array<Teams_Insert_Input>;
+  on_conflict?: InputMaybe<Teams_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Teams_OneArgs = {
+  object: Teams_Insert_Input;
+  on_conflict?: InputMaybe<Teams_On_Conflict>;
 };
 
 
@@ -415,6 +495,46 @@ export type Mutation_RootUpdate_Tags_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_Tags_ManyArgs = {
   updates: Array<Tags_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Team_UsersArgs = {
+  _set?: InputMaybe<Team_Users_Set_Input>;
+  where: Team_Users_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Team_Users_By_PkArgs = {
+  _set?: InputMaybe<Team_Users_Set_Input>;
+  pk_columns: Team_Users_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Team_Users_ManyArgs = {
+  updates: Array<Team_Users_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_TeamsArgs = {
+  _set?: InputMaybe<Teams_Set_Input>;
+  where: Teams_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Teams_By_PkArgs = {
+  _set?: InputMaybe<Teams_Set_Input>;
+  pk_columns: Teams_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Teams_ManyArgs = {
+  updates: Array<Teams_Updates>;
 };
 
 
@@ -1358,6 +1478,18 @@ export type Query_Root = {
   tags_aggregate: Tags_Aggregate;
   /** fetch data from the table: "tags" using primary key columns */
   tags_by_pk?: Maybe<Tags>;
+  /** fetch data from the table: "team_users" */
+  team_users: Array<Team_Users>;
+  /** fetch aggregated fields from the table: "team_users" */
+  team_users_aggregate: Team_Users_Aggregate;
+  /** fetch data from the table: "team_users" using primary key columns */
+  team_users_by_pk?: Maybe<Team_Users>;
+  /** fetch data from the table: "teams" */
+  teams: Array<Teams>;
+  /** fetch aggregated fields from the table: "teams" */
+  teams_aggregate: Teams_Aggregate;
+  /** fetch data from the table: "teams" using primary key columns */
+  teams_by_pk?: Maybe<Teams>;
   /** fetch data from the table: "users" */
   users: Array<Users>;
   /** fetch aggregated fields from the table: "users" */
@@ -1482,6 +1614,52 @@ export type Query_RootTags_By_PkArgs = {
 };
 
 
+export type Query_RootTeam_UsersArgs = {
+  distinct_on?: InputMaybe<Array<Team_Users_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Team_Users_Order_By>>;
+  where?: InputMaybe<Team_Users_Bool_Exp>;
+};
+
+
+export type Query_RootTeam_Users_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Team_Users_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Team_Users_Order_By>>;
+  where?: InputMaybe<Team_Users_Bool_Exp>;
+};
+
+
+export type Query_RootTeam_Users_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Query_RootTeamsArgs = {
+  distinct_on?: InputMaybe<Array<Teams_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Teams_Order_By>>;
+  where?: InputMaybe<Teams_Bool_Exp>;
+};
+
+
+export type Query_RootTeams_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Teams_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Teams_Order_By>>;
+  where?: InputMaybe<Teams_Bool_Exp>;
+};
+
+
+export type Query_RootTeams_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
 export type Query_RootUsersArgs = {
   distinct_on?: InputMaybe<Array<Users_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -1546,6 +1724,22 @@ export type Subscription_Root = {
   tags_by_pk?: Maybe<Tags>;
   /** fetch data from the table in a streaming manner: "tags" */
   tags_stream: Array<Tags>;
+  /** fetch data from the table: "team_users" */
+  team_users: Array<Team_Users>;
+  /** fetch aggregated fields from the table: "team_users" */
+  team_users_aggregate: Team_Users_Aggregate;
+  /** fetch data from the table: "team_users" using primary key columns */
+  team_users_by_pk?: Maybe<Team_Users>;
+  /** fetch data from the table in a streaming manner: "team_users" */
+  team_users_stream: Array<Team_Users>;
+  /** fetch data from the table: "teams" */
+  teams: Array<Teams>;
+  /** fetch aggregated fields from the table: "teams" */
+  teams_aggregate: Teams_Aggregate;
+  /** fetch data from the table: "teams" using primary key columns */
+  teams_by_pk?: Maybe<Teams>;
+  /** fetch data from the table in a streaming manner: "teams" */
+  teams_stream: Array<Teams>;
   /** fetch data from the table: "users" */
   users: Array<Users>;
   /** fetch aggregated fields from the table: "users" */
@@ -1707,6 +1901,66 @@ export type Subscription_RootTags_StreamArgs = {
 };
 
 
+export type Subscription_RootTeam_UsersArgs = {
+  distinct_on?: InputMaybe<Array<Team_Users_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Team_Users_Order_By>>;
+  where?: InputMaybe<Team_Users_Bool_Exp>;
+};
+
+
+export type Subscription_RootTeam_Users_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Team_Users_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Team_Users_Order_By>>;
+  where?: InputMaybe<Team_Users_Bool_Exp>;
+};
+
+
+export type Subscription_RootTeam_Users_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootTeam_Users_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Team_Users_Stream_Cursor_Input>>;
+  where?: InputMaybe<Team_Users_Bool_Exp>;
+};
+
+
+export type Subscription_RootTeamsArgs = {
+  distinct_on?: InputMaybe<Array<Teams_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Teams_Order_By>>;
+  where?: InputMaybe<Teams_Bool_Exp>;
+};
+
+
+export type Subscription_RootTeams_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Teams_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Teams_Order_By>>;
+  where?: InputMaybe<Teams_Bool_Exp>;
+};
+
+
+export type Subscription_RootTeams_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootTeams_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Teams_Stream_Cursor_Input>>;
+  where?: InputMaybe<Teams_Bool_Exp>;
+};
+
+
 export type Subscription_RootUsersArgs = {
   distinct_on?: InputMaybe<Array<Users_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -1802,6 +2056,8 @@ export type Tags_Bool_Exp = {
 
 /** unique or primary key constraints on table "tags" */
 export enum Tags_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  TagsIdKey = 'tags_id_key',
   /** unique or primary key constraint on columns "id" */
   TagsPkey = 'tags_pkey'
 }
@@ -1903,6 +2159,286 @@ export type Tags_Updates = {
   _set?: InputMaybe<Tags_Set_Input>;
   /** filter the rows which have to be updated */
   where: Tags_Bool_Exp;
+};
+
+/** columns and relationships of "team_users" */
+export type Team_Users = {
+  __typename?: 'team_users';
+  id: Scalars['uuid']['output'];
+  team_id: Scalars['uuid']['output'];
+  user_id: Scalars['String']['output'];
+};
+
+/** aggregated selection of "team_users" */
+export type Team_Users_Aggregate = {
+  __typename?: 'team_users_aggregate';
+  aggregate?: Maybe<Team_Users_Aggregate_Fields>;
+  nodes: Array<Team_Users>;
+};
+
+/** aggregate fields of "team_users" */
+export type Team_Users_Aggregate_Fields = {
+  __typename?: 'team_users_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Team_Users_Max_Fields>;
+  min?: Maybe<Team_Users_Min_Fields>;
+};
+
+
+/** aggregate fields of "team_users" */
+export type Team_Users_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Team_Users_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Boolean expression to filter rows from the table "team_users". All fields are combined with a logical 'AND'. */
+export type Team_Users_Bool_Exp = {
+  _and?: InputMaybe<Array<Team_Users_Bool_Exp>>;
+  _not?: InputMaybe<Team_Users_Bool_Exp>;
+  _or?: InputMaybe<Array<Team_Users_Bool_Exp>>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  team_id?: InputMaybe<Uuid_Comparison_Exp>;
+  user_id?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "team_users" */
+export enum Team_Users_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  TeamUsersPkey = 'team_users_pkey'
+}
+
+/** input type for inserting data into table "team_users" */
+export type Team_Users_Insert_Input = {
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  team_id?: InputMaybe<Scalars['uuid']['input']>;
+  user_id?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate max on columns */
+export type Team_Users_Max_Fields = {
+  __typename?: 'team_users_max_fields';
+  id?: Maybe<Scalars['uuid']['output']>;
+  team_id?: Maybe<Scalars['uuid']['output']>;
+  user_id?: Maybe<Scalars['String']['output']>;
+};
+
+/** aggregate min on columns */
+export type Team_Users_Min_Fields = {
+  __typename?: 'team_users_min_fields';
+  id?: Maybe<Scalars['uuid']['output']>;
+  team_id?: Maybe<Scalars['uuid']['output']>;
+  user_id?: Maybe<Scalars['String']['output']>;
+};
+
+/** response of any mutation on the table "team_users" */
+export type Team_Users_Mutation_Response = {
+  __typename?: 'team_users_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Team_Users>;
+};
+
+/** on_conflict condition type for table "team_users" */
+export type Team_Users_On_Conflict = {
+  constraint: Team_Users_Constraint;
+  update_columns?: Array<Team_Users_Update_Column>;
+  where?: InputMaybe<Team_Users_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "team_users". */
+export type Team_Users_Order_By = {
+  id?: InputMaybe<Order_By>;
+  team_id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: team_users */
+export type Team_Users_Pk_Columns_Input = {
+  id: Scalars['uuid']['input'];
+};
+
+/** select columns of table "team_users" */
+export enum Team_Users_Select_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  TeamId = 'team_id',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** input type for updating data in table "team_users" */
+export type Team_Users_Set_Input = {
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  team_id?: InputMaybe<Scalars['uuid']['input']>;
+  user_id?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Streaming cursor of the table "team_users" */
+export type Team_Users_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Team_Users_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Team_Users_Stream_Cursor_Value_Input = {
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  team_id?: InputMaybe<Scalars['uuid']['input']>;
+  user_id?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** update columns of table "team_users" */
+export enum Team_Users_Update_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  TeamId = 'team_id',
+  /** column name */
+  UserId = 'user_id'
+}
+
+export type Team_Users_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Team_Users_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Team_Users_Bool_Exp;
+};
+
+/** columns and relationships of "teams" */
+export type Teams = {
+  __typename?: 'teams';
+  id: Scalars['uuid']['output'];
+  name: Scalars['String']['output'];
+};
+
+/** aggregated selection of "teams" */
+export type Teams_Aggregate = {
+  __typename?: 'teams_aggregate';
+  aggregate?: Maybe<Teams_Aggregate_Fields>;
+  nodes: Array<Teams>;
+};
+
+/** aggregate fields of "teams" */
+export type Teams_Aggregate_Fields = {
+  __typename?: 'teams_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Teams_Max_Fields>;
+  min?: Maybe<Teams_Min_Fields>;
+};
+
+
+/** aggregate fields of "teams" */
+export type Teams_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Teams_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Boolean expression to filter rows from the table "teams". All fields are combined with a logical 'AND'. */
+export type Teams_Bool_Exp = {
+  _and?: InputMaybe<Array<Teams_Bool_Exp>>;
+  _not?: InputMaybe<Teams_Bool_Exp>;
+  _or?: InputMaybe<Array<Teams_Bool_Exp>>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "teams" */
+export enum Teams_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  TeamsPkey = 'teams_pkey'
+}
+
+/** input type for inserting data into table "teams" */
+export type Teams_Insert_Input = {
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate max on columns */
+export type Teams_Max_Fields = {
+  __typename?: 'teams_max_fields';
+  id?: Maybe<Scalars['uuid']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+};
+
+/** aggregate min on columns */
+export type Teams_Min_Fields = {
+  __typename?: 'teams_min_fields';
+  id?: Maybe<Scalars['uuid']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+};
+
+/** response of any mutation on the table "teams" */
+export type Teams_Mutation_Response = {
+  __typename?: 'teams_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Teams>;
+};
+
+/** on_conflict condition type for table "teams" */
+export type Teams_On_Conflict = {
+  constraint: Teams_Constraint;
+  update_columns?: Array<Teams_Update_Column>;
+  where?: InputMaybe<Teams_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "teams". */
+export type Teams_Order_By = {
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: teams */
+export type Teams_Pk_Columns_Input = {
+  id: Scalars['uuid']['input'];
+};
+
+/** select columns of table "teams" */
+export enum Teams_Select_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name'
+}
+
+/** input type for updating data in table "teams" */
+export type Teams_Set_Input = {
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Streaming cursor of the table "teams" */
+export type Teams_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Teams_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Teams_Stream_Cursor_Value_Input = {
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** update columns of table "teams" */
+export enum Teams_Update_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name'
+}
+
+export type Teams_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Teams_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Teams_Bool_Exp;
 };
 
 /** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
@@ -2187,6 +2723,13 @@ export type DeleteReactionMutationVariables = Exact<{
 
 export type DeleteReactionMutation = { __typename?: 'mutation_root', delete_post_reactions_by_pk?: { __typename?: 'post_reactions', id: any } | null };
 
+export type SearchTagsQueryVariables = Exact<{
+  _regex?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type SearchTagsQuery = { __typename?: 'query_root', tags: Array<{ __typename?: 'tags', id: string }> };
+
 export type CreateUserMutationVariables = Exact<{
   id?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
@@ -2202,4 +2745,5 @@ export const UpdatePostDocument = {"kind":"Document","definitions":[{"kind":"Ope
 export const CreatePostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreatePost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"body"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"creator_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"title"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"post_tags_insert_input"}}}},"defaultValue":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"post_id"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"tag_id"},"value":{"kind":"StringValue","value":"","block":false}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_posts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"body"},"value":{"kind":"Variable","name":{"kind":"Name","value":"body"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"creator_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"creator_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"title"},"value":{"kind":"Variable","name":{"kind":"Name","value":"title"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"post_tags"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<CreatePostMutation, CreatePostMutationVariables>;
 export const CreateReactionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateReaction"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"author_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"post_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"type"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"post_reaction_types_enum"}},"defaultValue":{"kind":"EnumValue","value":"THUMBS_UP"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_post_reactions_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"author_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"author_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"post_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"post_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"type"},"value":{"kind":"Variable","name":{"kind":"Name","value":"type"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateReactionMutation, CreateReactionMutationVariables>;
 export const DeleteReactionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteReaction"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_post_reactions_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<DeleteReactionMutation, DeleteReactionMutationVariables>;
+export const SearchTagsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchTags"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"_regex"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_regex"},"value":{"kind":"Variable","name":{"kind":"Name","value":"_regex"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<SearchTagsQuery, SearchTagsQueryVariables>;
 export const CreateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_users_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateUserMutation, CreateUserMutationVariables>;

@@ -93,3 +93,11 @@ export const DELETE_REACTION = graphql(`
     }
   }
 `);
+
+export const SEARCH_TAGS = graphql(`
+  query SearchTags($_regex: String = "") {
+    tags(limit: 10, where: { id: { _regex: $_regex } }) {
+      id
+    }
+  }
+`);

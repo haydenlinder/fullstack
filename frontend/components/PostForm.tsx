@@ -6,64 +6,21 @@ import {
   useFormApi,
 } from "@data-driven-forms/react-form-renderer";
 import { componentMapper } from "@data-driven-forms/mui-component-mapper";
-import { Button, Card, FormLabel } from "@mui/material";
+import { Autocomplete, Button, Card, FormLabel } from "@mui/material";
 import FormTemplateCommonProps from "@data-driven-forms/common/form-template";
 import FormSpy from "@data-driven-forms/react-form-renderer/form-spy";
 import {
   CreatePostMutation,
   CreatePostMutationVariables,
+  SearchTagsQuery,
+  SearchTagsQueryVariables,
   UpdatePostMutation,
   UpdatePostMutationVariables,
 } from "@/src/gql/graphql";
-import { useMutation } from "@apollo/client";
+import { useApolloClient, useMutation, useQuery } from "@apollo/client";
 import { useAuth } from "@clerk/nextjs";
-import { CREATE_POST, GET_POSTS, UPDATE_POST } from "@/gql/posts";
+import { CREATE_POST, GET_POSTS, SEARCH_TAGS, UPDATE_POST } from "@/gql/posts";
 import { ComponentType } from "react";
-
-const FormTemplate: ComponentType<
-  FormTemplateCommonProps & { submitting: boolean; after?: () => void }
-> = ({ schema, formFields, submitting, after }) => {
-  const { handleSubmit, getState } = useFormApi();
-
-  const s = getState();
-
-  return (
-    <form className="w-full" onSubmit={handleSubmit}>
-      {schema.title}
-      <>{formFields}</>
-      <FormSpy>
-        {() => (
-          <>
-            <Button
-              style={{ marginRight: "15px" }}
-              disabled={submitting || !s.valid}
-              type="submit"
-              variant="contained"
-            >
-              Submit
-            </Button>
-            {after && (
-              <Button onClick={after} variant="contained">
-                Cancel
-              </Button>
-            )}
-          </>
-        )}
-      </FormSpy>
-    </form>
-  );
-};
-
-type Props = {
-  type?: "New" | "Edit";
-  initialValues?: {
-    body?: string;
-    id?: string;
-    title?: string;
-    tags?: string[];
-  };
-  after?: () => void;
-};
 
 export const PostForm = ({ type = "New", initialValues, after }: Props) => {
   const { posting, schema, onSubmit, updating } = usePost({
@@ -92,6 +49,53 @@ export const PostForm = ({ type = "New", initialValues, after }: Props) => {
   );
 };
 
+const FormTemplate: ComponentType<
+  FormTemplateCommonProps & { submitting: boolean; after?: () => void }
+> = ({ schema, formFields, submitting, after }) => {
+  const { handleSubmit, getState } = useFormApi();
+
+  const s = getState();
+
+  return (
+    <form className="w-full" onSubmit={handleSubmit}>
+      {schema.title}
+      <>{formFields}</>
+      <FormSpy>
+        {(r) => {
+          return (
+            <>
+              <Button
+                style={{ marginRight: "15px" }}
+                disabled={submitting || !s.valid}
+                type="submit"
+                variant="contained"
+              >
+                Submit
+              </Button>
+              {after && (
+                <Button onClick={after} variant="contained">
+                  Cancel
+                </Button>
+              )}
+            </>
+          );
+        }}
+      </FormSpy>
+    </form>
+  );
+};
+
+type Props = {
+  type?: "New" | "Edit";
+  initialValues?: {
+    body?: string;
+    id?: string;
+    title?: string;
+    tags?: string[];
+  };
+  after?: () => void;
+};
+
 const usePost = ({ type, after }: Props) => {
   const { userId } = useAuth();
 
@@ -104,6 +108,21 @@ const usePost = ({ type, after }: Props) => {
     UpdatePostMutation,
     UpdatePostMutationVariables
   >(UPDATE_POST);
+
+  const client = useApolloClient();
+
+  const getTags = async (search: string) => {
+    const res = await client.query({
+      query: SEARCH_TAGS,
+      variables: { _regex: search },
+    });
+    const ar = res.data.tags.map((t) => ({
+      label: t.id,
+      value: t.id,
+      key: t.id,
+    }));
+    return ar || [];
+  };
 
   const onSubmit: FormRendererProps<{
     tags: string[];
@@ -147,8 +166,10 @@ const usePost = ({ type, after }: Props) => {
     ),
     fields: [
       {
+        classes: {
+          root: "mb-10 ",
+        },
         component: componentTypes.TEXT_FIELD,
-        className: "mb-10",
         name: "title",
         label: "title",
         validate: [{ type: "required" }],
@@ -165,20 +186,18 @@ const usePost = ({ type, after }: Props) => {
       },
       {
         component: componentTypes.SELECT,
-        options: [
-          {
-            label: "bass",
-            value: "bass",
-          },
-        ],
+        noOptionsMessage: "No results",
+        options: [],
+        loadOptions: getTags,
         name: "tags",
         label: "tags",
         validate: [{ type: "required" }],
         // validateOnMount: true,
-        helperText: "What's on your mind?",
+        helperText: "tags",
         isMulti: true,
         isSearchable: true,
         isClearable: true,
+        menuIsPortal: true,
       },
     ],
   };

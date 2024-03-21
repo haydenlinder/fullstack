@@ -19,6 +19,7 @@ const documents = {
     "\n  mutation CreatePost(\n    $body: String = \"\"\n    $creator_id: String = \"\"\n    $title: String = \"\"\n    $data: [post_tags_insert_input!] = { post_id: \"\", tag_id: \"\" }\n  ) {\n    insert_posts(\n      objects: {\n        body: $body\n        creator_id: $creator_id\n        title: $title\n        post_tags: { data: $data }\n      }\n    ) {\n      returning {\n        id\n      }\n    }\n  }\n": types.CreatePostDocument,
     "\n  mutation CreateReaction(\n    $author_id: String = \"\"\n    $post_id: uuid = \"\"\n    $type: post_reaction_types_enum = THUMBS_UP\n  ) {\n    insert_post_reactions_one(\n      object: { author_id: $author_id, post_id: $post_id, type: $type }\n    ) {\n      id\n    }\n  }\n": types.CreateReactionDocument,
     "\n  mutation DeleteReaction($id: uuid = \"\") {\n    delete_post_reactions_by_pk(id: $id) {\n      id\n    }\n  }\n": types.DeleteReactionDocument,
+    "\n  query SearchTags($_regex: String = \"\") {\n    tags(limit: 10, where: { id: { _regex: $_regex } }) {\n      id\n    }\n  }\n": types.SearchTagsDocument,
     "\n  mutation CreateUser($id: String = \"\", $name: String = \"\") {\n    insert_users_one(object: { id: $id, name: $name }) {\n      id\n    }\n  }\n": types.CreateUserDocument,
 };
 
@@ -60,6 +61,10 @@ export function graphql(source: "\n  mutation CreateReaction(\n    $author_id: S
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  mutation DeleteReaction($id: uuid = \"\") {\n    delete_post_reactions_by_pk(id: $id) {\n      id\n    }\n  }\n"): (typeof documents)["\n  mutation DeleteReaction($id: uuid = \"\") {\n    delete_post_reactions_by_pk(id: $id) {\n      id\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query SearchTags($_regex: String = \"\") {\n    tags(limit: 10, where: { id: { _regex: $_regex } }) {\n      id\n    }\n  }\n"): (typeof documents)["\n  query SearchTags($_regex: String = \"\") {\n    tags(limit: 10, where: { id: { _regex: $_regex } }) {\n      id\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
