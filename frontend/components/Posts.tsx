@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 
-import { useMutation, useQuery } from "@apollo/client";
+import { useApolloClient, useMutation, useQuery } from "@apollo/client";
 import {
   CreateReactionMutation,
   CreateReactionMutationVariables,
@@ -18,32 +18,47 @@ import {
   DeleteReactionMutationVariables,
   GetPostsQuery,
   Post_Reaction_Types_Enum,
+  SearchPostsQuery,
+  SearchPostsQueryVariables,
 } from "../src/gql/graphql";
 import {
   CREATE_REACTION,
   DELETE_POST,
   DELETE_REACTION,
   GET_POSTS,
+  SEARCH_POSTS,
 } from "@/gql/posts";
 import { PostForm } from "./PostForm";
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "@clerk/nextjs";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import UserIcon from "@mui/icons-material/AccountCircle";
 import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
+import { useQueryStore } from "@/state/store";
 
 export const Posts = () => {
-  const { data, loading, error } = useQuery<GetPostsQuery>(GET_POSTS);
+  const { query } = useQueryStore();
+  const { data, loading } = useQuery<GetPostsQuery>(GET_POSTS);
+  const { data: search, loading: searching } = useQuery<
+    SearchPostsQuery,
+    SearchPostsQueryVariables
+  >(SEARCH_POSTS, {
+    skip: !query,
+    variables: {
+      _regex: query,
+    },
+  });
+  console.log(query, search?.posts);
 
   return (
     <div className="w-full">
-      {loading && <CircularProgress />}
-      <>{data?.posts.map((p) => <Post key={p.id} post={p} />)}</>
+      {loading || (searching && <CircularProgress />)}
+      <>{(search || data)?.posts.map((p) => <Post key={p.id} post={p} />)}</>
     </div>
   );
 };

@@ -116,3 +116,55 @@ export const SEARCH_TAGS = graphql(`
     }
   }
 `);
+
+export const SEARCH_POSTS = graphql(`
+  query SearchPosts($_regex: String = "") {
+    posts(
+      order_by: { created_at: desc }
+      where: {
+        _or: [
+          { author: { name: { _ilike: $_regex } } }
+          { body: { _ilike: $_regex } }
+          { title: { _ilike: $_regex } }
+          { post_tags: { tag_id: { _ilike: $_regex } } }
+        ]
+      }
+      limit: 10
+    ) {
+      id
+      body
+      created_at
+      creator_id
+      title
+      updated_at
+      author {
+        name
+        id
+      }
+      post_reactions {
+        author_id
+        type
+        id
+      }
+      post_reactions_aggregate {
+        aggregate {
+          count
+        }
+      }
+      post_tags {
+        tag {
+          id
+        }
+      }
+    }
+  }
+`);
+`{
+  articles(
+    where: {_or: [{is_published: {_eq: false}}, {is_published: {_is_null: true}}]}
+  ) {
+    id
+    title
+    is_published
+  }
+}`;

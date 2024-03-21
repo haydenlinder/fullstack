@@ -6,7 +6,11 @@ import IconButton from "@mui/material/IconButton";
 
 import SearchIcon from "@mui/icons-material/Search";
 
-export default function Search() {
+type Props = {
+  onChange?: (query: string) => void;
+};
+
+export default function Search({ onChange = () => null }: Props) {
   return (
     <div className="relative w-40 md:w-96 flex">
       <Paper
@@ -14,6 +18,7 @@ export default function Search() {
         sx={{ p: "2px 4px", display: "flex", alignItems: "center", width: 400 }}
       >
         <InputBase
+          onChange={(e) => onChange(e.target.value)}
           sx={{ ml: 1, flex: 1 }}
           placeholder="Search"
           inputProps={{ "aria-label": "search" }}
