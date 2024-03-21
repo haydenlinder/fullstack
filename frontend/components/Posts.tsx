@@ -92,7 +92,7 @@ const Post = ({ post }: Props) => {
               key={tag.id}
               label={tag.id}
               variant="outlined"
-              className="mr-2"
+              className="mr-2 mb-2"
             />
           ))}
         </div>
