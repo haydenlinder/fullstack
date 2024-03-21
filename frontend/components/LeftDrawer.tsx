@@ -18,7 +18,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { SignInButton } from "@clerk/nextjs";
 import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
-import { Button } from "@mui/material";
+import { Button, debounce } from "@mui/material";
 import Search from "./Search";
 import Link from "next/link";
 import { useQueryStore } from "@/state/store";
@@ -43,9 +43,6 @@ const Header = () => {
 
   const onChange = (q: string) => {
     update(q);
-    client.refetchQueries({
-      include: [SEARCH_POSTS],
-    });
   };
 
   return (

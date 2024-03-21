@@ -8,7 +8,12 @@ import {
   Typography,
 } from "@mui/material";
 
-import { useApolloClient, useMutation, useQuery } from "@apollo/client";
+import {
+  useApolloClient,
+  useLazyQuery,
+  useMutation,
+  useQuery,
+} from "@apollo/client";
 import {
   CreateReactionMutation,
   CreateReactionMutationVariables,
@@ -32,7 +37,7 @@ import { PostForm } from "./PostForm";
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "@clerk/nextjs";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import UserIcon from "@mui/icons-material/AccountCircle";
@@ -40,24 +45,37 @@ import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
 import { useQueryStore } from "@/state/store";
+import debounce from "lodash/debounce";
 
 export const Posts = () => {
   const { query } = useQueryStore();
   const { data, loading } = useQuery<GetPostsQuery>(GET_POSTS);
-  const { data: search, loading: searching } = useQuery<
+  const [search, { data: searchResults, loading: searching }] = useLazyQuery<
     SearchPostsQuery,
     SearchPostsQueryVariables
-  >(SEARCH_POSTS, {
-    skip: !query,
-    variables: {
+  >(SEARCH_POSTS);
+
+  const debouncer = useCallback(
+    debounce((vars: SearchPostsQueryVariables) => {
+      return search({ variables: vars });
+    }, 300),
+    [],
+  );
+
+  useEffect(() => {
+    debouncer({
       _regex: `%${query}%`,
-    },
-  });
+    });
+  }, [query]);
 
   return (
     <div className="w-full">
       {loading || (searching && <CircularProgress />)}
-      <>{(search || data)?.posts.map((p) => <Post key={p.id} post={p} />)}</>
+      <>
+        {(searchResults || (searching ? { posts: [] } : data))?.posts.map(
+          (p) => <Post key={p.id} post={p} />,
+        )}
+      </>
     </div>
   );
 };
