@@ -68,18 +68,23 @@ export const Posts = () => {
     });
   }, [query]);
 
-  const list = query ? searchResults : data;
+  const posts = (query ? searchResults : data)?.posts;
+  const noResults = !loading && !searching && !posts?.length;
 
   return (
     <div className="w-full">
-      {loading || (searching && <CircularProgress />)}
-      <>
-        {list?.posts.map((p) => (
+      {loading || noResults ? (
+        <div className="w-full flex justify-center h-20 my-5">
+          {(loading || searching) && <CircularProgress />}
+          {noResults && <>No Resuts</>}
+        </div>
+      ) : (
+        posts?.map((p) => (
           <div key={p.id + query}>
             <Post post={p} />
           </div>
-        ))}
-      </>
+        ))
+      )}
     </div>
   );
 };

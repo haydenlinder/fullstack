@@ -11,7 +11,7 @@ import { useState } from "react";
 export default function Home() {
   const [isFormOpen, setIsFormOpen] = useState(false);
 
-  const { isOpen, update } = useModalStore();
+  const { update } = useModalStore();
   const { userId } = useAuth();
 
   const handleClick = () => {
@@ -20,7 +20,7 @@ export default function Home() {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full flex flex-col items-center">
       <Button onClick={handleClick}>
         <AddIcon />
       </Button>
