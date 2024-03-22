@@ -17,7 +17,7 @@ export default function Home() {
 
   return (
     <div className="w-full flex flex-col items-center">
-      <Paper className="w-full flex flex-col items-center mb-20 mt-10">
+      <Paper className="w-full flex flex-col items-center mb-20 mt-10 text-center">
         <Typography variant="h1">Do stuff</Typography>
         <Typography variant="h1">But cooler</Typography>
       </Paper>
