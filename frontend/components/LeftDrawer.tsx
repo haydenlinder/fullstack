@@ -87,7 +87,7 @@ export const Header = () => {
 
 export const SideBar = ({}) => {
   const { openModal, update } = useModalStore();
-  console.log({ openModal });
+
   return (
     <Box
       component="nav"
