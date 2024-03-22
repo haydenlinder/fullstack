@@ -5,6 +5,7 @@ import InputBase from "@mui/material/InputBase";
 import IconButton from "@mui/material/IconButton";
 
 import SearchIcon from "@mui/icons-material/Search";
+import ClearIcon from "@mui/icons-material/Clear";
 
 type Props = {
   onChange?: (query: string) => void;
@@ -25,6 +26,14 @@ export default function Search({ onChange = () => null, value }: Props) {
           placeholder="Search"
           inputProps={{ "aria-label": "search" }}
         />
+        <IconButton
+          onClick={() => onChange("")}
+          type="button"
+          sx={{ p: "10px" }}
+          aria-label="search"
+        >
+          <ClearIcon />
+        </IconButton>
         <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
           <SearchIcon />
         </IconButton>
