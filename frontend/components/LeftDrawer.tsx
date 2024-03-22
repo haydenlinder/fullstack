@@ -21,46 +21,51 @@ import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
 import { Button, debounce } from "@mui/material";
 import Search from "./Search";
 import Link from "next/link";
-import { useStore } from "@/state/store";
+import { ModalTypes, useModalStore, useStore } from "@/state/store";
+import { useRouter } from "next/router";
+import { useParams, usePathname } from "next/navigation";
 
 export const drawerWidth = 240;
 
 export default function ResponsiveDrawer() {
-  const drawer = useDrawer();
-
   return (
     <Box sx={{ display: "flex" }}>
-      <Header {...drawer} />
-      <SideBar {...drawer} />
+      <SideBar />
     </Box>
   );
 }
 
-const Header = ({ handleDrawerToggle }: ReturnType<typeof useDrawer>) => {
+export const Header = () => {
   const { query, update } = useStore();
-
+  const { update: updateModal, openModal } = useModalStore();
   const onChange = (q: string) => {
     update(q);
   };
 
-  return (
-    <AppBar
-      position="fixed"
-      sx={{
+  const p = usePathname();
+  const isApp = p.startsWith("/app");
+
+  const styles = isApp
+    ? {
         width: { sm: `calc(100% - ${drawerWidth}px)` },
         ml: { sm: `${drawerWidth}px` },
-      }}
-    >
-      <Toolbar className="flex justify-between">
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          edge="start"
-          onClick={handleDrawerToggle}
-          sx={{ mr: 2, display: { sm: "none" } }}
-        >
-          <MenuIcon />
-        </IconButton>
+      }
+    : {};
+
+  return (
+    <AppBar position="fixed" sx={styles}>
+      <Toolbar className="flex justify-between container">
+        {isApp && (
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={() => updateModal(openModal ? null : ModalTypes.MENU)}
+            sx={{ mr: 2, display: { sm: "none" } }}
+          >
+            <MenuIcon />
+          </IconButton>
+        )}
         <div></div>
         <div className="mr-5">
           <Search value={query} onChange={onChange} />
@@ -80,11 +85,9 @@ const Header = ({ handleDrawerToggle }: ReturnType<typeof useDrawer>) => {
   );
 };
 
-const SideBar = ({
-  mobileOpen,
-  handleDrawerClose,
-  handleDrawerTransitionEnd,
-}: ReturnType<typeof useDrawer>) => {
+export const SideBar = ({}) => {
+  const { openModal, update } = useModalStore();
+  console.log({ openModal });
   return (
     <Box
       component="nav"
@@ -94,9 +97,8 @@ const SideBar = ({
       {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
       <Drawer
         variant="temporary"
-        open={mobileOpen}
-        onTransitionEnd={handleDrawerTransitionEnd}
-        onClose={handleDrawerClose}
+        open={openModal === ModalTypes.MENU}
+        onClose={() => update(null)}
         ModalProps={{
           keepMounted: true, // Better open performance on mobile.
         }}
@@ -162,32 +164,3 @@ const drawerInner = (
     </List>
   </div>
 );
-
-const useDrawer = () => {
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [isClosing, setIsClosing] = React.useState(false);
-
-  const handleDrawerClose = () => {
-    setIsClosing(true);
-    setMobileOpen(false);
-  };
-
-  const handleDrawerTransitionEnd = () => {
-    setIsClosing(false);
-  };
-
-  const handleDrawerToggle = () => {
-    if (!isClosing) {
-      setMobileOpen(!mobileOpen);
-    }
-  };
-
-  return {
-    mobileOpen,
-    setMobileOpen,
-    setIsClosing,
-    handleDrawerClose,
-    handleDrawerToggle,
-    handleDrawerTransitionEnd,
-  };
-};

@@ -19,5 +19,13 @@ export default function Home() {
     setIsFormOpen(!isFormOpen);
   };
 
-  return <div className="w-full flex flex-col items-center">Do stuff</div>;
+  return (
+    <div className="w-full flex flex-col items-center">
+      <Button variant="contained" onClick={handleClick}>
+        <AddIcon />
+      </Button>
+      <SignedIn>{isFormOpen && <PostForm />}</SignedIn>
+      <Posts />
+    </div>
+  );
 }

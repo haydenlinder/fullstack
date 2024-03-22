@@ -5,10 +5,14 @@ interface QueryState {
   query: string;
   update: (query: string) => void;
 }
+export enum ModalTypes {
+  LOGIN = "LOGIN",
+  MENU = "MENU",
+}
 
 interface ModalState {
-  isOpen: boolean;
-  update: (isOpen: boolean) => void;
+  openModal: null | ModalTypes;
+  update: (modal: null | ModalTypes) => void;
 }
 
 export const useStore = create<QueryState>()(
@@ -29,8 +33,8 @@ export const useModalStore = create<ModalState>()(
   devtools(
     persist(
       (set) => ({
-        isOpen: false,
-        update: (isOpen) => set(() => ({ isOpen })),
+        openModal: null,
+        update: (openModal) => set(() => ({ openModal })),
       }),
       {
         name: "query-storage",

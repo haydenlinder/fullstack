@@ -44,7 +44,7 @@ import UserIcon from "@mui/icons-material/AccountCircle";
 import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
-import { useModalStore, useStore } from "@/state/store";
+import { ModalTypes, useModalStore, useStore } from "@/state/store";
 import debounce from "lodash/debounce";
 
 export const Posts = () => {
@@ -236,7 +236,7 @@ const usePost = ({ post }: Props) => {
   };
 
   const onReact = async (type: Post_Reaction_Types_Enum) => {
-    if (!userId) return update(true);
+    if (!userId) return update(ModalTypes.LOGIN);
     if (creating || removing) return;
     const reaction = getReaction();
     if (reaction) {
