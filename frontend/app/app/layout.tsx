@@ -36,7 +36,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         </Paper>
       </Modal>
       <SideBar />
-      <div className={`sm:m-16 mt-16 sm:ml-[300px] p-10 flex justify-center`}>
+      <div className={`sm:mx-16 sm:ml-[300px] flex justify-center`}>
         <div className="container">{children}</div>
       </div>
     </>

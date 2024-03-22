@@ -14,10 +14,5 @@ export default function Home() {
   const { update } = useModalStore();
   const { userId } = useAuth();
 
-  const handleClick = () => {
-    if (!userId) return update(ModalTypes.LOGIN);
-    setIsFormOpen(!isFormOpen);
-  };
-
   return <div className="w-full flex flex-col items-center">Do stuff</div>;
 }
