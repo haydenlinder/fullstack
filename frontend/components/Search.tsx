@@ -34,9 +34,6 @@ export default function Search({ onChange = () => null, value }: Props) {
         >
           <ClearIcon />
         </IconButton>
-        <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
-          <SearchIcon />
-        </IconButton>
       </Paper>
     </div>
   );
