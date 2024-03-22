@@ -21,7 +21,7 @@ export default function Home() {
 
   return (
     <div className="w-full flex flex-col items-center">
-      <Button onClick={handleClick}>
+      <Button variant="contained" onClick={handleClick}>
         <AddIcon />
       </Button>
       <SignedIn>{isFormOpen && <PostForm />}</SignedIn>

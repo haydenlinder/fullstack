@@ -54,7 +54,12 @@ const Layout = () => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Paper className="absolute inset-0 m-auto w-fit h-fit p-2">
+        <Paper
+          sx={{
+            ml: { sm: `calc(50% - ${120}px)` },
+          }}
+          className="absolute inset-0 m-auto w-fit h-fit p-2 "
+        >
           <SignIn />
         </Paper>
       </Modal>
