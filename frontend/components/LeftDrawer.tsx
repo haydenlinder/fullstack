@@ -21,25 +21,23 @@ import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
 import { Button, debounce } from "@mui/material";
 import Search from "./Search";
 import Link from "next/link";
-import { useQueryStore } from "@/state/store";
-import { useApolloClient } from "@apollo/client";
-import { SEARCH_POSTS } from "@/gql/posts";
+import { useStore } from "@/state/store";
 
 export const drawerWidth = 240;
 
 export default function ResponsiveDrawer() {
+  const drawer = useDrawer();
+
   return (
     <Box sx={{ display: "flex" }}>
-      <Header />
-      <SideBar />
+      <Header {...drawer} />
+      <SideBar {...drawer} />
     </Box>
   );
 }
 
-const Header = () => {
-  const { handleDrawerToggle } = useDrawer();
-  const { query, update } = useQueryStore();
-  const client = useApolloClient();
+const Header = ({ handleDrawerToggle }: ReturnType<typeof useDrawer>) => {
+  const { query, update } = useStore();
 
   const onChange = (q: string) => {
     update(q);
@@ -82,10 +80,11 @@ const Header = () => {
   );
 };
 
-const SideBar = () => {
-  const { mobileOpen, handleDrawerClose, handleDrawerTransitionEnd } =
-    useDrawer();
-
+const SideBar = ({
+  mobileOpen,
+  handleDrawerClose,
+  handleDrawerTransitionEnd,
+}: ReturnType<typeof useDrawer>) => {
   return (
     <Box
       component="nav"

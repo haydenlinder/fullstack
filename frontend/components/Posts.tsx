@@ -44,11 +44,11 @@ import UserIcon from "@mui/icons-material/AccountCircle";
 import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
-import { useQueryStore } from "@/state/store";
+import { useModalStore, useStore } from "@/state/store";
 import debounce from "lodash/debounce";
 
 export const Posts = () => {
-  const { query } = useQueryStore();
+  const { query } = useStore();
   const { data, loading } = useQuery<GetPostsQuery>(GET_POSTS);
   const [search, { data: searchResults, loading: searching }] = useLazyQuery<
     SearchPostsQuery,
@@ -73,7 +73,11 @@ export const Posts = () => {
       {loading || (searching && <CircularProgress />)}
       <>
         {(searchResults || (searching ? { posts: [] } : data))?.posts.map(
-          (p) => <Post key={p.id} post={p} />,
+          (p) => (
+            <div key={p.id + query}>
+              <Post post={p} />
+            </div>
+          ),
         )}
       </>
     </div>
@@ -115,7 +119,7 @@ const Post = ({ post }: Props) => {
     );
 
   return (
-    <Card key={post.id} className="flex justify-center my-10 w-full">
+    <Card className="flex justify-center my-10 w-full">
       <CardContent className="w-full">
         <div className="flex items-center">
           <UserIcon className="mr-2" />
@@ -126,13 +130,14 @@ const Post = ({ post }: Props) => {
           <Typography>{parse(post.body)}</Typography>
         </div>
         <div className="my-5">
-          {post.post_tags.map(({ tag }) => (
-            <Chip
-              key={tag.id}
-              label={parse(tag.id)}
-              variant="outlined"
-              className="mr-2 mb-2"
-            />
+          {post.post_tags.map(({ tag }, i) => (
+            <span key={tag.id + i}>
+              <Chip
+                label={parse(tag.id)}
+                variant="outlined"
+                className="mr-2 mb-2"
+              />
+            </span>
           ))}
         </div>
         {/* FOOTER */}
@@ -197,7 +202,8 @@ const Post = ({ post }: Props) => {
 
 const usePost = ({ post }: Props) => {
   const { userId } = useAuth();
-  const { query } = useQueryStore();
+  const { query } = useStore();
+  const { update } = useModalStore();
 
   const [deletePost, { loading: deleting }] = useMutation<
     DeletePostMutation,
@@ -225,6 +231,7 @@ const usePost = ({ post }: Props) => {
   };
 
   const onReact = async (type: Post_Reaction_Types_Enum) => {
+    if (!userId) return update(true);
     if (creating || removing) return;
     const reaction = getReaction();
     if (reaction) {
@@ -236,7 +243,7 @@ const usePost = ({ post }: Props) => {
       });
     }
   };
-
+  /** Highlights text that is part of the current search */
   const parse = (text?: string) => {
     if (!query) return text;
     const regEscape = (v: string) =>
@@ -245,13 +252,15 @@ const usePost = ({ post }: Props) => {
     const chunks = text?.split(new RegExp(`(${regEscape(query)})`, "ig"));
     const regex = new RegExp(regEscape(query), "ig");
 
-    return chunks?.map((chunk) => {
+    return chunks?.map((chunk, i) => {
       return (
         <>
           {regex.test(chunk) ? (
-            <span className="bg-yellow-800">{chunk}</span>
+            <span key={`${chunk}-${Math.random()}`} className="bg-yellow-800">
+              {chunk}
+            </span>
           ) : (
-            <span>{chunk}</span>
+            <span key={`${chunk}-${Math.random()}`}>{chunk}</span>
           )}
         </>
       );
