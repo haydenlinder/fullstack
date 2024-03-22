@@ -68,17 +68,17 @@ export const Posts = () => {
     });
   }, [query]);
 
+  const list = query ? searchResults : data;
+
   return (
     <div className="w-full">
       {loading || (searching && <CircularProgress />)}
       <>
-        {(searchResults || (searching ? { posts: [] } : data))?.posts.map(
-          (p) => (
-            <div key={p.id + query}>
-              <Post post={p} />
-            </div>
-          ),
-        )}
+        {list?.posts.map((p) => (
+          <div key={p.id + query}>
+            <Post post={p} />
+          </div>
+        ))}
       </>
     </div>
   );
