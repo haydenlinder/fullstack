@@ -32,7 +32,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           }}
           className="absolute inset-0 m-auto w-fit h-fit p-2 "
         >
-          <SignIn />
+          <SignIn afterSignInUrl={"/app"} afterSignUpUrl={"/app"} />
         </Paper>
       </Modal>
       <SideBar />
