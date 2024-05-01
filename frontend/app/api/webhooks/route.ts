@@ -50,11 +50,9 @@ export async function POST(req: Request) {
     });
   }
 
-  
   const variables: CreateUserMutationVariables = {};
   switch (evt.type) {
     case "user.created":
-      console.log(evt.data)
       variables.name = evt.data.first_name + " " + evt.data.last_name;
       variables.id = evt.data.id;
       variables.email = evt.data.email_addresses[0].email_address;
@@ -65,14 +63,15 @@ export async function POST(req: Request) {
         status: 400,
       });
   }
-
-  await fetch(process.env.NEXT_PUBLIC_HASURA_GRAPHQL_API || "", {
+  const res = await fetch(process.env.NEXT_PUBLIC_HASURA_GRAPHQL_API || "", {
     method: "POST",
     headers: {
       "x-hasura-admin-secret": process.env.HASURA_SECRET || "",
     },
     body: JSON.stringify({ query: CREATE_USER, variables }),
   });
+
+  console.log(res);
 
   return new Response("User created successfully", { status: 200 });
 }
