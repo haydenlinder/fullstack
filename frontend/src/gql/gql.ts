@@ -21,7 +21,7 @@ const documents = {
     "\n  mutation DeleteReaction($id: uuid = \"\") {\n    delete_post_reactions_by_pk(id: $id) {\n      id\n    }\n  }\n": types.DeleteReactionDocument,
     "\n  query SearchTags($_regex: String = \"\") {\n    tags(limit: 10, where: { id: { _regex: $_regex } }) {\n      id\n    }\n  }\n": types.SearchTagsDocument,
     "\n  query SearchPosts($_regex: String = \"\") {\n    posts(\n      order_by: { created_at: desc }\n      where: {\n        _or: [\n          { author: { name: { _ilike: $_regex } } }\n          { body: { _ilike: $_regex } }\n          { title: { _ilike: $_regex } }\n          { post_tags: { tag_id: { _ilike: $_regex } } }\n        ]\n      }\n      limit: 10\n    ) {\n      id\n      body\n      created_at\n      creator_id\n      title\n      updated_at\n      author {\n        name\n        id\n      }\n      post_reactions {\n        author_id\n        type\n        id\n      }\n      post_reactions_aggregate {\n        aggregate {\n          count\n        }\n      }\n      post_tags {\n        tag {\n          id\n        }\n      }\n    }\n  }\n": types.SearchPostsDocument,
-    "\n  mutation CreateUser($id: String = \"\", $name: String = \"\") {\n    insert_users_one(object: { id: $id, name: $name }) {\n      id\n    }\n  }\n": types.CreateUserDocument,
+    "mutation CreateUser($id: String = \"\", $name: String = \"\", $email: String = \"\") {\n  insert_users_one(object: {id: $id, name: $name, email: $email}) {\n    id\n  }\n}": types.CreateUserDocument,
 };
 
 /**
@@ -73,7 +73,7 @@ export function graphql(source: "\n  query SearchPosts($_regex: String = \"\") {
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  mutation CreateUser($id: String = \"\", $name: String = \"\") {\n    insert_users_one(object: { id: $id, name: $name }) {\n      id\n    }\n  }\n"): (typeof documents)["\n  mutation CreateUser($id: String = \"\", $name: String = \"\") {\n    insert_users_one(object: { id: $id, name: $name }) {\n      id\n    }\n  }\n"];
+export function graphql(source: "mutation CreateUser($id: String = \"\", $name: String = \"\", $email: String = \"\") {\n  insert_users_one(object: {id: $id, name: $name, email: $email}) {\n    id\n  }\n}"): (typeof documents)["mutation CreateUser($id: String = \"\", $name: String = \"\", $email: String = \"\") {\n  insert_users_one(object: {id: $id, name: $name, email: $email}) {\n    id\n  }\n}"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

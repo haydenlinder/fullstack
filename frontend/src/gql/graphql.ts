@@ -1155,7 +1155,7 @@ export type Post_Tags_Updates = {
 export type Posts = {
   __typename?: 'posts';
   /** An object relationship */
-  author: Users;
+  author?: Maybe<Users>;
   body: Scalars['String']['output'];
   created_at: Scalars['timestamptz']['output'];
   creator_id: Scalars['String']['output'];
@@ -2457,6 +2457,7 @@ export type Timestamptz_Comparison_Exp = {
 /** For use with Clerk.com integration */
 export type Users = {
   __typename?: 'users';
+  email?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
   last_seen: Scalars['timestamptz']['output'];
   name: Scalars['String']['output'];
@@ -2537,6 +2538,7 @@ export type Users_Bool_Exp = {
   _and?: InputMaybe<Array<Users_Bool_Exp>>;
   _not?: InputMaybe<Users_Bool_Exp>;
   _or?: InputMaybe<Array<Users_Bool_Exp>>;
+  email?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<String_Comparison_Exp>;
   last_seen?: InputMaybe<Timestamptz_Comparison_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
@@ -2548,12 +2550,15 @@ export type Users_Bool_Exp = {
 
 /** unique or primary key constraints on table "users" */
 export enum Users_Constraint {
+  /** unique or primary key constraint on columns "email" */
+  UsersEmailKey = 'users_email_key',
   /** unique or primary key constraint on columns "id" */
   UsersPkey = 'users_pkey'
 }
 
 /** input type for inserting data into table "users" */
 export type Users_Insert_Input = {
+  email?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
   last_seen?: InputMaybe<Scalars['timestamptz']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
@@ -2564,6 +2569,7 @@ export type Users_Insert_Input = {
 /** aggregate max on columns */
 export type Users_Max_Fields = {
   __typename?: 'users_max_fields';
+  email?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['String']['output']>;
   last_seen?: Maybe<Scalars['timestamptz']['output']>;
   name?: Maybe<Scalars['String']['output']>;
@@ -2572,6 +2578,7 @@ export type Users_Max_Fields = {
 /** aggregate min on columns */
 export type Users_Min_Fields = {
   __typename?: 'users_min_fields';
+  email?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['String']['output']>;
   last_seen?: Maybe<Scalars['timestamptz']['output']>;
   name?: Maybe<Scalars['String']['output']>;
@@ -2602,6 +2609,7 @@ export type Users_On_Conflict = {
 
 /** Ordering options when selecting data from "users". */
 export type Users_Order_By = {
+  email?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   last_seen?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
@@ -2617,6 +2625,8 @@ export type Users_Pk_Columns_Input = {
 /** select columns of table "users" */
 export enum Users_Select_Column {
   /** column name */
+  Email = 'email',
+  /** column name */
   Id = 'id',
   /** column name */
   LastSeen = 'last_seen',
@@ -2626,6 +2636,7 @@ export enum Users_Select_Column {
 
 /** input type for updating data in table "users" */
 export type Users_Set_Input = {
+  email?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
   last_seen?: InputMaybe<Scalars['timestamptz']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
@@ -2641,6 +2652,7 @@ export type Users_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Users_Stream_Cursor_Value_Input = {
+  email?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
   last_seen?: InputMaybe<Scalars['timestamptz']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
@@ -2648,6 +2660,8 @@ export type Users_Stream_Cursor_Value_Input = {
 
 /** update columns of table "users" */
 export enum Users_Update_Column {
+  /** column name */
+  Email = 'email',
   /** column name */
   Id = 'id',
   /** column name */
@@ -2679,7 +2693,7 @@ export type Uuid_Comparison_Exp = {
 export type GetPostsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetPostsQuery = { __typename?: 'query_root', posts: Array<{ __typename?: 'posts', id: any, body: string, created_at: any, creator_id: string, title: string, updated_at: any, author: { __typename?: 'users', name: string, id: string }, post_reactions: Array<{ __typename?: 'post_reactions', author_id: string, type: Post_Reaction_Types_Enum, id: any }>, post_reactions_aggregate: { __typename?: 'post_reactions_aggregate', aggregate?: { __typename?: 'post_reactions_aggregate_fields', count: number } | null }, post_tags: Array<{ __typename?: 'post_tags', tag: { __typename?: 'tags', id: string } }> }> };
+export type GetPostsQuery = { __typename?: 'query_root', posts: Array<{ __typename?: 'posts', id: any, body: string, created_at: any, creator_id: string, title: string, updated_at: any, author?: { __typename?: 'users', name: string, id: string } | null, post_reactions: Array<{ __typename?: 'post_reactions', author_id: string, type: Post_Reaction_Types_Enum, id: any }>, post_reactions_aggregate: { __typename?: 'post_reactions_aggregate', aggregate?: { __typename?: 'post_reactions_aggregate_fields', count: number } | null }, post_tags: Array<{ __typename?: 'post_tags', tag: { __typename?: 'tags', id: string } }> }> };
 
 export type DeletePostMutationVariables = Exact<{
   id?: InputMaybe<Scalars['uuid']['input']>;
@@ -2736,11 +2750,12 @@ export type SearchPostsQueryVariables = Exact<{
 }>;
 
 
-export type SearchPostsQuery = { __typename?: 'query_root', posts: Array<{ __typename?: 'posts', id: any, body: string, created_at: any, creator_id: string, title: string, updated_at: any, author: { __typename?: 'users', name: string, id: string }, post_reactions: Array<{ __typename?: 'post_reactions', author_id: string, type: Post_Reaction_Types_Enum, id: any }>, post_reactions_aggregate: { __typename?: 'post_reactions_aggregate', aggregate?: { __typename?: 'post_reactions_aggregate_fields', count: number } | null }, post_tags: Array<{ __typename?: 'post_tags', tag: { __typename?: 'tags', id: string } }> }> };
+export type SearchPostsQuery = { __typename?: 'query_root', posts: Array<{ __typename?: 'posts', id: any, body: string, created_at: any, creator_id: string, title: string, updated_at: any, author?: { __typename?: 'users', name: string, id: string } | null, post_reactions: Array<{ __typename?: 'post_reactions', author_id: string, type: Post_Reaction_Types_Enum, id: any }>, post_reactions_aggregate: { __typename?: 'post_reactions_aggregate', aggregate?: { __typename?: 'post_reactions_aggregate_fields', count: number } | null }, post_tags: Array<{ __typename?: 'post_tags', tag: { __typename?: 'tags', id: string } }> }> };
 
 export type CreateUserMutationVariables = Exact<{
   id?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
+  email?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -2755,4 +2770,4 @@ export const CreateReactionDocument = {"kind":"Document","definitions":[{"kind":
 export const DeleteReactionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteReaction"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_post_reactions_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<DeleteReactionMutation, DeleteReactionMutationVariables>;
 export const SearchTagsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchTags"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"_regex"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_regex"},"value":{"kind":"Variable","name":{"kind":"Name","value":"_regex"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<SearchTagsQuery, SearchTagsQueryVariables>;
 export const SearchPostsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchPosts"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"_regex"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"posts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_or"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"author"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_ilike"},"value":{"kind":"Variable","name":{"kind":"Name","value":"_regex"}}}]}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"body"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_ilike"},"value":{"kind":"Variable","name":{"kind":"Name","value":"_regex"}}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"title"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_ilike"},"value":{"kind":"Variable","name":{"kind":"Name","value":"_regex"}}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"post_tags"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tag_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_ilike"},"value":{"kind":"Variable","name":{"kind":"Name","value":"_regex"}}}]}}]}}]}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"creator_id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_reactions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"author_id"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_reactions_aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_tags"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tag"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}}]} as unknown as DocumentNode<SearchPostsQuery, SearchPostsQueryVariables>;
-export const CreateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_users_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateUserMutation, CreateUserMutationVariables>;
+export const CreateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_users_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateUserMutation, CreateUserMutationVariables>;

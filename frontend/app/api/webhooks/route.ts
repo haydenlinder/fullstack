@@ -1,7 +1,7 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
-import { createUser } from "@/gql/users";
+import { CREATE_USER } from "@/gql/users";
 import { CreateUserMutationVariables } from "@/src/gql/graphql";
 
 export async function POST(req: Request) {
@@ -50,11 +50,14 @@ export async function POST(req: Request) {
     });
   }
 
+  
   const variables: CreateUserMutationVariables = {};
   switch (evt.type) {
     case "user.created":
+      console.log(evt.data)
       variables.name = evt.data.first_name + " " + evt.data.last_name;
       variables.id = evt.data.id;
+      variables.email = evt.data.email_addresses[0].email_address;
       break;
     default:
       console.error("Error verifying webhook:", `Unexpected type: ${evt.type}`);
@@ -68,7 +71,7 @@ export async function POST(req: Request) {
     headers: {
       "x-hasura-admin-secret": process.env.HASURA_SECRET || "",
     },
-    body: JSON.stringify({ query: createUser, variables }),
+    body: JSON.stringify({ query: CREATE_USER, variables }),
   });
 
   return new Response("User created successfully", { status: 200 });
