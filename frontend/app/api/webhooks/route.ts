@@ -71,7 +71,9 @@ export async function POST(req: Request) {
     body: JSON.stringify({ query: CREATE_USER, variables }),
   });
 
-  console.log(res);
+  const data = await res.json()
+
+  console.log(data);
 
   return new Response("User created successfully", { status: 200 });
 }
