@@ -63,6 +63,7 @@ export async function POST(req: Request) {
         status: 400,
       });
   }
+  console.log({ variables });
   const res = await fetch(process.env.NEXT_PUBLIC_HASURA_GRAPHQL_API || "", {
     method: "POST",
     headers: {
@@ -71,7 +72,7 @@ export async function POST(req: Request) {
     body: JSON.stringify({ query: CREATE_USER, variables }),
   });
 
-  const data = await res.json()
+  const data = await res.json();
 
   console.log(data);
 
