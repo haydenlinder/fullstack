@@ -159,12 +159,4 @@ export const SEARCH_POSTS = graphql(`
     }
   }
 `);
-`{
-  articles(
-    where: {_or: [{is_published: {_eq: false}}, {is_published: {_is_null: true}}]}
-  ) {
-    id
-    title
-    is_published
-  }
-}`;
+
