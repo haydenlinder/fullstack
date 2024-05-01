@@ -73,7 +73,7 @@ export async function POST(req: Request) {
 
   const data = await res.json();
 
-  console.log({ variables, data });
+  console.log(JSON.stringify({ variables, data }));
 
   return new Response("User created successfully", { status: 200 });
 }
