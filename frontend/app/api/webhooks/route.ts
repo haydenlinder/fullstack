@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
 import { CREATE_USER } from "@/gql/users";
 import { CreateUserMutationVariables } from "@/src/gql/graphql";
+import { print } from "graphql";
 
 export async function POST(req: Request) {
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the webhook
@@ -68,7 +69,7 @@ export async function POST(req: Request) {
     headers: {
       "x-hasura-admin-secret": process.env.HASURA_SECRET || "",
     },
-    body: JSON.stringify({ query: CREATE_USER, variables }),
+    body: JSON.stringify({ query: print(CREATE_USER), variables }),
   });
 
   const data = await res.json();

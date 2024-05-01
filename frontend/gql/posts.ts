@@ -159,4 +159,3 @@ export const SEARCH_POSTS = graphql(`
     }
   }
 `);
-
