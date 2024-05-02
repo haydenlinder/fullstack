@@ -23,7 +23,8 @@ import Search from "./Search";
 import Link from "next/link";
 import { ModalTypes, useModalStore, useStore } from "@/state/store";
 import { usePathname } from "next/navigation";
-import { OrganizationSwitcher } from "@clerk/nextjs";
+import { OrganizationSwitcher, useAuth } from "@clerk/nextjs";
+import { useApolloClient } from "@apollo/client";
 
 export const drawerWidth = 240;
 
@@ -37,10 +38,16 @@ export default function ResponsiveDrawer() {
 
 export const Header = () => {
   const { query, update } = useStore();
+  const client = useApolloClient();
+  const { orgId } = useAuth();
   const { update: updateModal, openModal } = useModalStore();
   const onChange = (q: string) => {
     update(q);
   };
+
+  React.useEffect(() => {
+    client.resetStore();
+  }, [orgId]);
 
   const p = usePathname();
   const isApp = p.startsWith("/app");

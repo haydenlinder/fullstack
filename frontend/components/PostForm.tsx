@@ -97,7 +97,7 @@ type Props = {
 };
 
 const usePost = ({ type, after }: Props) => {
-  const { userId } = useAuth();
+  const { userId, orgId } = useAuth();
 
   const [createPost, { loading: posting }] = useMutation<
     CreatePostMutation,
@@ -135,6 +135,7 @@ const usePost = ({ type, after }: Props) => {
       ? createPost({
           variables: {
             creator_id: userId,
+            org_id: orgId || userId,
             body,
             title,
             data: tags.map((tag) => ({

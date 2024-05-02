@@ -69,11 +69,13 @@ export const CREATE_POST = graphql(`
   mutation CreatePost(
     $body: String = ""
     $creator_id: String = ""
+    $org_id: String = ""
     $title: String = ""
     $data: [post_tags_insert_input!] = { post_id: "", tag_id: "" }
   ) {
     insert_posts(
       objects: {
+        org_id: $org_id
         body: $body
         creator_id: $creator_id
         title: $title

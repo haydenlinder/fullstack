@@ -772,6 +772,17 @@ export type Organizations_Aggregate = {
   nodes: Array<Organizations>;
 };
 
+export type Organizations_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Organizations_Aggregate_Bool_Exp_Count>;
+};
+
+export type Organizations_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Organizations_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Organizations_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
 /** aggregate fields of "organizations" */
 export type Organizations_Aggregate_Fields = {
   __typename?: 'organizations_aggregate_fields';
@@ -785,6 +796,20 @@ export type Organizations_Aggregate_Fields = {
 export type Organizations_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<Organizations_Select_Column>>;
   distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "organizations" */
+export type Organizations_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Organizations_Max_Order_By>;
+  min?: InputMaybe<Organizations_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "organizations" */
+export type Organizations_Arr_Rel_Insert_Input = {
+  data: Array<Organizations_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Organizations_On_Conflict>;
 };
 
 /** Boolean expression to filter rows from the table "organizations". All fields are combined with a logical 'AND'. */
@@ -823,6 +848,14 @@ export type Organizations_Max_Fields = {
   name?: Maybe<Scalars['String']['output']>;
 };
 
+/** order by max() on columns of table "organizations" */
+export type Organizations_Max_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  created_by?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+};
+
 /** aggregate min on columns */
 export type Organizations_Min_Fields = {
   __typename?: 'organizations_min_fields';
@@ -832,6 +865,14 @@ export type Organizations_Min_Fields = {
   name?: Maybe<Scalars['String']['output']>;
 };
 
+/** order by min() on columns of table "organizations" */
+export type Organizations_Min_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  created_by?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+};
+
 /** response of any mutation on the table "organizations" */
 export type Organizations_Mutation_Response = {
   __typename?: 'organizations_mutation_response';
@@ -839,6 +880,13 @@ export type Organizations_Mutation_Response = {
   affected_rows: Scalars['Int']['output'];
   /** data from the rows affected by the mutation */
   returning: Array<Organizations>;
+};
+
+/** input type for inserting object relation for remote table "organizations" */
+export type Organizations_Obj_Rel_Insert_Input = {
+  data: Organizations_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Organizations_On_Conflict>;
 };
 
 /** on_conflict condition type for table "organizations" */
@@ -1504,6 +1552,9 @@ export type Posts = {
   created_at: Scalars['timestamptz']['output'];
   creator_id: Scalars['String']['output'];
   id: Scalars['uuid']['output'];
+  org_id?: Maybe<Scalars['String']['output']>;
+  /** An object relationship */
+  organization?: Maybe<Organizations>;
   /** An array relationship */
   post_reactions: Array<Post_Reactions>;
   /** An aggregate relationship */
@@ -1613,6 +1664,8 @@ export type Posts_Bool_Exp = {
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   creator_id?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
+  org_id?: InputMaybe<String_Comparison_Exp>;
+  organization?: InputMaybe<Organizations_Bool_Exp>;
   post_reactions?: InputMaybe<Post_Reactions_Bool_Exp>;
   post_reactions_aggregate?: InputMaybe<Post_Reactions_Aggregate_Bool_Exp>;
   post_tags?: InputMaybe<Post_Tags_Bool_Exp>;
@@ -1634,6 +1687,8 @@ export type Posts_Insert_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   creator_id?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
+  org_id?: InputMaybe<Scalars['String']['input']>;
+  organization?: InputMaybe<Organizations_Obj_Rel_Insert_Input>;
   post_reactions?: InputMaybe<Post_Reactions_Arr_Rel_Insert_Input>;
   post_tags?: InputMaybe<Post_Tags_Arr_Rel_Insert_Input>;
   title?: InputMaybe<Scalars['String']['input']>;
@@ -1647,6 +1702,7 @@ export type Posts_Max_Fields = {
   created_at?: Maybe<Scalars['timestamptz']['output']>;
   creator_id?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
+  org_id?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
   updated_at?: Maybe<Scalars['timestamptz']['output']>;
 };
@@ -1657,6 +1713,7 @@ export type Posts_Max_Order_By = {
   created_at?: InputMaybe<Order_By>;
   creator_id?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  org_id?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
 };
@@ -1668,6 +1725,7 @@ export type Posts_Min_Fields = {
   created_at?: Maybe<Scalars['timestamptz']['output']>;
   creator_id?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
+  org_id?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
   updated_at?: Maybe<Scalars['timestamptz']['output']>;
 };
@@ -1678,6 +1736,7 @@ export type Posts_Min_Order_By = {
   created_at?: InputMaybe<Order_By>;
   creator_id?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  org_id?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
 };
@@ -1712,6 +1771,8 @@ export type Posts_Order_By = {
   created_at?: InputMaybe<Order_By>;
   creator_id?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  org_id?: InputMaybe<Order_By>;
+  organization?: InputMaybe<Organizations_Order_By>;
   post_reactions_aggregate?: InputMaybe<Post_Reactions_Aggregate_Order_By>;
   post_tags_aggregate?: InputMaybe<Post_Tags_Aggregate_Order_By>;
   title?: InputMaybe<Order_By>;
@@ -1734,6 +1795,8 @@ export enum Posts_Select_Column {
   /** column name */
   Id = 'id',
   /** column name */
+  OrgId = 'org_id',
+  /** column name */
   Title = 'title',
   /** column name */
   UpdatedAt = 'updated_at'
@@ -1745,6 +1808,7 @@ export type Posts_Set_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   creator_id?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
+  org_id?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
 };
@@ -1763,6 +1827,7 @@ export type Posts_Stream_Cursor_Value_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   creator_id?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
+  org_id?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
 };
@@ -1777,6 +1842,8 @@ export enum Posts_Update_Column {
   CreatorId = 'creator_id',
   /** column name */
   Id = 'id',
+  /** column name */
+  OrgId = 'org_id',
   /** column name */
   Title = 'title',
   /** column name */
@@ -1798,9 +1865,9 @@ export type Query_Root = {
   organization_users_aggregate: Organization_Users_Aggregate;
   /** fetch data from the table: "organization_users" using primary key columns */
   organization_users_by_pk?: Maybe<Organization_Users>;
-  /** fetch data from the table: "organizations" */
+  /** An array relationship */
   organizations: Array<Organizations>;
-  /** fetch aggregated fields from the table: "organizations" */
+  /** An aggregate relationship */
   organizations_aggregate: Organizations_Aggregate;
   /** fetch data from the table: "organizations" using primary key columns */
   organizations_by_pk?: Maybe<Organizations>;
@@ -2036,9 +2103,9 @@ export type Subscription_Root = {
   organization_users_by_pk?: Maybe<Organization_Users>;
   /** fetch data from the table in a streaming manner: "organization_users" */
   organization_users_stream: Array<Organization_Users>;
-  /** fetch data from the table: "organizations" */
+  /** An array relationship */
   organizations: Array<Organizations>;
-  /** fetch aggregated fields from the table: "organizations" */
+  /** An aggregate relationship */
   organizations_aggregate: Organizations_Aggregate;
   /** fetch data from the table: "organizations" using primary key columns */
   organizations_by_pk?: Maybe<Organizations>;
@@ -2526,6 +2593,10 @@ export type Users = {
   last_seen: Scalars['timestamptz']['output'];
   name: Scalars['String']['output'];
   /** An array relationship */
+  organizations: Array<Organizations>;
+  /** An aggregate relationship */
+  organizations_aggregate: Organizations_Aggregate;
+  /** An array relationship */
   post_reactions: Array<Post_Reactions>;
   /** An aggregate relationship */
   post_reactions_aggregate: Post_Reactions_Aggregate;
@@ -2533,6 +2604,26 @@ export type Users = {
   posts: Array<Posts>;
   /** An aggregate relationship */
   posts_aggregate: Posts_Aggregate;
+};
+
+
+/** For use with Clerk.com integration */
+export type UsersOrganizationsArgs = {
+  distinct_on?: InputMaybe<Array<Organizations_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Organizations_Order_By>>;
+  where?: InputMaybe<Organizations_Bool_Exp>;
+};
+
+
+/** For use with Clerk.com integration */
+export type UsersOrganizations_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Organizations_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Organizations_Order_By>>;
+  where?: InputMaybe<Organizations_Bool_Exp>;
 };
 
 
@@ -2631,6 +2722,8 @@ export type Users_Bool_Exp = {
   id?: InputMaybe<String_Comparison_Exp>;
   last_seen?: InputMaybe<Timestamptz_Comparison_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
+  organizations?: InputMaybe<Organizations_Bool_Exp>;
+  organizations_aggregate?: InputMaybe<Organizations_Aggregate_Bool_Exp>;
   post_reactions?: InputMaybe<Post_Reactions_Bool_Exp>;
   post_reactions_aggregate?: InputMaybe<Post_Reactions_Aggregate_Bool_Exp>;
   posts?: InputMaybe<Posts_Bool_Exp>;
@@ -2651,6 +2744,7 @@ export type Users_Insert_Input = {
   id?: InputMaybe<Scalars['String']['input']>;
   last_seen?: InputMaybe<Scalars['timestamptz']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
+  organizations?: InputMaybe<Organizations_Arr_Rel_Insert_Input>;
   post_reactions?: InputMaybe<Post_Reactions_Arr_Rel_Insert_Input>;
   posts?: InputMaybe<Posts_Arr_Rel_Insert_Input>;
 };
@@ -2718,6 +2812,7 @@ export type Users_Order_By = {
   id?: InputMaybe<Order_By>;
   last_seen?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
+  organizations_aggregate?: InputMaybe<Organizations_Aggregate_Order_By>;
   post_reactions_aggregate?: InputMaybe<Post_Reactions_Aggregate_Order_By>;
   posts_aggregate?: InputMaybe<Posts_Aggregate_Order_By>;
 };
@@ -2820,6 +2915,7 @@ export type UpdatePostMutation = { __typename?: 'mutation_root', update_posts_by
 export type CreatePostMutationVariables = Exact<{
   body?: InputMaybe<Scalars['String']['input']>;
   creator_id?: InputMaybe<Scalars['String']['input']>;
+  org_id?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
   data?: InputMaybe<Array<Post_Tags_Insert_Input> | Post_Tags_Insert_Input>;
 }>;
@@ -2880,7 +2976,7 @@ export type CreateOrganizationMutation = { __typename?: 'mutation_root', insert_
 export const GetPostsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPosts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"posts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10"}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"creator_id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_reactions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"author_id"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_reactions_aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_tags"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tag"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetPostsQuery, GetPostsQueryVariables>;
 export const DeletePostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeletePost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_posts_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"creator_id"}}]}}]}}]} as unknown as DocumentNode<DeletePostMutation, DeletePostMutationVariables>;
 export const UpdatePostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdatePost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"body"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"title"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tags"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"post_tags_insert_input"}}}},"defaultValue":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"post_id"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"tag_id"},"value":{"kind":"StringValue","value":"","block":false}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_posts_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"body"},"value":{"kind":"Variable","name":{"kind":"Name","value":"body"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"title"},"value":{"kind":"Variable","name":{"kind":"Name","value":"title"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"delete_post_tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"post_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"insert_post_tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tags"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<UpdatePostMutation, UpdatePostMutationVariables>;
-export const CreatePostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreatePost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"body"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"creator_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"title"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"post_tags_insert_input"}}}},"defaultValue":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"post_id"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"tag_id"},"value":{"kind":"StringValue","value":"","block":false}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_posts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"body"},"value":{"kind":"Variable","name":{"kind":"Name","value":"body"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"creator_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"creator_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"title"},"value":{"kind":"Variable","name":{"kind":"Name","value":"title"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"post_tags"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<CreatePostMutation, CreatePostMutationVariables>;
+export const CreatePostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreatePost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"body"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"creator_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"org_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"title"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"post_tags_insert_input"}}}},"defaultValue":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"post_id"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"tag_id"},"value":{"kind":"StringValue","value":"","block":false}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_posts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"org_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"org_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"body"},"value":{"kind":"Variable","name":{"kind":"Name","value":"body"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"creator_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"creator_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"title"},"value":{"kind":"Variable","name":{"kind":"Name","value":"title"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"post_tags"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<CreatePostMutation, CreatePostMutationVariables>;
 export const CreateReactionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateReaction"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"author_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"post_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"type"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"post_reaction_types_enum"}},"defaultValue":{"kind":"EnumValue","value":"THUMBS_UP"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_post_reactions_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"author_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"author_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"post_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"post_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"type"},"value":{"kind":"Variable","name":{"kind":"Name","value":"type"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateReactionMutation, CreateReactionMutationVariables>;
 export const DeleteReactionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteReaction"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_post_reactions_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<DeleteReactionMutation, DeleteReactionMutationVariables>;
 export const SearchTagsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchTags"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"_regex"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_regex"},"value":{"kind":"Variable","name":{"kind":"Name","value":"_regex"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<SearchTagsQuery, SearchTagsQueryVariables>;
