@@ -168,6 +168,151 @@ const usePost = ({ type, after }: Props) => {
     ),
     fields: [
       {
+        component: "field-array",
+        name: "products",
+        label: "Product section",
+        validate: [{ type: "required" }],
+        initialValue: [""],
+        class: {
+          form: "flex",
+        },
+        fields: [
+          {
+            FormFieldGridProps: { xs: 2.4 },
+            component: "text-field",
+            name: "partNumber",
+            label: "Part Number",
+            placeholder: "Part Number",
+            isRequired: true,
+            validate: [
+              {
+                type: "required",
+              },
+            ],
+          },
+          {
+            FormFieldGridProps: { xs: 2.4 },
+            isRequired: true,
+            validate: [
+              {
+                type: "required",
+              },
+            ],
+            component: "textarea",
+            name: "description",
+            label: "Description",
+            placeholder: "Description",
+          },
+          {
+            FormFieldGridProps: { xs: 2.4 },
+            isRequired: true,
+            validate: [
+              {
+                type: "required",
+              },
+            ],
+            component: "text-field",
+            type: "number",
+            name: "quantity",
+            label: "quantity",
+            placeholder: "quantity",
+          },
+          {
+            FormFieldGridProps: { xs: 2.4 },
+            isRequired: true,
+            validate: [
+              {
+                type: "required",
+              },
+            ],
+            component: "text-field",
+            name: "customer_po",
+            label: "customer_po",
+            placeholder: "customer_po",
+          },
+          {
+            FormFieldGridProps: { xs: 2.4 },
+            isRequired: true,
+            validate: [
+              {
+                type: "required",
+              },
+            ],
+            component: "text-field",
+            type: "number",
+            name: "unit_resell",
+            label: "unit_resell",
+            placeholder: "unit_resell",
+          },
+          {
+            FormFieldGridProps: { xs: 2.4 },
+            isRequired: true,
+            validate: [
+              {
+                type: "required",
+              },
+            ],
+            component: "text-field",
+            type: "number",
+            name: "extend_resell",
+            label: "extend_resell",
+            placeholder: "extend_resell",
+          },
+          {
+            FormFieldGridProps: { xs: 2.4 },
+            isRequired: true,
+            validate: [
+              {
+                type: "required",
+              },
+            ],
+            component: "text-field",
+            name: "manufacturer",
+            label: "manufacturer",
+            placeholder: "manufacturer",
+          },
+          {
+            FormFieldGridProps: { xs: 2.4 },
+            isRequired: true,
+            validate: [
+              {
+                type: "required",
+              },
+            ],
+            component: "text-field",
+            name: "so",
+            label: "so",
+            placeholder: "so",
+          },
+          {
+            FormFieldGridProps: { xs: 2.4 },
+            isRequired: true,
+            validate: [
+              {
+                type: "required",
+              },
+            ],
+            component: "text-field",
+            name: "po",
+            label: "po",
+            placeholder: "po",
+          },
+          {
+            FormFieldGridProps: { xs: 2.4 },
+            isRequired: true,
+            validate: [
+              {
+                type: "required",
+              },
+            ],
+            component: "text-field",
+            name: "whs_delivery_date",
+            label: "whs_delivery_date",
+            placeholder: "whs_delivery_date",
+          },
+        ],
+      },
+      {
         classes: {
           root: "mb-10 ",
         },

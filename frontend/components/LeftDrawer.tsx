@@ -6,7 +6,7 @@ import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import HomeIcon from "@mui/icons-material/Home";
-import MessageIcon from "@mui/icons-material/MessageRounded";
+import MessageIcon from "@mui/icons-material/AddAlert";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -58,7 +58,7 @@ export const Header = () => {
         ml: { sm: `${drawerWidth}px` },
       }
     : {};
-
+  console.log({ isApp });
   return (
     <AppBar position="fixed" sx={styles}>
       <Toolbar className="flex justify-between container">
@@ -98,7 +98,7 @@ export const Header = () => {
 
 export const SideBar = ({}) => {
   const { openModal, update } = useModalStore();
-
+  console.log({ openModal });
   return (
     <Box
       component="nav"
@@ -147,8 +147,8 @@ const listMap = [
     icon: <HomeIcon />,
   },
   {
-    title: "Messages",
-    route: "/messages",
+    title: "New",
+    route: "/new",
     icon: <MessageIcon />,
   },
 ];
@@ -157,7 +157,7 @@ const drawerInner = (
   <div>
     <Toolbar>
       <Link className="-ml-2" href="/">
-        <Typography variant="h6">Band App</Typography>
+        <Typography variant="h6">Ship</Typography>
       </Link>
     </Toolbar>
     <Divider />
