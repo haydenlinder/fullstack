@@ -34,8 +34,8 @@ body {
 
 /* Override clerk dark theme */
 [class*="cl-internal"] {
-  background-color: inherit;
-  color: inherit !important;
-  fill: inherit !important;
+  background-color: #272727;
+  color: white !important;
+  fill: white !important;
   border-color: white;
 }
