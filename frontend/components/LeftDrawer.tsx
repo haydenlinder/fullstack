@@ -84,9 +84,9 @@ export const Header = () => {
             </SignInButton>
           </SignedOut>
           <SignedIn>
-            <div className="m-2">
+            <div className="m-2 flex">
               <UserButton afterSignOutUrl="/" />
-              <div className="mb-2" />
+              <div className="mr-2" />
               <OrganizationSwitcher />
             </div>
           </SignedIn>
