@@ -1,9 +1,15 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
-import { CREATE_USER } from "@/gql/users";
-import { CreateUserMutationVariables } from "@/src/gql/graphql";
+import { CREATE_ORG, CREATE_USER } from "@/gql/users";
+import {
+  CreateOrganizationMutation,
+  CreateOrganizationMutationVariables,
+  CreateUserMutation,
+  CreateUserMutationVariables,
+} from "@/src/gql/graphql";
 import { print } from "graphql";
+import { TypedDocumentNode } from "@apollo/client";
 
 export async function POST(req: Request) {
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the webhook
@@ -50,14 +56,59 @@ export async function POST(req: Request) {
       status: 400,
     });
   }
-  // User created in clerk
-  const variables: CreateUserMutationVariables = {};
+
+  const callHasura = async <tquery, tvariables>(
+    query: TypedDocumentNode,
+    variables: tvariables,
+    errorMessage: string,
+    successMessage: string,
+  ) => {
+    try {
+      await fetch(process.env.NEXT_PUBLIC_HASURA_GRAPHQL_API || "", {
+        method: "POST",
+        headers: {
+          "x-hasura-admin-secret": process.env.HASURA_SECRET || "",
+        },
+        body: JSON.stringify({ query: print(query), variables }),
+      });
+      return new Response(`"${successMessage}"`, { status: 200 });
+    } catch (error) {
+      console.error(`"${errorMessage}", ${error}`);
+      return new Response("Error occured", {
+        status: 400,
+      });
+    }
+  };
+
   switch (evt.type) {
     case "user.created":
-      variables.name = evt.data.first_name + " " + evt.data.last_name;
-      variables.id = evt.data.id;
-      variables.email = evt.data.email_addresses[0].email_address;
-      break;
+      return await callHasura<CreateUserMutation, CreateUserMutationVariables>(
+        CREATE_USER,
+        {
+          name: evt.data.first_name + " " + evt.data.last_name,
+          id: evt.data.id,
+          email: evt.data.email_addresses[0].email_address,
+        },
+        "Error creating user",
+        "Successfully created user",
+      );
+
+    case "organization.created":
+      return await callHasura<
+        CreateOrganizationMutation,
+        CreateOrganizationMutationVariables
+      >(
+        CREATE_ORG,
+        {
+          created_by: evt.data.created_by,
+          name: evt.data.name,
+          user_id: evt.data.created_by,
+          organization_id: evt.data.id,
+        },
+        "Error creating org",
+        "Successfully created org",
+      );
+
     default:
       console.error("Error verifying webhook:", `Unexpected type: ${evt.type}`);
       return new Response("Error occured", {
@@ -65,20 +116,4 @@ export async function POST(req: Request) {
       });
   }
   // Create user in our DB
-  try {
-    await fetch(process.env.NEXT_PUBLIC_HASURA_GRAPHQL_API || "", {
-      method: "POST",
-      headers: {
-        "x-hasura-admin-secret": process.env.HASURA_SECRET || "",
-      },
-      body: JSON.stringify({ query: print(CREATE_USER), variables }),
-    });
-  } catch (error) {
-    console.error(`"Error creating user in DB:", ${error}`);
-    return new Response("Error occured", {
-      status: 400,
-    });
-  }
-
-  return new Response("User created successfully", { status: 200 });
 }

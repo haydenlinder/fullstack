@@ -75,6 +75,14 @@ export enum Cursor_Ordering {
 /** mutation root */
 export type Mutation_Root = {
   __typename?: 'mutation_root';
+  /** delete data from the table: "organization_users" */
+  delete_organization_users?: Maybe<Organization_Users_Mutation_Response>;
+  /** delete single row from the table: "organization_users" */
+  delete_organization_users_by_pk?: Maybe<Organization_Users>;
+  /** delete data from the table: "organizations" */
+  delete_organizations?: Maybe<Organizations_Mutation_Response>;
+  /** delete single row from the table: "organizations" */
+  delete_organizations_by_pk?: Maybe<Organizations>;
   /** delete data from the table: "post_reaction_types" */
   delete_post_reaction_types?: Maybe<Post_Reaction_Types_Mutation_Response>;
   /** delete single row from the table: "post_reaction_types" */
@@ -95,18 +103,18 @@ export type Mutation_Root = {
   delete_tags?: Maybe<Tags_Mutation_Response>;
   /** delete single row from the table: "tags" */
   delete_tags_by_pk?: Maybe<Tags>;
-  /** delete data from the table: "team_users" */
-  delete_team_users?: Maybe<Team_Users_Mutation_Response>;
-  /** delete single row from the table: "team_users" */
-  delete_team_users_by_pk?: Maybe<Team_Users>;
-  /** delete data from the table: "teams" */
-  delete_teams?: Maybe<Teams_Mutation_Response>;
-  /** delete single row from the table: "teams" */
-  delete_teams_by_pk?: Maybe<Teams>;
   /** delete data from the table: "users" */
   delete_users?: Maybe<Users_Mutation_Response>;
   /** delete single row from the table: "users" */
   delete_users_by_pk?: Maybe<Users>;
+  /** insert data into the table: "organization_users" */
+  insert_organization_users?: Maybe<Organization_Users_Mutation_Response>;
+  /** insert a single row into the table: "organization_users" */
+  insert_organization_users_one?: Maybe<Organization_Users>;
+  /** insert data into the table: "organizations" */
+  insert_organizations?: Maybe<Organizations_Mutation_Response>;
+  /** insert a single row into the table: "organizations" */
+  insert_organizations_one?: Maybe<Organizations>;
   /** insert data into the table: "post_reaction_types" */
   insert_post_reaction_types?: Maybe<Post_Reaction_Types_Mutation_Response>;
   /** insert a single row into the table: "post_reaction_types" */
@@ -127,18 +135,22 @@ export type Mutation_Root = {
   insert_tags?: Maybe<Tags_Mutation_Response>;
   /** insert a single row into the table: "tags" */
   insert_tags_one?: Maybe<Tags>;
-  /** insert data into the table: "team_users" */
-  insert_team_users?: Maybe<Team_Users_Mutation_Response>;
-  /** insert a single row into the table: "team_users" */
-  insert_team_users_one?: Maybe<Team_Users>;
-  /** insert data into the table: "teams" */
-  insert_teams?: Maybe<Teams_Mutation_Response>;
-  /** insert a single row into the table: "teams" */
-  insert_teams_one?: Maybe<Teams>;
   /** insert data into the table: "users" */
   insert_users?: Maybe<Users_Mutation_Response>;
   /** insert a single row into the table: "users" */
   insert_users_one?: Maybe<Users>;
+  /** update data of the table: "organization_users" */
+  update_organization_users?: Maybe<Organization_Users_Mutation_Response>;
+  /** update single row of the table: "organization_users" */
+  update_organization_users_by_pk?: Maybe<Organization_Users>;
+  /** update multiples rows of table: "organization_users" */
+  update_organization_users_many?: Maybe<Array<Maybe<Organization_Users_Mutation_Response>>>;
+  /** update data of the table: "organizations" */
+  update_organizations?: Maybe<Organizations_Mutation_Response>;
+  /** update single row of the table: "organizations" */
+  update_organizations_by_pk?: Maybe<Organizations>;
+  /** update multiples rows of table: "organizations" */
+  update_organizations_many?: Maybe<Array<Maybe<Organizations_Mutation_Response>>>;
   /** update data of the table: "post_reaction_types" */
   update_post_reaction_types?: Maybe<Post_Reaction_Types_Mutation_Response>;
   /** update single row of the table: "post_reaction_types" */
@@ -169,24 +181,36 @@ export type Mutation_Root = {
   update_tags_by_pk?: Maybe<Tags>;
   /** update multiples rows of table: "tags" */
   update_tags_many?: Maybe<Array<Maybe<Tags_Mutation_Response>>>;
-  /** update data of the table: "team_users" */
-  update_team_users?: Maybe<Team_Users_Mutation_Response>;
-  /** update single row of the table: "team_users" */
-  update_team_users_by_pk?: Maybe<Team_Users>;
-  /** update multiples rows of table: "team_users" */
-  update_team_users_many?: Maybe<Array<Maybe<Team_Users_Mutation_Response>>>;
-  /** update data of the table: "teams" */
-  update_teams?: Maybe<Teams_Mutation_Response>;
-  /** update single row of the table: "teams" */
-  update_teams_by_pk?: Maybe<Teams>;
-  /** update multiples rows of table: "teams" */
-  update_teams_many?: Maybe<Array<Maybe<Teams_Mutation_Response>>>;
   /** update data of the table: "users" */
   update_users?: Maybe<Users_Mutation_Response>;
   /** update single row of the table: "users" */
   update_users_by_pk?: Maybe<Users>;
   /** update multiples rows of table: "users" */
   update_users_many?: Maybe<Array<Maybe<Users_Mutation_Response>>>;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Organization_UsersArgs = {
+  where: Organization_Users_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Organization_Users_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_OrganizationsArgs = {
+  where: Organizations_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Organizations_By_PkArgs = {
+  id: Scalars['String']['input'];
 };
 
 
@@ -251,30 +275,6 @@ export type Mutation_RootDelete_Tags_By_PkArgs = {
 
 
 /** mutation root */
-export type Mutation_RootDelete_Team_UsersArgs = {
-  where: Team_Users_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_Team_Users_By_PkArgs = {
-  id: Scalars['uuid']['input'];
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_TeamsArgs = {
-  where: Teams_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_Teams_By_PkArgs = {
-  id: Scalars['uuid']['input'];
-};
-
-
-/** mutation root */
 export type Mutation_RootDelete_UsersArgs = {
   where: Users_Bool_Exp;
 };
@@ -283,6 +283,34 @@ export type Mutation_RootDelete_UsersArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Users_By_PkArgs = {
   id: Scalars['String']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Organization_UsersArgs = {
+  objects: Array<Organization_Users_Insert_Input>;
+  on_conflict?: InputMaybe<Organization_Users_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Organization_Users_OneArgs = {
+  object: Organization_Users_Insert_Input;
+  on_conflict?: InputMaybe<Organization_Users_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_OrganizationsArgs = {
+  objects: Array<Organizations_Insert_Input>;
+  on_conflict?: InputMaybe<Organizations_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Organizations_OneArgs = {
+  object: Organizations_Insert_Input;
+  on_conflict?: InputMaybe<Organizations_On_Conflict>;
 };
 
 
@@ -357,34 +385,6 @@ export type Mutation_RootInsert_Tags_OneArgs = {
 
 
 /** mutation root */
-export type Mutation_RootInsert_Team_UsersArgs = {
-  objects: Array<Team_Users_Insert_Input>;
-  on_conflict?: InputMaybe<Team_Users_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_Team_Users_OneArgs = {
-  object: Team_Users_Insert_Input;
-  on_conflict?: InputMaybe<Team_Users_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_TeamsArgs = {
-  objects: Array<Teams_Insert_Input>;
-  on_conflict?: InputMaybe<Teams_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_Teams_OneArgs = {
-  object: Teams_Insert_Input;
-  on_conflict?: InputMaybe<Teams_On_Conflict>;
-};
-
-
-/** mutation root */
 export type Mutation_RootInsert_UsersArgs = {
   objects: Array<Users_Insert_Input>;
   on_conflict?: InputMaybe<Users_On_Conflict>;
@@ -395,6 +395,46 @@ export type Mutation_RootInsert_UsersArgs = {
 export type Mutation_RootInsert_Users_OneArgs = {
   object: Users_Insert_Input;
   on_conflict?: InputMaybe<Users_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Organization_UsersArgs = {
+  _set?: InputMaybe<Organization_Users_Set_Input>;
+  where: Organization_Users_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Organization_Users_By_PkArgs = {
+  _set?: InputMaybe<Organization_Users_Set_Input>;
+  pk_columns: Organization_Users_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Organization_Users_ManyArgs = {
+  updates: Array<Organization_Users_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_OrganizationsArgs = {
+  _set?: InputMaybe<Organizations_Set_Input>;
+  where: Organizations_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Organizations_By_PkArgs = {
+  _set?: InputMaybe<Organizations_Set_Input>;
+  pk_columns: Organizations_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Organizations_ManyArgs = {
+  updates: Array<Organizations_Updates>;
 };
 
 
@@ -499,46 +539,6 @@ export type Mutation_RootUpdate_Tags_ManyArgs = {
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Team_UsersArgs = {
-  _set?: InputMaybe<Team_Users_Set_Input>;
-  where: Team_Users_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Team_Users_By_PkArgs = {
-  _set?: InputMaybe<Team_Users_Set_Input>;
-  pk_columns: Team_Users_Pk_Columns_Input;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Team_Users_ManyArgs = {
-  updates: Array<Team_Users_Updates>;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_TeamsArgs = {
-  _set?: InputMaybe<Teams_Set_Input>;
-  where: Teams_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Teams_By_PkArgs = {
-  _set?: InputMaybe<Teams_Set_Input>;
-  pk_columns: Teams_Pk_Columns_Input;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Teams_ManyArgs = {
-  updates: Array<Teams_Updates>;
-};
-
-
-/** mutation root */
 export type Mutation_RootUpdate_UsersArgs = {
   _set?: InputMaybe<Users_Set_Input>;
   where: Users_Bool_Exp;
@@ -572,6 +572,350 @@ export enum Order_By {
   /** in descending order, nulls last */
   DescNullsLast = 'desc_nulls_last'
 }
+
+/** columns and relationships of "organization_users" */
+export type Organization_Users = {
+  __typename?: 'organization_users';
+  id: Scalars['uuid']['output'];
+  /** An array relationship */
+  members: Array<Users>;
+  /** An aggregate relationship */
+  members_aggregate: Users_Aggregate;
+  organization_id: Scalars['String']['output'];
+  user_id: Scalars['String']['output'];
+};
+
+
+/** columns and relationships of "organization_users" */
+export type Organization_UsersMembersArgs = {
+  distinct_on?: InputMaybe<Array<Users_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Users_Order_By>>;
+  where?: InputMaybe<Users_Bool_Exp>;
+};
+
+
+/** columns and relationships of "organization_users" */
+export type Organization_UsersMembers_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Users_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Users_Order_By>>;
+  where?: InputMaybe<Users_Bool_Exp>;
+};
+
+/** aggregated selection of "organization_users" */
+export type Organization_Users_Aggregate = {
+  __typename?: 'organization_users_aggregate';
+  aggregate?: Maybe<Organization_Users_Aggregate_Fields>;
+  nodes: Array<Organization_Users>;
+};
+
+/** aggregate fields of "organization_users" */
+export type Organization_Users_Aggregate_Fields = {
+  __typename?: 'organization_users_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Organization_Users_Max_Fields>;
+  min?: Maybe<Organization_Users_Min_Fields>;
+};
+
+
+/** aggregate fields of "organization_users" */
+export type Organization_Users_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Organization_Users_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Boolean expression to filter rows from the table "organization_users". All fields are combined with a logical 'AND'. */
+export type Organization_Users_Bool_Exp = {
+  _and?: InputMaybe<Array<Organization_Users_Bool_Exp>>;
+  _not?: InputMaybe<Organization_Users_Bool_Exp>;
+  _or?: InputMaybe<Array<Organization_Users_Bool_Exp>>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  members?: InputMaybe<Users_Bool_Exp>;
+  members_aggregate?: InputMaybe<Users_Aggregate_Bool_Exp>;
+  organization_id?: InputMaybe<String_Comparison_Exp>;
+  user_id?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "organization_users" */
+export enum Organization_Users_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  TeamUsersPkey = 'team_users_pkey'
+}
+
+/** input type for inserting data into table "organization_users" */
+export type Organization_Users_Insert_Input = {
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  members?: InputMaybe<Users_Arr_Rel_Insert_Input>;
+  organization_id?: InputMaybe<Scalars['String']['input']>;
+  user_id?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate max on columns */
+export type Organization_Users_Max_Fields = {
+  __typename?: 'organization_users_max_fields';
+  id?: Maybe<Scalars['uuid']['output']>;
+  organization_id?: Maybe<Scalars['String']['output']>;
+  user_id?: Maybe<Scalars['String']['output']>;
+};
+
+/** aggregate min on columns */
+export type Organization_Users_Min_Fields = {
+  __typename?: 'organization_users_min_fields';
+  id?: Maybe<Scalars['uuid']['output']>;
+  organization_id?: Maybe<Scalars['String']['output']>;
+  user_id?: Maybe<Scalars['String']['output']>;
+};
+
+/** response of any mutation on the table "organization_users" */
+export type Organization_Users_Mutation_Response = {
+  __typename?: 'organization_users_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Organization_Users>;
+};
+
+/** input type for inserting object relation for remote table "organization_users" */
+export type Organization_Users_Obj_Rel_Insert_Input = {
+  data: Organization_Users_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Organization_Users_On_Conflict>;
+};
+
+/** on_conflict condition type for table "organization_users" */
+export type Organization_Users_On_Conflict = {
+  constraint: Organization_Users_Constraint;
+  update_columns?: Array<Organization_Users_Update_Column>;
+  where?: InputMaybe<Organization_Users_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "organization_users". */
+export type Organization_Users_Order_By = {
+  id?: InputMaybe<Order_By>;
+  members_aggregate?: InputMaybe<Users_Aggregate_Order_By>;
+  organization_id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: organization_users */
+export type Organization_Users_Pk_Columns_Input = {
+  id: Scalars['uuid']['input'];
+};
+
+/** select columns of table "organization_users" */
+export enum Organization_Users_Select_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  OrganizationId = 'organization_id',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** input type for updating data in table "organization_users" */
+export type Organization_Users_Set_Input = {
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  organization_id?: InputMaybe<Scalars['String']['input']>;
+  user_id?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Streaming cursor of the table "organization_users" */
+export type Organization_Users_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Organization_Users_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Organization_Users_Stream_Cursor_Value_Input = {
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  organization_id?: InputMaybe<Scalars['String']['input']>;
+  user_id?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** update columns of table "organization_users" */
+export enum Organization_Users_Update_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  OrganizationId = 'organization_id',
+  /** column name */
+  UserId = 'user_id'
+}
+
+export type Organization_Users_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Organization_Users_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Organization_Users_Bool_Exp;
+};
+
+/** columns and relationships of "organizations" */
+export type Organizations = {
+  __typename?: 'organizations';
+  created_at: Scalars['timestamptz']['output'];
+  created_by: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  /** An object relationship */
+  organization_users?: Maybe<Organization_Users>;
+};
+
+/** aggregated selection of "organizations" */
+export type Organizations_Aggregate = {
+  __typename?: 'organizations_aggregate';
+  aggregate?: Maybe<Organizations_Aggregate_Fields>;
+  nodes: Array<Organizations>;
+};
+
+/** aggregate fields of "organizations" */
+export type Organizations_Aggregate_Fields = {
+  __typename?: 'organizations_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Organizations_Max_Fields>;
+  min?: Maybe<Organizations_Min_Fields>;
+};
+
+
+/** aggregate fields of "organizations" */
+export type Organizations_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Organizations_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Boolean expression to filter rows from the table "organizations". All fields are combined with a logical 'AND'. */
+export type Organizations_Bool_Exp = {
+  _and?: InputMaybe<Array<Organizations_Bool_Exp>>;
+  _not?: InputMaybe<Organizations_Bool_Exp>;
+  _or?: InputMaybe<Array<Organizations_Bool_Exp>>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  created_by?: InputMaybe<String_Comparison_Exp>;
+  id?: InputMaybe<String_Comparison_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
+  organization_users?: InputMaybe<Organization_Users_Bool_Exp>;
+};
+
+/** unique or primary key constraints on table "organizations" */
+export enum Organizations_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  OrganizationsPkey = 'organizations_pkey'
+}
+
+/** input type for inserting data into table "organizations" */
+export type Organizations_Insert_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  created_by?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  organization_users?: InputMaybe<Organization_Users_Obj_Rel_Insert_Input>;
+};
+
+/** aggregate max on columns */
+export type Organizations_Max_Fields = {
+  __typename?: 'organizations_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  created_by?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+};
+
+/** aggregate min on columns */
+export type Organizations_Min_Fields = {
+  __typename?: 'organizations_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  created_by?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+};
+
+/** response of any mutation on the table "organizations" */
+export type Organizations_Mutation_Response = {
+  __typename?: 'organizations_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Organizations>;
+};
+
+/** on_conflict condition type for table "organizations" */
+export type Organizations_On_Conflict = {
+  constraint: Organizations_Constraint;
+  update_columns?: Array<Organizations_Update_Column>;
+  where?: InputMaybe<Organizations_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "organizations". */
+export type Organizations_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  created_by?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  organization_users?: InputMaybe<Organization_Users_Order_By>;
+};
+
+/** primary key columns input for table: organizations */
+export type Organizations_Pk_Columns_Input = {
+  id: Scalars['String']['input'];
+};
+
+/** select columns of table "organizations" */
+export enum Organizations_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  CreatedBy = 'created_by',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name'
+}
+
+/** input type for updating data in table "organizations" */
+export type Organizations_Set_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  created_by?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Streaming cursor of the table "organizations" */
+export type Organizations_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Organizations_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Organizations_Stream_Cursor_Value_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  created_by?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** update columns of table "organizations" */
+export enum Organizations_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  CreatedBy = 'created_by',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name'
+}
+
+export type Organizations_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Organizations_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Organizations_Bool_Exp;
+};
 
 /** columns and relationships of "post_reaction_types" */
 export type Post_Reaction_Types = {
@@ -1448,6 +1792,18 @@ export type Posts_Updates = {
 
 export type Query_Root = {
   __typename?: 'query_root';
+  /** fetch data from the table: "organization_users" */
+  organization_users: Array<Organization_Users>;
+  /** fetch aggregated fields from the table: "organization_users" */
+  organization_users_aggregate: Organization_Users_Aggregate;
+  /** fetch data from the table: "organization_users" using primary key columns */
+  organization_users_by_pk?: Maybe<Organization_Users>;
+  /** fetch data from the table: "organizations" */
+  organizations: Array<Organizations>;
+  /** fetch aggregated fields from the table: "organizations" */
+  organizations_aggregate: Organizations_Aggregate;
+  /** fetch data from the table: "organizations" using primary key columns */
+  organizations_by_pk?: Maybe<Organizations>;
   /** fetch data from the table: "post_reaction_types" */
   post_reaction_types: Array<Post_Reaction_Types>;
   /** fetch aggregated fields from the table: "post_reaction_types" */
@@ -1478,24 +1834,58 @@ export type Query_Root = {
   tags_aggregate: Tags_Aggregate;
   /** fetch data from the table: "tags" using primary key columns */
   tags_by_pk?: Maybe<Tags>;
-  /** fetch data from the table: "team_users" */
-  team_users: Array<Team_Users>;
-  /** fetch aggregated fields from the table: "team_users" */
-  team_users_aggregate: Team_Users_Aggregate;
-  /** fetch data from the table: "team_users" using primary key columns */
-  team_users_by_pk?: Maybe<Team_Users>;
-  /** fetch data from the table: "teams" */
-  teams: Array<Teams>;
-  /** fetch aggregated fields from the table: "teams" */
-  teams_aggregate: Teams_Aggregate;
-  /** fetch data from the table: "teams" using primary key columns */
-  teams_by_pk?: Maybe<Teams>;
   /** fetch data from the table: "users" */
   users: Array<Users>;
   /** fetch aggregated fields from the table: "users" */
   users_aggregate: Users_Aggregate;
   /** fetch data from the table: "users" using primary key columns */
   users_by_pk?: Maybe<Users>;
+};
+
+
+export type Query_RootOrganization_UsersArgs = {
+  distinct_on?: InputMaybe<Array<Organization_Users_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Organization_Users_Order_By>>;
+  where?: InputMaybe<Organization_Users_Bool_Exp>;
+};
+
+
+export type Query_RootOrganization_Users_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Organization_Users_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Organization_Users_Order_By>>;
+  where?: InputMaybe<Organization_Users_Bool_Exp>;
+};
+
+
+export type Query_RootOrganization_Users_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Query_RootOrganizationsArgs = {
+  distinct_on?: InputMaybe<Array<Organizations_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Organizations_Order_By>>;
+  where?: InputMaybe<Organizations_Bool_Exp>;
+};
+
+
+export type Query_RootOrganizations_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Organizations_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Organizations_Order_By>>;
+  where?: InputMaybe<Organizations_Bool_Exp>;
+};
+
+
+export type Query_RootOrganizations_By_PkArgs = {
+  id: Scalars['String']['input'];
 };
 
 
@@ -1614,52 +2004,6 @@ export type Query_RootTags_By_PkArgs = {
 };
 
 
-export type Query_RootTeam_UsersArgs = {
-  distinct_on?: InputMaybe<Array<Team_Users_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Team_Users_Order_By>>;
-  where?: InputMaybe<Team_Users_Bool_Exp>;
-};
-
-
-export type Query_RootTeam_Users_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Team_Users_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Team_Users_Order_By>>;
-  where?: InputMaybe<Team_Users_Bool_Exp>;
-};
-
-
-export type Query_RootTeam_Users_By_PkArgs = {
-  id: Scalars['uuid']['input'];
-};
-
-
-export type Query_RootTeamsArgs = {
-  distinct_on?: InputMaybe<Array<Teams_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Teams_Order_By>>;
-  where?: InputMaybe<Teams_Bool_Exp>;
-};
-
-
-export type Query_RootTeams_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Teams_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Teams_Order_By>>;
-  where?: InputMaybe<Teams_Bool_Exp>;
-};
-
-
-export type Query_RootTeams_By_PkArgs = {
-  id: Scalars['uuid']['input'];
-};
-
-
 export type Query_RootUsersArgs = {
   distinct_on?: InputMaybe<Array<Users_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -1684,6 +2028,22 @@ export type Query_RootUsers_By_PkArgs = {
 
 export type Subscription_Root = {
   __typename?: 'subscription_root';
+  /** fetch data from the table: "organization_users" */
+  organization_users: Array<Organization_Users>;
+  /** fetch aggregated fields from the table: "organization_users" */
+  organization_users_aggregate: Organization_Users_Aggregate;
+  /** fetch data from the table: "organization_users" using primary key columns */
+  organization_users_by_pk?: Maybe<Organization_Users>;
+  /** fetch data from the table in a streaming manner: "organization_users" */
+  organization_users_stream: Array<Organization_Users>;
+  /** fetch data from the table: "organizations" */
+  organizations: Array<Organizations>;
+  /** fetch aggregated fields from the table: "organizations" */
+  organizations_aggregate: Organizations_Aggregate;
+  /** fetch data from the table: "organizations" using primary key columns */
+  organizations_by_pk?: Maybe<Organizations>;
+  /** fetch data from the table in a streaming manner: "organizations" */
+  organizations_stream: Array<Organizations>;
   /** fetch data from the table: "post_reaction_types" */
   post_reaction_types: Array<Post_Reaction_Types>;
   /** fetch aggregated fields from the table: "post_reaction_types" */
@@ -1724,22 +2084,6 @@ export type Subscription_Root = {
   tags_by_pk?: Maybe<Tags>;
   /** fetch data from the table in a streaming manner: "tags" */
   tags_stream: Array<Tags>;
-  /** fetch data from the table: "team_users" */
-  team_users: Array<Team_Users>;
-  /** fetch aggregated fields from the table: "team_users" */
-  team_users_aggregate: Team_Users_Aggregate;
-  /** fetch data from the table: "team_users" using primary key columns */
-  team_users_by_pk?: Maybe<Team_Users>;
-  /** fetch data from the table in a streaming manner: "team_users" */
-  team_users_stream: Array<Team_Users>;
-  /** fetch data from the table: "teams" */
-  teams: Array<Teams>;
-  /** fetch aggregated fields from the table: "teams" */
-  teams_aggregate: Teams_Aggregate;
-  /** fetch data from the table: "teams" using primary key columns */
-  teams_by_pk?: Maybe<Teams>;
-  /** fetch data from the table in a streaming manner: "teams" */
-  teams_stream: Array<Teams>;
   /** fetch data from the table: "users" */
   users: Array<Users>;
   /** fetch aggregated fields from the table: "users" */
@@ -1748,6 +2092,66 @@ export type Subscription_Root = {
   users_by_pk?: Maybe<Users>;
   /** fetch data from the table in a streaming manner: "users" */
   users_stream: Array<Users>;
+};
+
+
+export type Subscription_RootOrganization_UsersArgs = {
+  distinct_on?: InputMaybe<Array<Organization_Users_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Organization_Users_Order_By>>;
+  where?: InputMaybe<Organization_Users_Bool_Exp>;
+};
+
+
+export type Subscription_RootOrganization_Users_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Organization_Users_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Organization_Users_Order_By>>;
+  where?: InputMaybe<Organization_Users_Bool_Exp>;
+};
+
+
+export type Subscription_RootOrganization_Users_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootOrganization_Users_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Organization_Users_Stream_Cursor_Input>>;
+  where?: InputMaybe<Organization_Users_Bool_Exp>;
+};
+
+
+export type Subscription_RootOrganizationsArgs = {
+  distinct_on?: InputMaybe<Array<Organizations_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Organizations_Order_By>>;
+  where?: InputMaybe<Organizations_Bool_Exp>;
+};
+
+
+export type Subscription_RootOrganizations_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Organizations_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Organizations_Order_By>>;
+  where?: InputMaybe<Organizations_Bool_Exp>;
+};
+
+
+export type Subscription_RootOrganizations_By_PkArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type Subscription_RootOrganizations_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Organizations_Stream_Cursor_Input>>;
+  where?: InputMaybe<Organizations_Bool_Exp>;
 };
 
 
@@ -1898,66 +2302,6 @@ export type Subscription_RootTags_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Tags_Stream_Cursor_Input>>;
   where?: InputMaybe<Tags_Bool_Exp>;
-};
-
-
-export type Subscription_RootTeam_UsersArgs = {
-  distinct_on?: InputMaybe<Array<Team_Users_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Team_Users_Order_By>>;
-  where?: InputMaybe<Team_Users_Bool_Exp>;
-};
-
-
-export type Subscription_RootTeam_Users_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Team_Users_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Team_Users_Order_By>>;
-  where?: InputMaybe<Team_Users_Bool_Exp>;
-};
-
-
-export type Subscription_RootTeam_Users_By_PkArgs = {
-  id: Scalars['uuid']['input'];
-};
-
-
-export type Subscription_RootTeam_Users_StreamArgs = {
-  batch_size: Scalars['Int']['input'];
-  cursor: Array<InputMaybe<Team_Users_Stream_Cursor_Input>>;
-  where?: InputMaybe<Team_Users_Bool_Exp>;
-};
-
-
-export type Subscription_RootTeamsArgs = {
-  distinct_on?: InputMaybe<Array<Teams_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Teams_Order_By>>;
-  where?: InputMaybe<Teams_Bool_Exp>;
-};
-
-
-export type Subscription_RootTeams_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Teams_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Teams_Order_By>>;
-  where?: InputMaybe<Teams_Bool_Exp>;
-};
-
-
-export type Subscription_RootTeams_By_PkArgs = {
-  id: Scalars['uuid']['input'];
-};
-
-
-export type Subscription_RootTeams_StreamArgs = {
-  batch_size: Scalars['Int']['input'];
-  cursor: Array<InputMaybe<Teams_Stream_Cursor_Input>>;
-  where?: InputMaybe<Teams_Bool_Exp>;
 };
 
 
@@ -2161,286 +2505,6 @@ export type Tags_Updates = {
   where: Tags_Bool_Exp;
 };
 
-/** columns and relationships of "team_users" */
-export type Team_Users = {
-  __typename?: 'team_users';
-  id: Scalars['uuid']['output'];
-  team_id: Scalars['uuid']['output'];
-  user_id: Scalars['String']['output'];
-};
-
-/** aggregated selection of "team_users" */
-export type Team_Users_Aggregate = {
-  __typename?: 'team_users_aggregate';
-  aggregate?: Maybe<Team_Users_Aggregate_Fields>;
-  nodes: Array<Team_Users>;
-};
-
-/** aggregate fields of "team_users" */
-export type Team_Users_Aggregate_Fields = {
-  __typename?: 'team_users_aggregate_fields';
-  count: Scalars['Int']['output'];
-  max?: Maybe<Team_Users_Max_Fields>;
-  min?: Maybe<Team_Users_Min_Fields>;
-};
-
-
-/** aggregate fields of "team_users" */
-export type Team_Users_Aggregate_FieldsCountArgs = {
-  columns?: InputMaybe<Array<Team_Users_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-/** Boolean expression to filter rows from the table "team_users". All fields are combined with a logical 'AND'. */
-export type Team_Users_Bool_Exp = {
-  _and?: InputMaybe<Array<Team_Users_Bool_Exp>>;
-  _not?: InputMaybe<Team_Users_Bool_Exp>;
-  _or?: InputMaybe<Array<Team_Users_Bool_Exp>>;
-  id?: InputMaybe<Uuid_Comparison_Exp>;
-  team_id?: InputMaybe<Uuid_Comparison_Exp>;
-  user_id?: InputMaybe<String_Comparison_Exp>;
-};
-
-/** unique or primary key constraints on table "team_users" */
-export enum Team_Users_Constraint {
-  /** unique or primary key constraint on columns "id" */
-  TeamUsersPkey = 'team_users_pkey'
-}
-
-/** input type for inserting data into table "team_users" */
-export type Team_Users_Insert_Input = {
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  team_id?: InputMaybe<Scalars['uuid']['input']>;
-  user_id?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** aggregate max on columns */
-export type Team_Users_Max_Fields = {
-  __typename?: 'team_users_max_fields';
-  id?: Maybe<Scalars['uuid']['output']>;
-  team_id?: Maybe<Scalars['uuid']['output']>;
-  user_id?: Maybe<Scalars['String']['output']>;
-};
-
-/** aggregate min on columns */
-export type Team_Users_Min_Fields = {
-  __typename?: 'team_users_min_fields';
-  id?: Maybe<Scalars['uuid']['output']>;
-  team_id?: Maybe<Scalars['uuid']['output']>;
-  user_id?: Maybe<Scalars['String']['output']>;
-};
-
-/** response of any mutation on the table "team_users" */
-export type Team_Users_Mutation_Response = {
-  __typename?: 'team_users_mutation_response';
-  /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int']['output'];
-  /** data from the rows affected by the mutation */
-  returning: Array<Team_Users>;
-};
-
-/** on_conflict condition type for table "team_users" */
-export type Team_Users_On_Conflict = {
-  constraint: Team_Users_Constraint;
-  update_columns?: Array<Team_Users_Update_Column>;
-  where?: InputMaybe<Team_Users_Bool_Exp>;
-};
-
-/** Ordering options when selecting data from "team_users". */
-export type Team_Users_Order_By = {
-  id?: InputMaybe<Order_By>;
-  team_id?: InputMaybe<Order_By>;
-  user_id?: InputMaybe<Order_By>;
-};
-
-/** primary key columns input for table: team_users */
-export type Team_Users_Pk_Columns_Input = {
-  id: Scalars['uuid']['input'];
-};
-
-/** select columns of table "team_users" */
-export enum Team_Users_Select_Column {
-  /** column name */
-  Id = 'id',
-  /** column name */
-  TeamId = 'team_id',
-  /** column name */
-  UserId = 'user_id'
-}
-
-/** input type for updating data in table "team_users" */
-export type Team_Users_Set_Input = {
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  team_id?: InputMaybe<Scalars['uuid']['input']>;
-  user_id?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** Streaming cursor of the table "team_users" */
-export type Team_Users_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Team_Users_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Team_Users_Stream_Cursor_Value_Input = {
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  team_id?: InputMaybe<Scalars['uuid']['input']>;
-  user_id?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** update columns of table "team_users" */
-export enum Team_Users_Update_Column {
-  /** column name */
-  Id = 'id',
-  /** column name */
-  TeamId = 'team_id',
-  /** column name */
-  UserId = 'user_id'
-}
-
-export type Team_Users_Updates = {
-  /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Team_Users_Set_Input>;
-  /** filter the rows which have to be updated */
-  where: Team_Users_Bool_Exp;
-};
-
-/** columns and relationships of "teams" */
-export type Teams = {
-  __typename?: 'teams';
-  id: Scalars['uuid']['output'];
-  name: Scalars['String']['output'];
-};
-
-/** aggregated selection of "teams" */
-export type Teams_Aggregate = {
-  __typename?: 'teams_aggregate';
-  aggregate?: Maybe<Teams_Aggregate_Fields>;
-  nodes: Array<Teams>;
-};
-
-/** aggregate fields of "teams" */
-export type Teams_Aggregate_Fields = {
-  __typename?: 'teams_aggregate_fields';
-  count: Scalars['Int']['output'];
-  max?: Maybe<Teams_Max_Fields>;
-  min?: Maybe<Teams_Min_Fields>;
-};
-
-
-/** aggregate fields of "teams" */
-export type Teams_Aggregate_FieldsCountArgs = {
-  columns?: InputMaybe<Array<Teams_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-/** Boolean expression to filter rows from the table "teams". All fields are combined with a logical 'AND'. */
-export type Teams_Bool_Exp = {
-  _and?: InputMaybe<Array<Teams_Bool_Exp>>;
-  _not?: InputMaybe<Teams_Bool_Exp>;
-  _or?: InputMaybe<Array<Teams_Bool_Exp>>;
-  id?: InputMaybe<Uuid_Comparison_Exp>;
-  name?: InputMaybe<String_Comparison_Exp>;
-};
-
-/** unique or primary key constraints on table "teams" */
-export enum Teams_Constraint {
-  /** unique or primary key constraint on columns "id" */
-  TeamsPkey = 'teams_pkey'
-}
-
-/** input type for inserting data into table "teams" */
-export type Teams_Insert_Input = {
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** aggregate max on columns */
-export type Teams_Max_Fields = {
-  __typename?: 'teams_max_fields';
-  id?: Maybe<Scalars['uuid']['output']>;
-  name?: Maybe<Scalars['String']['output']>;
-};
-
-/** aggregate min on columns */
-export type Teams_Min_Fields = {
-  __typename?: 'teams_min_fields';
-  id?: Maybe<Scalars['uuid']['output']>;
-  name?: Maybe<Scalars['String']['output']>;
-};
-
-/** response of any mutation on the table "teams" */
-export type Teams_Mutation_Response = {
-  __typename?: 'teams_mutation_response';
-  /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int']['output'];
-  /** data from the rows affected by the mutation */
-  returning: Array<Teams>;
-};
-
-/** on_conflict condition type for table "teams" */
-export type Teams_On_Conflict = {
-  constraint: Teams_Constraint;
-  update_columns?: Array<Teams_Update_Column>;
-  where?: InputMaybe<Teams_Bool_Exp>;
-};
-
-/** Ordering options when selecting data from "teams". */
-export type Teams_Order_By = {
-  id?: InputMaybe<Order_By>;
-  name?: InputMaybe<Order_By>;
-};
-
-/** primary key columns input for table: teams */
-export type Teams_Pk_Columns_Input = {
-  id: Scalars['uuid']['input'];
-};
-
-/** select columns of table "teams" */
-export enum Teams_Select_Column {
-  /** column name */
-  Id = 'id',
-  /** column name */
-  Name = 'name'
-}
-
-/** input type for updating data in table "teams" */
-export type Teams_Set_Input = {
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** Streaming cursor of the table "teams" */
-export type Teams_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Teams_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Teams_Stream_Cursor_Value_Input = {
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** update columns of table "teams" */
-export enum Teams_Update_Column {
-  /** column name */
-  Id = 'id',
-  /** column name */
-  Name = 'name'
-}
-
-export type Teams_Updates = {
-  /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Teams_Set_Input>;
-  /** filter the rows which have to be updated */
-  where: Teams_Bool_Exp;
-};
-
 /** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
 export type Timestamptz_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['timestamptz']['input']>;
@@ -2518,6 +2582,17 @@ export type Users_Aggregate = {
   nodes: Array<Users>;
 };
 
+export type Users_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Users_Aggregate_Bool_Exp_Count>;
+};
+
+export type Users_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Users_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Users_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
 /** aggregate fields of "users" */
 export type Users_Aggregate_Fields = {
   __typename?: 'users_aggregate_fields';
@@ -2531,6 +2606,20 @@ export type Users_Aggregate_Fields = {
 export type Users_Aggregate_FieldsCountArgs = {
   columns?: InputMaybe<Array<Users_Select_Column>>;
   distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "users" */
+export type Users_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Users_Max_Order_By>;
+  min?: InputMaybe<Users_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "users" */
+export type Users_Arr_Rel_Insert_Input = {
+  data: Array<Users_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Users_On_Conflict>;
 };
 
 /** Boolean expression to filter rows from the table "users". All fields are combined with a logical 'AND'. */
@@ -2575,6 +2664,14 @@ export type Users_Max_Fields = {
   name?: Maybe<Scalars['String']['output']>;
 };
 
+/** order by max() on columns of table "users" */
+export type Users_Max_Order_By = {
+  email?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  last_seen?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+};
+
 /** aggregate min on columns */
 export type Users_Min_Fields = {
   __typename?: 'users_min_fields';
@@ -2582,6 +2679,14 @@ export type Users_Min_Fields = {
   id?: Maybe<Scalars['String']['output']>;
   last_seen?: Maybe<Scalars['timestamptz']['output']>;
   name?: Maybe<Scalars['String']['output']>;
+};
+
+/** order by min() on columns of table "users" */
+export type Users_Min_Order_By = {
+  email?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  last_seen?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "users" */
@@ -2761,6 +2866,16 @@ export type CreateUserMutationVariables = Exact<{
 
 export type CreateUserMutation = { __typename?: 'mutation_root', insert_users_one?: { __typename?: 'users', id: string } | null };
 
+export type CreateOrganizationMutationVariables = Exact<{
+  created_by?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  user_id?: InputMaybe<Scalars['String']['input']>;
+  organization_id?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type CreateOrganizationMutation = { __typename?: 'mutation_root', insert_organizations_one?: { __typename?: 'organizations', id: string } | null };
+
 
 export const GetPostsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPosts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"posts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10"}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"creator_id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_reactions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"author_id"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_reactions_aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_tags"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tag"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetPostsQuery, GetPostsQueryVariables>;
 export const DeletePostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeletePost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_posts_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"creator_id"}}]}}]}}]} as unknown as DocumentNode<DeletePostMutation, DeletePostMutationVariables>;
@@ -2771,3 +2886,4 @@ export const DeleteReactionDocument = {"kind":"Document","definitions":[{"kind":
 export const SearchTagsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchTags"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"_regex"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_regex"},"value":{"kind":"Variable","name":{"kind":"Name","value":"_regex"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<SearchTagsQuery, SearchTagsQueryVariables>;
 export const SearchPostsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchPosts"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"_regex"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"posts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_or"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"author"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_ilike"},"value":{"kind":"Variable","name":{"kind":"Name","value":"_regex"}}}]}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"body"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_ilike"},"value":{"kind":"Variable","name":{"kind":"Name","value":"_regex"}}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"title"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_ilike"},"value":{"kind":"Variable","name":{"kind":"Name","value":"_regex"}}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"post_tags"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tag_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_ilike"},"value":{"kind":"Variable","name":{"kind":"Name","value":"_regex"}}}]}}]}}]}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"creator_id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_reactions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"author_id"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_reactions_aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_tags"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tag"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}}]} as unknown as DocumentNode<SearchPostsQuery, SearchPostsQueryVariables>;
 export const CreateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_users_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateUserMutation, CreateUserMutationVariables>;
+export const CreateOrganizationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateOrganization"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"created_by"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"organization_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_organizations_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_by"},"value":{"kind":"Variable","name":{"kind":"Name","value":"created_by"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"organization_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"organization_users"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"data"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"organization_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"organization_id"}}}]}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateOrganizationMutation, CreateOrganizationMutationVariables>;

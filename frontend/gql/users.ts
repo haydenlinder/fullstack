@@ -11,3 +11,25 @@ export const CREATE_USER = graphql(`
     }
   }
 `);
+
+export const CREATE_ORG = graphql(`
+  mutation CreateOrganization(
+    $created_by: String = ""
+    $name: String = ""
+    $user_id: String = ""
+    $organization_id: String = ""
+  ) {
+    insert_organizations_one(
+      object: {
+        created_by: $created_by
+        id: $organization_id
+        name: $name
+        organization_users: {
+          data: { user_id: $user_id, organization_id: $organization_id }
+        }
+      }
+    ) {
+      id
+    }
+  }
+`);
