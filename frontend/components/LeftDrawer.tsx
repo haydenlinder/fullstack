@@ -18,12 +18,12 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { SignInButton } from "@clerk/nextjs";
 import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
-import { Button, debounce } from "@mui/material";
+import { Button } from "@mui/material";
 import Search from "./Search";
 import Link from "next/link";
 import { ModalTypes, useModalStore, useStore } from "@/state/store";
-import { useRouter } from "next/router";
-import { useParams, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
+import { OrganizationSwitcher } from "@clerk/nextjs";
 
 export const drawerWidth = 240;
 
@@ -70,14 +70,18 @@ export const Header = () => {
         <div className="mr-5">
           <Search value={query} onChange={onChange} />
         </div>
-        <div className="w-24">
+        <div className="">
           <SignedOut>
             <SignInButton>
               <Button variant="contained">Sign in</Button>
             </SignInButton>
           </SignedOut>
           <SignedIn>
-            <UserButton afterSignOutUrl="/" />
+            <div className="m-2">
+              <UserButton afterSignOutUrl="/" />
+              <div className="mb-2" />
+              <OrganizationSwitcher />
+            </div>
           </SignedIn>
         </div>
       </Toolbar>

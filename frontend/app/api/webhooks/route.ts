@@ -50,7 +50,7 @@ export async function POST(req: Request) {
       status: 400,
     });
   }
-
+  // User created in clerk
   const variables: CreateUserMutationVariables = {};
   switch (evt.type) {
     case "user.created":
@@ -64,17 +64,21 @@ export async function POST(req: Request) {
         status: 400,
       });
   }
-  const res = await fetch(process.env.NEXT_PUBLIC_HASURA_GRAPHQL_API || "", {
-    method: "POST",
-    headers: {
-      "x-hasura-admin-secret": process.env.HASURA_SECRET || "",
-    },
-    body: JSON.stringify({ query: print(CREATE_USER), variables }),
-  });
-
-  const data = await res.json();
-
-  console.log(JSON.stringify({ variables, data }));
+  // Create user in our DB
+  try {
+    await fetch(process.env.NEXT_PUBLIC_HASURA_GRAPHQL_API || "", {
+      method: "POST",
+      headers: {
+        "x-hasura-admin-secret": process.env.HASURA_SECRET || "",
+      },
+      body: JSON.stringify({ query: print(CREATE_USER), variables }),
+    });
+  } catch (error) {
+    console.error(`"Error creating user in DB:", ${error}`);
+    return new Response("Error occured", {
+      status: 400,
+    });
+  }
 
   return new Response("User created successfully", { status: 200 });
 }

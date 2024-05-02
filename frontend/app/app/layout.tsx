@@ -1,8 +1,5 @@
 "use client";
-import AnchorTemporaryDrawer, {
-  SideBar,
-  drawerWidth,
-} from "@/components/LeftDrawer";
+import AnchorTemporaryDrawer, { SideBar } from "@/components/LeftDrawer";
 import { useModalStore } from "@/state/store";
 import { SignIn } from "@clerk/clerk-react";
 import { useAuth } from "@clerk/nextjs";

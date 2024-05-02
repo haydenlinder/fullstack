@@ -31,3 +31,14 @@ body {
     text-wrap: balance;
   }
 }
+
+/* Override clerk dark theme */
+p[class*="cl-internal"] {
+  color: white !important;
+  fill: white !important;
+}
+
+svg[class*="cl-internal"] path {
+  color: white !important;
+  fill: white !important;
+}
