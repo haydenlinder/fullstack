@@ -33,12 +33,9 @@ body {
 }
 
 /* Override clerk dark theme */
-p[class*="cl-internal"] {
-  color: white !important;
-  fill: white !important;
-}
-
-svg[class*="cl-internal"] path {
-  color: white !important;
-  fill: white !important;
+[class*="cl-internal"] {
+  background-color: inherit;
+  color: inherit !important;
+  fill: inherit !important;
+  border-color: white;
 }
