@@ -22,7 +22,6 @@ export const CREATE_ORG = graphql(`
     insert_organizations_one(
       object: {
         created_by: $created_by
-        id: $organization_id
         name: $name
         organization_users: {
           data: { user_id: $user_id, organization_id: $organization_id }
