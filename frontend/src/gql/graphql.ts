@@ -1069,6 +1069,7 @@ export type Mutation_RootUpdate_Post_Tags_ManyArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_PostsArgs = {
+  _inc?: InputMaybe<Posts_Inc_Input>;
   _set?: InputMaybe<Posts_Set_Input>;
   where: Posts_Bool_Exp;
 };
@@ -1076,6 +1077,7 @@ export type Mutation_RootUpdate_PostsArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_Posts_By_PkArgs = {
+  _inc?: InputMaybe<Posts_Inc_Input>;
   _set?: InputMaybe<Posts_Set_Input>;
   pk_columns: Posts_Pk_Columns_Input;
 };
@@ -2130,10 +2132,17 @@ export type Posts = {
   __typename?: 'posts';
   /** An object relationship */
   author?: Maybe<Users>;
+  billing_so?: Maybe<Scalars['String']['output']>;
   body?: Maybe<Scalars['String']['output']>;
   created_at: Scalars['timestamptz']['output'];
   creator_id: Scalars['String']['output'];
+  delivery_date?: Maybe<Scalars['timestamptz']['output']>;
+  delivery_instructions?: Maybe<Scalars['String']['output']>;
+  destination_address?: Maybe<Scalars['String']['output']>;
+  destination_poc?: Maybe<Scalars['String']['output']>;
   id: Scalars['uuid']['output'];
+  international_frt_resale?: Maybe<Scalars['numeric']['output']>;
+  ior_compliance_resale?: Maybe<Scalars['numeric']['output']>;
   /** An array relationship */
   line_items: Array<Line_Items>;
   /** An aggregate relationship */
@@ -2141,6 +2150,7 @@ export type Posts = {
   org_id: Scalars['String']['output'];
   /** An object relationship */
   organization?: Maybe<Organizations>;
+  pickup_address?: Maybe<Scalars['String']['output']>;
   /** An array relationship */
   post_reactions: Array<Post_Reactions>;
   /** An aggregate relationship */
@@ -2149,6 +2159,7 @@ export type Posts = {
   post_tags: Array<Post_Tags>;
   /** An aggregate relationship */
   post_tags_aggregate: Post_Tags_Aggregate;
+  psr?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
   updated_at: Scalars['timestamptz']['output'];
 };
@@ -2234,9 +2245,17 @@ export type Posts_Aggregate_Bool_Exp_Count = {
 /** aggregate fields of "posts" */
 export type Posts_Aggregate_Fields = {
   __typename?: 'posts_aggregate_fields';
+  avg?: Maybe<Posts_Avg_Fields>;
   count: Scalars['Int']['output'];
   max?: Maybe<Posts_Max_Fields>;
   min?: Maybe<Posts_Min_Fields>;
+  stddev?: Maybe<Posts_Stddev_Fields>;
+  stddev_pop?: Maybe<Posts_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Posts_Stddev_Samp_Fields>;
+  sum?: Maybe<Posts_Sum_Fields>;
+  var_pop?: Maybe<Posts_Var_Pop_Fields>;
+  var_samp?: Maybe<Posts_Var_Samp_Fields>;
+  variance?: Maybe<Posts_Variance_Fields>;
 };
 
 
@@ -2248,9 +2267,17 @@ export type Posts_Aggregate_FieldsCountArgs = {
 
 /** order by aggregate values of table "posts" */
 export type Posts_Aggregate_Order_By = {
+  avg?: InputMaybe<Posts_Avg_Order_By>;
   count?: InputMaybe<Order_By>;
   max?: InputMaybe<Posts_Max_Order_By>;
   min?: InputMaybe<Posts_Min_Order_By>;
+  stddev?: InputMaybe<Posts_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Posts_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Posts_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Posts_Sum_Order_By>;
+  var_pop?: InputMaybe<Posts_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Posts_Var_Samp_Order_By>;
+  variance?: InputMaybe<Posts_Variance_Order_By>;
 };
 
 /** input type for inserting array relation for remote table "posts" */
@@ -2260,24 +2287,46 @@ export type Posts_Arr_Rel_Insert_Input = {
   on_conflict?: InputMaybe<Posts_On_Conflict>;
 };
 
+/** aggregate avg on columns */
+export type Posts_Avg_Fields = {
+  __typename?: 'posts_avg_fields';
+  international_frt_resale?: Maybe<Scalars['Float']['output']>;
+  ior_compliance_resale?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by avg() on columns of table "posts" */
+export type Posts_Avg_Order_By = {
+  international_frt_resale?: InputMaybe<Order_By>;
+  ior_compliance_resale?: InputMaybe<Order_By>;
+};
+
 /** Boolean expression to filter rows from the table "posts". All fields are combined with a logical 'AND'. */
 export type Posts_Bool_Exp = {
   _and?: InputMaybe<Array<Posts_Bool_Exp>>;
   _not?: InputMaybe<Posts_Bool_Exp>;
   _or?: InputMaybe<Array<Posts_Bool_Exp>>;
   author?: InputMaybe<Users_Bool_Exp>;
+  billing_so?: InputMaybe<String_Comparison_Exp>;
   body?: InputMaybe<String_Comparison_Exp>;
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   creator_id?: InputMaybe<String_Comparison_Exp>;
+  delivery_date?: InputMaybe<Timestamptz_Comparison_Exp>;
+  delivery_instructions?: InputMaybe<String_Comparison_Exp>;
+  destination_address?: InputMaybe<String_Comparison_Exp>;
+  destination_poc?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
+  international_frt_resale?: InputMaybe<Numeric_Comparison_Exp>;
+  ior_compliance_resale?: InputMaybe<Numeric_Comparison_Exp>;
   line_items?: InputMaybe<Line_Items_Bool_Exp>;
   line_items_aggregate?: InputMaybe<Line_Items_Aggregate_Bool_Exp>;
   org_id?: InputMaybe<String_Comparison_Exp>;
   organization?: InputMaybe<Organizations_Bool_Exp>;
+  pickup_address?: InputMaybe<String_Comparison_Exp>;
   post_reactions?: InputMaybe<Post_Reactions_Bool_Exp>;
   post_reactions_aggregate?: InputMaybe<Post_Reactions_Aggregate_Bool_Exp>;
   post_tags?: InputMaybe<Post_Tags_Bool_Exp>;
   post_tags_aggregate?: InputMaybe<Post_Tags_Aggregate_Bool_Exp>;
+  psr?: InputMaybe<String_Comparison_Exp>;
   title?: InputMaybe<String_Comparison_Exp>;
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
 };
@@ -2288,18 +2337,33 @@ export enum Posts_Constraint {
   PostsPkey = 'posts_pkey'
 }
 
+/** input type for incrementing numeric columns in table "posts" */
+export type Posts_Inc_Input = {
+  international_frt_resale?: InputMaybe<Scalars['numeric']['input']>;
+  ior_compliance_resale?: InputMaybe<Scalars['numeric']['input']>;
+};
+
 /** input type for inserting data into table "posts" */
 export type Posts_Insert_Input = {
   author?: InputMaybe<Users_Obj_Rel_Insert_Input>;
+  billing_so?: InputMaybe<Scalars['String']['input']>;
   body?: InputMaybe<Scalars['String']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   creator_id?: InputMaybe<Scalars['String']['input']>;
+  delivery_date?: InputMaybe<Scalars['timestamptz']['input']>;
+  delivery_instructions?: InputMaybe<Scalars['String']['input']>;
+  destination_address?: InputMaybe<Scalars['String']['input']>;
+  destination_poc?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
+  international_frt_resale?: InputMaybe<Scalars['numeric']['input']>;
+  ior_compliance_resale?: InputMaybe<Scalars['numeric']['input']>;
   line_items?: InputMaybe<Line_Items_Arr_Rel_Insert_Input>;
   org_id?: InputMaybe<Scalars['String']['input']>;
   organization?: InputMaybe<Organizations_Obj_Rel_Insert_Input>;
+  pickup_address?: InputMaybe<Scalars['String']['input']>;
   post_reactions?: InputMaybe<Post_Reactions_Arr_Rel_Insert_Input>;
   post_tags?: InputMaybe<Post_Tags_Arr_Rel_Insert_Input>;
+  psr?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
 };
@@ -2307,22 +2371,40 @@ export type Posts_Insert_Input = {
 /** aggregate max on columns */
 export type Posts_Max_Fields = {
   __typename?: 'posts_max_fields';
+  billing_so?: Maybe<Scalars['String']['output']>;
   body?: Maybe<Scalars['String']['output']>;
   created_at?: Maybe<Scalars['timestamptz']['output']>;
   creator_id?: Maybe<Scalars['String']['output']>;
+  delivery_date?: Maybe<Scalars['timestamptz']['output']>;
+  delivery_instructions?: Maybe<Scalars['String']['output']>;
+  destination_address?: Maybe<Scalars['String']['output']>;
+  destination_poc?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
+  international_frt_resale?: Maybe<Scalars['numeric']['output']>;
+  ior_compliance_resale?: Maybe<Scalars['numeric']['output']>;
   org_id?: Maybe<Scalars['String']['output']>;
+  pickup_address?: Maybe<Scalars['String']['output']>;
+  psr?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
   updated_at?: Maybe<Scalars['timestamptz']['output']>;
 };
 
 /** order by max() on columns of table "posts" */
 export type Posts_Max_Order_By = {
+  billing_so?: InputMaybe<Order_By>;
   body?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   creator_id?: InputMaybe<Order_By>;
+  delivery_date?: InputMaybe<Order_By>;
+  delivery_instructions?: InputMaybe<Order_By>;
+  destination_address?: InputMaybe<Order_By>;
+  destination_poc?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  international_frt_resale?: InputMaybe<Order_By>;
+  ior_compliance_resale?: InputMaybe<Order_By>;
   org_id?: InputMaybe<Order_By>;
+  pickup_address?: InputMaybe<Order_By>;
+  psr?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
 };
@@ -2330,22 +2412,40 @@ export type Posts_Max_Order_By = {
 /** aggregate min on columns */
 export type Posts_Min_Fields = {
   __typename?: 'posts_min_fields';
+  billing_so?: Maybe<Scalars['String']['output']>;
   body?: Maybe<Scalars['String']['output']>;
   created_at?: Maybe<Scalars['timestamptz']['output']>;
   creator_id?: Maybe<Scalars['String']['output']>;
+  delivery_date?: Maybe<Scalars['timestamptz']['output']>;
+  delivery_instructions?: Maybe<Scalars['String']['output']>;
+  destination_address?: Maybe<Scalars['String']['output']>;
+  destination_poc?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
+  international_frt_resale?: Maybe<Scalars['numeric']['output']>;
+  ior_compliance_resale?: Maybe<Scalars['numeric']['output']>;
   org_id?: Maybe<Scalars['String']['output']>;
+  pickup_address?: Maybe<Scalars['String']['output']>;
+  psr?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
   updated_at?: Maybe<Scalars['timestamptz']['output']>;
 };
 
 /** order by min() on columns of table "posts" */
 export type Posts_Min_Order_By = {
+  billing_so?: InputMaybe<Order_By>;
   body?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   creator_id?: InputMaybe<Order_By>;
+  delivery_date?: InputMaybe<Order_By>;
+  delivery_instructions?: InputMaybe<Order_By>;
+  destination_address?: InputMaybe<Order_By>;
+  destination_poc?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  international_frt_resale?: InputMaybe<Order_By>;
+  ior_compliance_resale?: InputMaybe<Order_By>;
   org_id?: InputMaybe<Order_By>;
+  pickup_address?: InputMaybe<Order_By>;
+  psr?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
 };
@@ -2376,15 +2476,24 @@ export type Posts_On_Conflict = {
 /** Ordering options when selecting data from "posts". */
 export type Posts_Order_By = {
   author?: InputMaybe<Users_Order_By>;
+  billing_so?: InputMaybe<Order_By>;
   body?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   creator_id?: InputMaybe<Order_By>;
+  delivery_date?: InputMaybe<Order_By>;
+  delivery_instructions?: InputMaybe<Order_By>;
+  destination_address?: InputMaybe<Order_By>;
+  destination_poc?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  international_frt_resale?: InputMaybe<Order_By>;
+  ior_compliance_resale?: InputMaybe<Order_By>;
   line_items_aggregate?: InputMaybe<Line_Items_Aggregate_Order_By>;
   org_id?: InputMaybe<Order_By>;
   organization?: InputMaybe<Organizations_Order_By>;
+  pickup_address?: InputMaybe<Order_By>;
   post_reactions_aggregate?: InputMaybe<Post_Reactions_Aggregate_Order_By>;
   post_tags_aggregate?: InputMaybe<Post_Tags_Aggregate_Order_By>;
+  psr?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
 };
@@ -2397,15 +2506,33 @@ export type Posts_Pk_Columns_Input = {
 /** select columns of table "posts" */
 export enum Posts_Select_Column {
   /** column name */
+  BillingSo = 'billing_so',
+  /** column name */
   Body = 'body',
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
   CreatorId = 'creator_id',
   /** column name */
+  DeliveryDate = 'delivery_date',
+  /** column name */
+  DeliveryInstructions = 'delivery_instructions',
+  /** column name */
+  DestinationAddress = 'destination_address',
+  /** column name */
+  DestinationPoc = 'destination_poc',
+  /** column name */
   Id = 'id',
   /** column name */
+  InternationalFrtResale = 'international_frt_resale',
+  /** column name */
+  IorComplianceResale = 'ior_compliance_resale',
+  /** column name */
   OrgId = 'org_id',
+  /** column name */
+  PickupAddress = 'pickup_address',
+  /** column name */
+  Psr = 'psr',
   /** column name */
   Title = 'title',
   /** column name */
@@ -2414,13 +2541,61 @@ export enum Posts_Select_Column {
 
 /** input type for updating data in table "posts" */
 export type Posts_Set_Input = {
+  billing_so?: InputMaybe<Scalars['String']['input']>;
   body?: InputMaybe<Scalars['String']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   creator_id?: InputMaybe<Scalars['String']['input']>;
+  delivery_date?: InputMaybe<Scalars['timestamptz']['input']>;
+  delivery_instructions?: InputMaybe<Scalars['String']['input']>;
+  destination_address?: InputMaybe<Scalars['String']['input']>;
+  destination_poc?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
+  international_frt_resale?: InputMaybe<Scalars['numeric']['input']>;
+  ior_compliance_resale?: InputMaybe<Scalars['numeric']['input']>;
   org_id?: InputMaybe<Scalars['String']['input']>;
+  pickup_address?: InputMaybe<Scalars['String']['input']>;
+  psr?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** aggregate stddev on columns */
+export type Posts_Stddev_Fields = {
+  __typename?: 'posts_stddev_fields';
+  international_frt_resale?: Maybe<Scalars['Float']['output']>;
+  ior_compliance_resale?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev() on columns of table "posts" */
+export type Posts_Stddev_Order_By = {
+  international_frt_resale?: InputMaybe<Order_By>;
+  ior_compliance_resale?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Posts_Stddev_Pop_Fields = {
+  __typename?: 'posts_stddev_pop_fields';
+  international_frt_resale?: Maybe<Scalars['Float']['output']>;
+  ior_compliance_resale?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_pop() on columns of table "posts" */
+export type Posts_Stddev_Pop_Order_By = {
+  international_frt_resale?: InputMaybe<Order_By>;
+  ior_compliance_resale?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Posts_Stddev_Samp_Fields = {
+  __typename?: 'posts_stddev_samp_fields';
+  international_frt_resale?: Maybe<Scalars['Float']['output']>;
+  ior_compliance_resale?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_samp() on columns of table "posts" */
+export type Posts_Stddev_Samp_Order_By = {
+  international_frt_resale?: InputMaybe<Order_By>;
+  ior_compliance_resale?: InputMaybe<Order_By>;
 };
 
 /** Streaming cursor of the table "posts" */
@@ -2433,17 +2608,41 @@ export type Posts_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Posts_Stream_Cursor_Value_Input = {
+  billing_so?: InputMaybe<Scalars['String']['input']>;
   body?: InputMaybe<Scalars['String']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   creator_id?: InputMaybe<Scalars['String']['input']>;
+  delivery_date?: InputMaybe<Scalars['timestamptz']['input']>;
+  delivery_instructions?: InputMaybe<Scalars['String']['input']>;
+  destination_address?: InputMaybe<Scalars['String']['input']>;
+  destination_poc?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
+  international_frt_resale?: InputMaybe<Scalars['numeric']['input']>;
+  ior_compliance_resale?: InputMaybe<Scalars['numeric']['input']>;
   org_id?: InputMaybe<Scalars['String']['input']>;
+  pickup_address?: InputMaybe<Scalars['String']['input']>;
+  psr?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
 };
 
+/** aggregate sum on columns */
+export type Posts_Sum_Fields = {
+  __typename?: 'posts_sum_fields';
+  international_frt_resale?: Maybe<Scalars['numeric']['output']>;
+  ior_compliance_resale?: Maybe<Scalars['numeric']['output']>;
+};
+
+/** order by sum() on columns of table "posts" */
+export type Posts_Sum_Order_By = {
+  international_frt_resale?: InputMaybe<Order_By>;
+  ior_compliance_resale?: InputMaybe<Order_By>;
+};
+
 /** update columns of table "posts" */
 export enum Posts_Update_Column {
+  /** column name */
+  BillingSo = 'billing_so',
   /** column name */
   Body = 'body',
   /** column name */
@@ -2451,9 +2650,25 @@ export enum Posts_Update_Column {
   /** column name */
   CreatorId = 'creator_id',
   /** column name */
+  DeliveryDate = 'delivery_date',
+  /** column name */
+  DeliveryInstructions = 'delivery_instructions',
+  /** column name */
+  DestinationAddress = 'destination_address',
+  /** column name */
+  DestinationPoc = 'destination_poc',
+  /** column name */
   Id = 'id',
   /** column name */
+  InternationalFrtResale = 'international_frt_resale',
+  /** column name */
+  IorComplianceResale = 'ior_compliance_resale',
+  /** column name */
   OrgId = 'org_id',
+  /** column name */
+  PickupAddress = 'pickup_address',
+  /** column name */
+  Psr = 'psr',
   /** column name */
   Title = 'title',
   /** column name */
@@ -2461,10 +2676,51 @@ export enum Posts_Update_Column {
 }
 
 export type Posts_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Posts_Inc_Input>;
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<Posts_Set_Input>;
   /** filter the rows which have to be updated */
   where: Posts_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Posts_Var_Pop_Fields = {
+  __typename?: 'posts_var_pop_fields';
+  international_frt_resale?: Maybe<Scalars['Float']['output']>;
+  ior_compliance_resale?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by var_pop() on columns of table "posts" */
+export type Posts_Var_Pop_Order_By = {
+  international_frt_resale?: InputMaybe<Order_By>;
+  ior_compliance_resale?: InputMaybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Posts_Var_Samp_Fields = {
+  __typename?: 'posts_var_samp_fields';
+  international_frt_resale?: Maybe<Scalars['Float']['output']>;
+  ior_compliance_resale?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by var_samp() on columns of table "posts" */
+export type Posts_Var_Samp_Order_By = {
+  international_frt_resale?: InputMaybe<Order_By>;
+  ior_compliance_resale?: InputMaybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Posts_Variance_Fields = {
+  __typename?: 'posts_variance_fields';
+  international_frt_resale?: Maybe<Scalars['Float']['output']>;
+  ior_compliance_resale?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by variance() on columns of table "posts" */
+export type Posts_Variance_Order_By = {
+  international_frt_resale?: InputMaybe<Order_By>;
+  ior_compliance_resale?: InputMaybe<Order_By>;
 };
 
 export type Query_Root = {
@@ -3570,7 +3826,7 @@ export type Uuid_Comparison_Exp = {
 export type GetPostsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetPostsQuery = { __typename?: 'query_root', posts: Array<{ __typename?: 'posts', id: any, body?: string | null, created_at: any, creator_id: string, title?: string | null, updated_at: any, author?: { __typename?: 'users', name: string, id: string } | null, post_reactions: Array<{ __typename?: 'post_reactions', author_id: string, type: Post_Reaction_Types_Enum, id: any }>, post_reactions_aggregate: { __typename?: 'post_reactions_aggregate', aggregate?: { __typename?: 'post_reactions_aggregate_fields', count: number } | null }, post_tags: Array<{ __typename?: 'post_tags', tag: { __typename?: 'tags', id: string } }>, line_items: Array<{ __typename?: 'line_items', customer_po: string, description: string, extended_resell: any, id: number, manufacturer: string, part_number: string, po: string, quantity: number, so: string, unit_resell: any, whs_delivery_date?: any | null }> }> };
+export type GetPostsQuery = { __typename?: 'query_root', posts: Array<{ __typename?: 'posts', id: any, body?: string | null, created_at: any, creator_id: string, title?: string | null, updated_at: any, billing_so?: string | null, delivery_date?: any | null, delivery_instructions?: string | null, destination_poc?: string | null, international_frt_resale?: any | null, destination_address?: string | null, ior_compliance_resale?: any | null, pickup_address?: string | null, psr?: string | null, author?: { __typename?: 'users', name: string, id: string } | null, post_reactions: Array<{ __typename?: 'post_reactions', author_id: string, type: Post_Reaction_Types_Enum, id: any }>, post_reactions_aggregate: { __typename?: 'post_reactions_aggregate', aggregate?: { __typename?: 'post_reactions_aggregate_fields', count: number } | null }, post_tags: Array<{ __typename?: 'post_tags', tag: { __typename?: 'tags', id: string } }>, line_items: Array<{ __typename?: 'line_items', customer_po: string, description: string, extended_resell: any, id: number, manufacturer: string, part_number: string, po: string, quantity: number, so: string, unit_resell: any, whs_delivery_date?: any | null }> }> };
 
 export type DeletePostMutationVariables = Exact<{
   id?: InputMaybe<Scalars['uuid']['input']>;
@@ -3582,6 +3838,15 @@ export type DeletePostMutation = { __typename?: 'mutation_root', delete_posts_by
 export type UpdatePostMutationVariables = Exact<{
   id?: InputMaybe<Scalars['uuid']['input']>;
   body?: InputMaybe<Scalars['String']['input']>;
+  billing_so?: InputMaybe<Scalars['String']['input']>;
+  destination_address?: InputMaybe<Scalars['String']['input']>;
+  delivery_date?: InputMaybe<Scalars['timestamptz']['input']>;
+  delivery_instructions?: InputMaybe<Scalars['String']['input']>;
+  destination_poc?: InputMaybe<Scalars['String']['input']>;
+  international_frt_resale?: InputMaybe<Scalars['numeric']['input']>;
+  ior_compliance_resale?: InputMaybe<Scalars['numeric']['input']>;
+  pickup_address?: InputMaybe<Scalars['String']['input']>;
+  psr?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
   tags?: InputMaybe<Array<Post_Tags_Insert_Input> | Post_Tags_Insert_Input>;
   line_items_data?: InputMaybe<Array<Line_Items_Insert_Input> | Line_Items_Insert_Input>;
@@ -3591,10 +3856,19 @@ export type UpdatePostMutationVariables = Exact<{
 export type UpdatePostMutation = { __typename?: 'mutation_root', update_posts_by_pk?: { __typename?: 'posts', id: any } | null, delete_post_tags?: { __typename?: 'post_tags_mutation_response', returning: Array<{ __typename?: 'post_tags', id: any }> } | null, insert_post_tags?: { __typename?: 'post_tags_mutation_response', returning: Array<{ __typename?: 'post_tags', id: any }> } | null, delete_line_items?: { __typename?: 'line_items_mutation_response', returning: Array<{ __typename?: 'line_items', id: number }> } | null, insert_line_items?: { __typename?: 'line_items_mutation_response', returning: Array<{ __typename?: 'line_items', id: number }> } | null };
 
 export type CreatePostMutationVariables = Exact<{
-  body?: InputMaybe<Scalars['String']['input']>;
   creator_id?: InputMaybe<Scalars['String']['input']>;
   org_id?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
+  billing_so?: InputMaybe<Scalars['String']['input']>;
+  body?: InputMaybe<Scalars['String']['input']>;
+  delivery_date?: InputMaybe<Scalars['timestamptz']['input']>;
+  delivery_instructions?: InputMaybe<Scalars['String']['input']>;
+  destination_poc?: InputMaybe<Scalars['String']['input']>;
+  destination_address?: InputMaybe<Scalars['String']['input']>;
+  international_frt_resale?: InputMaybe<Scalars['numeric']['input']>;
+  ior_compliance_resale?: InputMaybe<Scalars['numeric']['input']>;
+  pickup_address?: InputMaybe<Scalars['String']['input']>;
+  psr?: InputMaybe<Scalars['String']['input']>;
   tags_data?: InputMaybe<Array<Post_Tags_Insert_Input> | Post_Tags_Insert_Input>;
   line_items_data?: InputMaybe<Array<Line_Items_Insert_Input> | Line_Items_Insert_Input>;
 }>;
@@ -3652,10 +3926,10 @@ export type CreateOrganizationMutationVariables = Exact<{
 export type CreateOrganizationMutation = { __typename?: 'mutation_root', insert_organizations_one?: { __typename?: 'organizations', id: string } | null };
 
 
-export const GetPostsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPosts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"posts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10"}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"creator_id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_reactions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"author_id"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_reactions_aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_tags"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tag"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"line_items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"customer_po"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"extended_resell"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"manufacturer"}},{"kind":"Field","name":{"kind":"Name","value":"part_number"}},{"kind":"Field","name":{"kind":"Name","value":"po"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"so"}},{"kind":"Field","name":{"kind":"Name","value":"unit_resell"}},{"kind":"Field","name":{"kind":"Name","value":"whs_delivery_date"}}]}}]}}]}}]} as unknown as DocumentNode<GetPostsQuery, GetPostsQueryVariables>;
+export const GetPostsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPosts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"posts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10"}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"creator_id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"billing_so"}},{"kind":"Field","name":{"kind":"Name","value":"delivery_date"}},{"kind":"Field","name":{"kind":"Name","value":"delivery_instructions"}},{"kind":"Field","name":{"kind":"Name","value":"destination_poc"}},{"kind":"Field","name":{"kind":"Name","value":"international_frt_resale"}},{"kind":"Field","name":{"kind":"Name","value":"destination_address"}},{"kind":"Field","name":{"kind":"Name","value":"ior_compliance_resale"}},{"kind":"Field","name":{"kind":"Name","value":"pickup_address"}},{"kind":"Field","name":{"kind":"Name","value":"psr"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_reactions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"author_id"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_reactions_aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_tags"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tag"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"line_items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"customer_po"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"extended_resell"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"manufacturer"}},{"kind":"Field","name":{"kind":"Name","value":"part_number"}},{"kind":"Field","name":{"kind":"Name","value":"po"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"so"}},{"kind":"Field","name":{"kind":"Name","value":"unit_resell"}},{"kind":"Field","name":{"kind":"Name","value":"whs_delivery_date"}}]}}]}}]}}]} as unknown as DocumentNode<GetPostsQuery, GetPostsQueryVariables>;
 export const DeletePostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeletePost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_posts_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"creator_id"}}]}}]}}]} as unknown as DocumentNode<DeletePostMutation, DeletePostMutationVariables>;
-export const UpdatePostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdatePost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"body"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"title"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tags"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"post_tags_insert_input"}}}},"defaultValue":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"post_id"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"tag_id"},"value":{"kind":"StringValue","value":"","block":false}}]}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"line_items_data"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"line_items_insert_input"}}}},"defaultValue":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_by"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"customer_po"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"description"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"extended_resell"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"manufacturer"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"part_number"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"po"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"quantity"},"value":{"kind":"IntValue","value":"0"}},{"kind":"ObjectField","name":{"kind":"Name","value":"so"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"unit_resell"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"whs_delivery_date"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"post_id"},"value":{"kind":"StringValue","value":"","block":false}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_posts_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"body"},"value":{"kind":"Variable","name":{"kind":"Name","value":"body"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"title"},"value":{"kind":"Variable","name":{"kind":"Name","value":"title"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"delete_post_tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"post_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"insert_post_tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tags"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"delete_line_items"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"post_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"insert_line_items"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"Variable","name":{"kind":"Name","value":"line_items_data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<UpdatePostMutation, UpdatePostMutationVariables>;
-export const CreatePostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreatePost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"body"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"creator_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"org_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"title"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tags_data"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"post_tags_insert_input"}}}},"defaultValue":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tag_id"},"value":{"kind":"StringValue","value":"","block":false}}]}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"line_items_data"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"line_items_insert_input"}}}},"defaultValue":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_by"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"customer_po"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"description"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"extended_resell"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"manufacturer"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"part_number"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"po"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"quantity"},"value":{"kind":"IntValue","value":"0"}},{"kind":"ObjectField","name":{"kind":"Name","value":"so"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"unit_resell"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"whs_delivery_date"},"value":{"kind":"StringValue","value":"","block":false}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_posts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"org_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"org_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"body"},"value":{"kind":"Variable","name":{"kind":"Name","value":"body"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"creator_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"creator_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"title"},"value":{"kind":"Variable","name":{"kind":"Name","value":"title"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"post_tags"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tags_data"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"line_items"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"line_items_data"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<CreatePostMutation, CreatePostMutationVariables>;
+export const UpdatePostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdatePost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"body"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"billing_so"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"destination_address"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"delivery_date"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamptz"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"delivery_instructions"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"destination_poc"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"international_frt_resale"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"numeric"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"ior_compliance_resale"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"numeric"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pickup_address"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"psr"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"title"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tags"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"post_tags_insert_input"}}}},"defaultValue":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"post_id"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"tag_id"},"value":{"kind":"StringValue","value":"","block":false}}]}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"line_items_data"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"line_items_insert_input"}}}},"defaultValue":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_by"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"customer_po"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"description"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"extended_resell"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"manufacturer"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"part_number"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"po"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"quantity"},"value":{"kind":"IntValue","value":"0"}},{"kind":"ObjectField","name":{"kind":"Name","value":"so"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"unit_resell"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"whs_delivery_date"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"post_id"},"value":{"kind":"StringValue","value":"","block":false}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_posts_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"body"},"value":{"kind":"Variable","name":{"kind":"Name","value":"body"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"title"},"value":{"kind":"Variable","name":{"kind":"Name","value":"title"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"billing_so"},"value":{"kind":"Variable","name":{"kind":"Name","value":"billing_so"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"destination_address"},"value":{"kind":"Variable","name":{"kind":"Name","value":"destination_address"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"delivery_date"},"value":{"kind":"Variable","name":{"kind":"Name","value":"delivery_date"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"delivery_instructions"},"value":{"kind":"Variable","name":{"kind":"Name","value":"delivery_instructions"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"destination_poc"},"value":{"kind":"Variable","name":{"kind":"Name","value":"destination_poc"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"international_frt_resale"},"value":{"kind":"Variable","name":{"kind":"Name","value":"international_frt_resale"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"ior_compliance_resale"},"value":{"kind":"Variable","name":{"kind":"Name","value":"ior_compliance_resale"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"pickup_address"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pickup_address"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"psr"},"value":{"kind":"Variable","name":{"kind":"Name","value":"psr"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"delete_post_tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"post_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"insert_post_tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tags"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"delete_line_items"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"post_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"insert_line_items"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"Variable","name":{"kind":"Name","value":"line_items_data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<UpdatePostMutation, UpdatePostMutationVariables>;
+export const CreatePostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreatePost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"creator_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"org_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"title"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"billing_so"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"body"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"delivery_date"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamptz"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"delivery_instructions"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"destination_poc"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"destination_address"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"international_frt_resale"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"numeric"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"ior_compliance_resale"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"numeric"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pickup_address"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"psr"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tags_data"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"post_tags_insert_input"}}}},"defaultValue":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tag_id"},"value":{"kind":"StringValue","value":"","block":false}}]}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"line_items_data"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"line_items_insert_input"}}}},"defaultValue":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_by"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"customer_po"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"description"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"extended_resell"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"manufacturer"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"part_number"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"po"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"quantity"},"value":{"kind":"IntValue","value":"0"}},{"kind":"ObjectField","name":{"kind":"Name","value":"so"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"unit_resell"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"whs_delivery_date"},"value":{"kind":"StringValue","value":"","block":false}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_posts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"org_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"org_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"body"},"value":{"kind":"Variable","name":{"kind":"Name","value":"body"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"creator_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"creator_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"title"},"value":{"kind":"Variable","name":{"kind":"Name","value":"title"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"post_tags"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tags_data"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"line_items"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"line_items_data"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<CreatePostMutation, CreatePostMutationVariables>;
 export const CreateReactionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateReaction"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"author_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"post_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"type"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"post_reaction_types_enum"}},"defaultValue":{"kind":"EnumValue","value":"THUMBS_UP"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_post_reactions_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"author_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"author_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"post_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"post_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"type"},"value":{"kind":"Variable","name":{"kind":"Name","value":"type"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateReactionMutation, CreateReactionMutationVariables>;
 export const DeleteReactionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteReaction"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_post_reactions_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<DeleteReactionMutation, DeleteReactionMutationVariables>;
 export const SearchTagsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchTags"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"_regex"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_regex"},"value":{"kind":"Variable","name":{"kind":"Name","value":"_regex"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<SearchTagsQuery, SearchTagsQueryVariables>;

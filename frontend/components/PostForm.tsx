@@ -12,6 +12,7 @@ import FormSpy from "@data-driven-forms/react-form-renderer/form-spy";
 import {
   CreatePostMutation,
   CreatePostMutationVariables,
+  GetPostsQuery,
   Line_Items_Insert_Input,
   UpdatePostMutation,
   UpdatePostMutationVariables,
@@ -97,7 +98,6 @@ type Props = {
 
 const usePost = ({ type, after, initialValues }: Props) => {
   const { userId, orgId } = useAuth();
-  console.log(initialValues);
 
   const [createPost, { loading: posting }] = useMutation<
     CreatePostMutation,
@@ -124,25 +124,61 @@ const usePost = ({ type, after, initialValues }: Props) => {
     return ar || [];
   };
 
-  const onSubmit: FormRendererProps<{
-    tags?: string[];
-    body: string;
-    title: string;
-    id?: string;
-    products: (Line_Items_Insert_Input & { __typename?: string })[];
-  }>["onSubmit"] = async ({ tags, body, title, id, products }, api) => {
+  const onSubmit: FormRendererProps<
+    {
+      tags?: string[];
+      body: string;
+      title: string;
+      id?: string;
+      products: (Line_Items_Insert_Input & { __typename?: string })[];
+    } & GetPostsQuery["posts"]["0"]
+  >["onSubmit"] = async ({ tags, body, title, id, products, ...rest }, api) => {
     // return
     const lineItemsData = products.map((p) => {
       delete p.id;
-      // delete p.__typename
-      console.log(p);
       return { ...p, created_by: userId };
     });
+    console.log(rest);
+    console.log(rest);
+
+    const variables = {
+      pickup_address: rest.pickup_address,
+      delivery_date: rest.delivery_date,
+      psr: rest.psr,
+      destination_address: rest.destination_address,
+      destination_poc: rest.destination_poc,
+      delivery_instructions: rest.delivery_instructions,
+      billing_so: rest.billing_so,
+      ior_compliance_resale: rest.ior_compliance_resale,
+      international_frt_resale: rest.international_frt_resale,
+      body,
+      title,
+      id,
+      tags:
+        tags?.map((tag) => ({
+          tag_id: tag,
+          post_id: id,
+        })) || [],
+      line_items_data: lineItemsData.map((i) => {
+        delete i.__typename;
+        return { ...i, post_id: id };
+      }),
+    };
+    console.log(variables);
     try {
       type === "New"
         ? await createPost({
             variables: {
               creator_id: userId,
+              pickup_address: rest.pickup_address,
+              delivery_date: rest.delivery_date,
+              psr: rest.psr,
+              destination_address: rest.destination_address,
+              destination_poc: rest.destination_poc,
+              delivery_instructions: rest.delivery_instructions,
+              billing_so: rest.billing_so,
+              ior_compliance_resale: rest.ior_compliance_resale,
+              international_frt_resale: rest.international_frt_resale,
               org_id: orgId || userId,
               body,
               title,
@@ -154,27 +190,14 @@ const usePost = ({ type, after, initialValues }: Props) => {
             },
             refetchQueries: [GET_POSTS],
             onCompleted: () => api.reset(),
-            onError: (e) => console.log(e),
+            onError: (e) => console.error(e),
           })
         : await updatePost({
-            variables: {
-              body,
-              title,
-              id,
-              tags:
-                tags?.map((tag) => ({
-                  tag_id: tag,
-                  post_id: id,
-                })) || [],
-              line_items_data: lineItemsData.map((i) => {
-                delete i.__typename;
-                return { ...i, post_id: id };
-              }),
-            },
+            variables,
             refetchQueries: [GET_POSTS],
           });
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
     after && after();
   };
@@ -381,17 +404,11 @@ const usePost = ({ type, after, initialValues }: Props) => {
       },
       {
         component: componentTypes.TEXTAREA,
-        name: "resale_values",
-        label: "resale_values",
+        name: "ior_compliance_resale",
+        label: "ior_compliance_resale",
         validate: [{ type: "required" }],
         helperText:
           "Please provide the resale values for the IOR & intenational FRT lines.  The estimated costs for these lines can be found on the GIDS quote.",
-      },
-      {
-        component: componentTypes.TEXTAREA,
-        name: "ior_complience_resale",
-        label: "ior_complience_resale",
-        validate: [{ type: "required" }],
       },
       {
         component: componentTypes.TEXTAREA,

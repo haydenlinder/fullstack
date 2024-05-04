@@ -9,6 +9,15 @@ export const GET_POSTS = graphql(`
       creator_id
       title
       updated_at
+      billing_so
+      delivery_date
+      delivery_instructions
+      destination_poc
+      international_frt_resale
+      destination_address
+      ior_compliance_resale
+      pickup_address
+      psr
       author {
         name
         id
@@ -57,6 +66,15 @@ export const UPDATE_POST = graphql(`
   mutation UpdatePost(
     $id: uuid = ""
     $body: String = ""
+    $billing_so: String = ""
+    $destination_address: String = ""
+    $delivery_date: timestamptz = ""
+    $delivery_instructions: String = ""
+    $destination_poc: String = ""
+    $international_frt_resale: numeric = ""
+    $ior_compliance_resale: numeric = ""
+    $pickup_address: String = ""
+    $psr: String = ""
     $title: String = ""
     $tags: [post_tags_insert_input!] = { post_id: "", tag_id: "" }
     $line_items_data: [line_items_insert_input!] = {
@@ -76,7 +94,19 @@ export const UPDATE_POST = graphql(`
   ) {
     update_posts_by_pk(
       pk_columns: { id: $id }
-      _set: { body: $body, title: $title }
+      _set: {
+        body: $body
+        title: $title
+        billing_so: $billing_so
+        destination_address: $destination_address
+        delivery_date: $delivery_date
+        delivery_instructions: $delivery_instructions
+        destination_poc: $destination_poc
+        international_frt_resale: $international_frt_resale
+        ior_compliance_resale: $ior_compliance_resale
+        pickup_address: $pickup_address
+        psr: $psr
+      }
     ) {
       id
     }
@@ -105,10 +135,19 @@ export const UPDATE_POST = graphql(`
 
 export const CREATE_POST = graphql(`
   mutation CreatePost(
-    $body: String = ""
     $creator_id: String = ""
     $org_id: String = ""
     $title: String = ""
+    $billing_so: String = ""
+    $body: String = ""
+    $delivery_date: timestamptz = ""
+    $delivery_instructions: String = ""
+    $destination_poc: String = ""
+    $destination_address: String = ""
+    $international_frt_resale: numeric = ""
+    $ior_compliance_resale: numeric = ""
+    $pickup_address: String = ""
+    $psr: String = ""
     $tags_data: [post_tags_insert_input!] = { tag_id: "" }
     $line_items_data: [line_items_insert_input!] = {
       created_by: ""

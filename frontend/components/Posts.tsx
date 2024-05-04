@@ -113,19 +113,23 @@ const Post = ({ post }: Props) => {
     deletePost,
     parse,
   } = usePost({ post });
+  const p: Partial<typeof post> = { ...post };
+  delete p.line_items;
+  delete p.post_tags;
+  delete p.__typename;
 
   const initialValues = {
+    ...post,
+    delivery_date: new Date(post.delivery_date),
     body: post.body || undefined,
     title: post.title || undefined,
-    id: post.id,
+    // id: post.id,
     tags: post.post_tags.map(({ tag }) => tag.id) || undefined,
     products: post.line_items.map((i) => ({
       ...i,
       whs_delivery_date: new Date(i.whs_delivery_date),
     })),
   };
-
-  console.log(post.line_items);
 
   if (edit)
     return (
@@ -143,6 +147,7 @@ const Post = ({ post }: Props) => {
           <UserIcon className="mr-2" />
           <Typography fontSize={16}>{parse(post?.author?.name)}</Typography>
         </div>
+        {/* PARTS */}
         <div className="my-4">
           <Typography fontSize={24}>{parse(post.id)}</Typography>
           <TableContainer component={Paper}>
@@ -153,7 +158,12 @@ const Post = ({ post }: Props) => {
                   <TableCell align="right">Description</TableCell>
                   <TableCell align="right">Quantity</TableCell>
                   <TableCell align="right">Customer PO</TableCell>
+                  <TableCell align="right">Unit Resell</TableCell>
+                  <TableCell align="right">Extended Resell</TableCell>
+                  <TableCell align="right">Manufacturer</TableCell>
                   <TableCell align="right">SO</TableCell>
+                  <TableCell align="right">PO</TableCell>
+                  <TableCell align="right">Whs delivery date</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -166,12 +176,37 @@ const Post = ({ post }: Props) => {
                     <TableCell align="right">{row.description}</TableCell>
                     <TableCell align="right">{row.quantity}</TableCell>
                     <TableCell align="right">{row.customer_po}</TableCell>
+                    <TableCell align="right">{row.unit_resell}</TableCell>
+                    <TableCell align="right">
+                      {row.unit_resell * row.quantity}
+                    </TableCell>
+                    <TableCell align="right">{row.manufacturer}</TableCell>
                     <TableCell align="right">{row.so}</TableCell>
+                    <TableCell align="right">{row.po}</TableCell>
+                    <TableCell align="right">
+                      {new Date(row.whs_delivery_date).toLocaleDateString()}
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
           </TableContainer>
+        </div>
+        {/* MAIN */}
+        <div>
+          <div>
+            Delivery Date: {new Date(post.delivery_date).toLocaleDateString()}
+          </div>
+          <div>PSR: {post.psr}</div>
+          <div>Pickup Address: {post.pickup_address}</div>
+          <div>Destination Address: {post.destination_address}</div>
+          <div>Destination POC: {post.destination_poc}</div>
+          <div>Delivery Instructions: {post.delivery_instructions}</div>
+          <div>Billing SO: {post.billing_so}</div>
+          <div>IOR Compliance Resale: {post.ior_compliance_resale}</div>
+          <div>
+            International FRT Compliance Resale: {post.international_frt_resale}
+          </div>
         </div>
         <div className="my-5">
           {post.post_tags.map(({ tag }, i) => (
