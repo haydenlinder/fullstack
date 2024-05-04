@@ -24,7 +24,7 @@ export default function RootLayout({
   return (
     <ClerkProvider appearance={{ baseTheme: dark }}>
       <html lang="en">
-        <body className={`flex justify-center mt-28`}>
+        <body className={"flex justify-center mt-28"}>
           <div className="container">
             <ApolloWrapper>
               <AppRouterCacheProvider options={{}}>
@@ -69,7 +69,7 @@ function App({ children }: { children: ReactNode }) {
           <SignIn afterSignInUrl={"/app"} afterSignUpUrl={"/app"} />
         </Paper>
       </Modal>
-      <div className={`sm:mx-16 sm:ml-[300px] flex justify-center`}>
+      <div className={"sm:mx-16 sm:ml-[300px] flex justify-center"}>
         <div className="container">{children}</div>
       </div>
     </>

@@ -1,3 +1,3 @@
 export default function New() {
-  return <div>I haven't built this page yet</div>;
+  return <div>I no build this page yet</div>;
 }
