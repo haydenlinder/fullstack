@@ -211,6 +211,7 @@ const usePost = ({ type, after, initialValues }: Props) => {
     fields: [
       {
         component: "field-array",
+        class: "mb-8",
         name: "products",
         label: "Product section",
         validate: [{ type: "required" }],
@@ -357,14 +358,15 @@ const usePost = ({ type, after, initialValues }: Props) => {
       },
       {
         component: componentTypes.DATE_PICKER,
-        FormFieldGridProps: { xs: 6 },
-
+        class: "mb-8",
+        FormFieldGridProps: { xs: 6, mb: 3 },
         name: "delivery_date",
         label: "delivery_date",
         validate: [{ type: "required" }],
       },
       {
         component: componentTypes.TEXT_FIELD,
+        class: "mb-8",
         name: "psr",
         label: "psr",
         validate: [{ type: "required" }],
@@ -372,24 +374,28 @@ const usePost = ({ type, after, initialValues }: Props) => {
       },
       {
         component: componentTypes.TEXTAREA,
+        class: "mb-8",
         name: "pickup_address",
         label: "pickup_address",
         validate: [{ type: "required" }],
       },
       {
         component: componentTypes.TEXTAREA,
+        class: "mb-8",
         name: "destination_address",
         label: "destination_address",
         validate: [{ type: "required" }],
       },
       {
         component: componentTypes.TEXTAREA,
+        class: "mb-8",
         name: "destination_poc",
         label: "destination_poc",
         validate: [{ type: "required" }],
       },
       {
         component: componentTypes.TEXTAREA,
+        class: "mb-8",
         name: "delivery_instructions",
         label: "delivery_instructions",
         validate: [{ type: "required" }],
@@ -398,12 +404,14 @@ const usePost = ({ type, after, initialValues }: Props) => {
       },
       {
         component: componentTypes.TEXTAREA,
+        class: "mb-8",
         name: "billing_so",
         label: "billing_so",
         validate: [{ type: "required" }],
       },
       {
         component: componentTypes.TEXTAREA,
+        class: "mb-8",
         name: "ior_compliance_resale",
         label: "ior_compliance_resale",
         validate: [{ type: "required" }],
@@ -412,12 +420,14 @@ const usePost = ({ type, after, initialValues }: Props) => {
       },
       {
         component: componentTypes.TEXTAREA,
+        class: "mb-8",
         name: "international_frt_resale",
         label: "international_frt_resale",
         validate: [{ type: "required" }],
       },
       {
         component: componentTypes.SELECT,
+        class: "mb-8",
         noOptionsMessage: "No results",
         options: [],
         loadOptions: getTags,
