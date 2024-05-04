@@ -28,6 +28,19 @@ export const GET_POSTS = graphql(`
           id
         }
       }
+      line_items {
+        customer_po
+        description
+        extended_resell
+        id
+        manufacturer
+        part_number
+        po
+        quantity
+        so
+        unit_resell
+        whs_delivery_date
+      }
     }
   }
 `);
@@ -39,12 +52,27 @@ export const DELETE_POST = graphql(`
     }
   }
 `);
+
 export const UPDATE_POST = graphql(`
   mutation UpdatePost(
     $id: uuid = ""
     $body: String = ""
     $title: String = ""
     $tags: [post_tags_insert_input!] = { post_id: "", tag_id: "" }
+    $line_items_data: [line_items_insert_input!] = {
+      created_by: ""
+      customer_po: ""
+      description: ""
+      extended_resell: ""
+      manufacturer: ""
+      part_number: ""
+      po: ""
+      quantity: 0
+      so: ""
+      unit_resell: ""
+      whs_delivery_date: ""
+      post_id: ""
+    }
   ) {
     update_posts_by_pk(
       pk_columns: { id: $id }
@@ -62,6 +90,16 @@ export const UPDATE_POST = graphql(`
         id
       }
     }
+    delete_line_items(where: { post_id: { _eq: $id } }) {
+      returning {
+        id
+      }
+    }
+    insert_line_items(objects: $line_items_data) {
+      returning {
+        id
+      }
+    }
   }
 `);
 
@@ -71,7 +109,20 @@ export const CREATE_POST = graphql(`
     $creator_id: String = ""
     $org_id: String = ""
     $title: String = ""
-    $data: [post_tags_insert_input!] = { post_id: "", tag_id: "" }
+    $tags_data: [post_tags_insert_input!] = { tag_id: "" }
+    $line_items_data: [line_items_insert_input!] = {
+      created_by: ""
+      customer_po: ""
+      description: ""
+      extended_resell: ""
+      manufacturer: ""
+      part_number: ""
+      po: ""
+      quantity: 0
+      so: ""
+      unit_resell: ""
+      whs_delivery_date: ""
+    }
   ) {
     insert_posts(
       objects: {
@@ -79,7 +130,8 @@ export const CREATE_POST = graphql(`
         body: $body
         creator_id: $creator_id
         title: $title
-        post_tags: { data: $data }
+        post_tags: { data: $tags_data }
+        line_items: { data: $line_items_data }
       }
     ) {
       returning {
@@ -157,6 +209,19 @@ export const SEARCH_POSTS = graphql(`
         tag {
           id
         }
+      }
+      line_items {
+        customer_po
+        description
+        extended_resell
+        id
+        manufacturer
+        part_number
+        po
+        quantity
+        so
+        unit_resell
+        whs_delivery_date
       }
     }
   }

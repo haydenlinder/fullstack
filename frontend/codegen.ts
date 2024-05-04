@@ -1,3 +1,4 @@
+import { addTypenameToDocument } from "@apollo/client/utilities";
 import { CodegenConfig } from "@graphql-codegen/cli";
 import { readFileSync } from "fs";
 
@@ -19,6 +20,9 @@ const config: CodegenConfig = {
   ignoreNoDocuments: true, // for better experience with the watcher
   generates: {
     "./src/gql/": {
+      config: {
+        addTypenameToDocument: true,
+      },
       preset: "client",
     },
   },

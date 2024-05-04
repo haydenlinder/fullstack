@@ -14,6 +14,7 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  numeric: { input: any; output: any; }
   timestamptz: { input: any; output: any; }
   uuid: { input: any; output: any; }
 };
@@ -72,9 +73,519 @@ export enum Cursor_Ordering {
   Desc = 'DESC'
 }
 
+/** columns and relationships of "line_items" */
+export type Line_Items = {
+  __typename?: 'line_items';
+  created_at: Scalars['timestamptz']['output'];
+  created_by: Scalars['String']['output'];
+  customer_po: Scalars['String']['output'];
+  description: Scalars['String']['output'];
+  extended_resell: Scalars['numeric']['output'];
+  id: Scalars['Int']['output'];
+  manufacturer: Scalars['String']['output'];
+  part_number: Scalars['String']['output'];
+  po: Scalars['String']['output'];
+  /** An object relationship */
+  post?: Maybe<Posts>;
+  post_id: Scalars['uuid']['output'];
+  quantity: Scalars['Int']['output'];
+  so: Scalars['String']['output'];
+  unit_resell: Scalars['numeric']['output'];
+  whs_delivery_date?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** aggregated selection of "line_items" */
+export type Line_Items_Aggregate = {
+  __typename?: 'line_items_aggregate';
+  aggregate?: Maybe<Line_Items_Aggregate_Fields>;
+  nodes: Array<Line_Items>;
+};
+
+export type Line_Items_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Line_Items_Aggregate_Bool_Exp_Count>;
+};
+
+export type Line_Items_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Line_Items_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Line_Items_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "line_items" */
+export type Line_Items_Aggregate_Fields = {
+  __typename?: 'line_items_aggregate_fields';
+  avg?: Maybe<Line_Items_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Line_Items_Max_Fields>;
+  min?: Maybe<Line_Items_Min_Fields>;
+  stddev?: Maybe<Line_Items_Stddev_Fields>;
+  stddev_pop?: Maybe<Line_Items_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Line_Items_Stddev_Samp_Fields>;
+  sum?: Maybe<Line_Items_Sum_Fields>;
+  var_pop?: Maybe<Line_Items_Var_Pop_Fields>;
+  var_samp?: Maybe<Line_Items_Var_Samp_Fields>;
+  variance?: Maybe<Line_Items_Variance_Fields>;
+};
+
+
+/** aggregate fields of "line_items" */
+export type Line_Items_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Line_Items_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "line_items" */
+export type Line_Items_Aggregate_Order_By = {
+  avg?: InputMaybe<Line_Items_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Line_Items_Max_Order_By>;
+  min?: InputMaybe<Line_Items_Min_Order_By>;
+  stddev?: InputMaybe<Line_Items_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Line_Items_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Line_Items_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Line_Items_Sum_Order_By>;
+  var_pop?: InputMaybe<Line_Items_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Line_Items_Var_Samp_Order_By>;
+  variance?: InputMaybe<Line_Items_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "line_items" */
+export type Line_Items_Arr_Rel_Insert_Input = {
+  data: Array<Line_Items_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Line_Items_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type Line_Items_Avg_Fields = {
+  __typename?: 'line_items_avg_fields';
+  extended_resell?: Maybe<Scalars['Float']['output']>;
+  id?: Maybe<Scalars['Float']['output']>;
+  quantity?: Maybe<Scalars['Float']['output']>;
+  unit_resell?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by avg() on columns of table "line_items" */
+export type Line_Items_Avg_Order_By = {
+  extended_resell?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  quantity?: InputMaybe<Order_By>;
+  unit_resell?: InputMaybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "line_items". All fields are combined with a logical 'AND'. */
+export type Line_Items_Bool_Exp = {
+  _and?: InputMaybe<Array<Line_Items_Bool_Exp>>;
+  _not?: InputMaybe<Line_Items_Bool_Exp>;
+  _or?: InputMaybe<Array<Line_Items_Bool_Exp>>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  created_by?: InputMaybe<String_Comparison_Exp>;
+  customer_po?: InputMaybe<String_Comparison_Exp>;
+  description?: InputMaybe<String_Comparison_Exp>;
+  extended_resell?: InputMaybe<Numeric_Comparison_Exp>;
+  id?: InputMaybe<Int_Comparison_Exp>;
+  manufacturer?: InputMaybe<String_Comparison_Exp>;
+  part_number?: InputMaybe<String_Comparison_Exp>;
+  po?: InputMaybe<String_Comparison_Exp>;
+  post?: InputMaybe<Posts_Bool_Exp>;
+  post_id?: InputMaybe<Uuid_Comparison_Exp>;
+  quantity?: InputMaybe<Int_Comparison_Exp>;
+  so?: InputMaybe<String_Comparison_Exp>;
+  unit_resell?: InputMaybe<Numeric_Comparison_Exp>;
+  whs_delivery_date?: InputMaybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "line_items" */
+export enum Line_Items_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  LineItemsPkey = 'line_items_pkey'
+}
+
+/** input type for incrementing numeric columns in table "line_items" */
+export type Line_Items_Inc_Input = {
+  extended_resell?: InputMaybe<Scalars['numeric']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  quantity?: InputMaybe<Scalars['Int']['input']>;
+  unit_resell?: InputMaybe<Scalars['numeric']['input']>;
+};
+
+/** input type for inserting data into table "line_items" */
+export type Line_Items_Insert_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  created_by?: InputMaybe<Scalars['String']['input']>;
+  customer_po?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  extended_resell?: InputMaybe<Scalars['numeric']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  manufacturer?: InputMaybe<Scalars['String']['input']>;
+  part_number?: InputMaybe<Scalars['String']['input']>;
+  po?: InputMaybe<Scalars['String']['input']>;
+  post?: InputMaybe<Posts_Obj_Rel_Insert_Input>;
+  post_id?: InputMaybe<Scalars['uuid']['input']>;
+  quantity?: InputMaybe<Scalars['Int']['input']>;
+  so?: InputMaybe<Scalars['String']['input']>;
+  unit_resell?: InputMaybe<Scalars['numeric']['input']>;
+  whs_delivery_date?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** aggregate max on columns */
+export type Line_Items_Max_Fields = {
+  __typename?: 'line_items_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  created_by?: Maybe<Scalars['String']['output']>;
+  customer_po?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  extended_resell?: Maybe<Scalars['numeric']['output']>;
+  id?: Maybe<Scalars['Int']['output']>;
+  manufacturer?: Maybe<Scalars['String']['output']>;
+  part_number?: Maybe<Scalars['String']['output']>;
+  po?: Maybe<Scalars['String']['output']>;
+  post_id?: Maybe<Scalars['uuid']['output']>;
+  quantity?: Maybe<Scalars['Int']['output']>;
+  so?: Maybe<Scalars['String']['output']>;
+  unit_resell?: Maybe<Scalars['numeric']['output']>;
+  whs_delivery_date?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** order by max() on columns of table "line_items" */
+export type Line_Items_Max_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  created_by?: InputMaybe<Order_By>;
+  customer_po?: InputMaybe<Order_By>;
+  description?: InputMaybe<Order_By>;
+  extended_resell?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  manufacturer?: InputMaybe<Order_By>;
+  part_number?: InputMaybe<Order_By>;
+  po?: InputMaybe<Order_By>;
+  post_id?: InputMaybe<Order_By>;
+  quantity?: InputMaybe<Order_By>;
+  so?: InputMaybe<Order_By>;
+  unit_resell?: InputMaybe<Order_By>;
+  whs_delivery_date?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Line_Items_Min_Fields = {
+  __typename?: 'line_items_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  created_by?: Maybe<Scalars['String']['output']>;
+  customer_po?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  extended_resell?: Maybe<Scalars['numeric']['output']>;
+  id?: Maybe<Scalars['Int']['output']>;
+  manufacturer?: Maybe<Scalars['String']['output']>;
+  part_number?: Maybe<Scalars['String']['output']>;
+  po?: Maybe<Scalars['String']['output']>;
+  post_id?: Maybe<Scalars['uuid']['output']>;
+  quantity?: Maybe<Scalars['Int']['output']>;
+  so?: Maybe<Scalars['String']['output']>;
+  unit_resell?: Maybe<Scalars['numeric']['output']>;
+  whs_delivery_date?: Maybe<Scalars['timestamptz']['output']>;
+};
+
+/** order by min() on columns of table "line_items" */
+export type Line_Items_Min_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  created_by?: InputMaybe<Order_By>;
+  customer_po?: InputMaybe<Order_By>;
+  description?: InputMaybe<Order_By>;
+  extended_resell?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  manufacturer?: InputMaybe<Order_By>;
+  part_number?: InputMaybe<Order_By>;
+  po?: InputMaybe<Order_By>;
+  post_id?: InputMaybe<Order_By>;
+  quantity?: InputMaybe<Order_By>;
+  so?: InputMaybe<Order_By>;
+  unit_resell?: InputMaybe<Order_By>;
+  whs_delivery_date?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "line_items" */
+export type Line_Items_Mutation_Response = {
+  __typename?: 'line_items_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Line_Items>;
+};
+
+/** on_conflict condition type for table "line_items" */
+export type Line_Items_On_Conflict = {
+  constraint: Line_Items_Constraint;
+  update_columns?: Array<Line_Items_Update_Column>;
+  where?: InputMaybe<Line_Items_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "line_items". */
+export type Line_Items_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  created_by?: InputMaybe<Order_By>;
+  customer_po?: InputMaybe<Order_By>;
+  description?: InputMaybe<Order_By>;
+  extended_resell?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  manufacturer?: InputMaybe<Order_By>;
+  part_number?: InputMaybe<Order_By>;
+  po?: InputMaybe<Order_By>;
+  post?: InputMaybe<Posts_Order_By>;
+  post_id?: InputMaybe<Order_By>;
+  quantity?: InputMaybe<Order_By>;
+  so?: InputMaybe<Order_By>;
+  unit_resell?: InputMaybe<Order_By>;
+  whs_delivery_date?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: line_items */
+export type Line_Items_Pk_Columns_Input = {
+  id: Scalars['Int']['input'];
+};
+
+/** select columns of table "line_items" */
+export enum Line_Items_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  CreatedBy = 'created_by',
+  /** column name */
+  CustomerPo = 'customer_po',
+  /** column name */
+  Description = 'description',
+  /** column name */
+  ExtendedResell = 'extended_resell',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Manufacturer = 'manufacturer',
+  /** column name */
+  PartNumber = 'part_number',
+  /** column name */
+  Po = 'po',
+  /** column name */
+  PostId = 'post_id',
+  /** column name */
+  Quantity = 'quantity',
+  /** column name */
+  So = 'so',
+  /** column name */
+  UnitResell = 'unit_resell',
+  /** column name */
+  WhsDeliveryDate = 'whs_delivery_date'
+}
+
+/** input type for updating data in table "line_items" */
+export type Line_Items_Set_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  created_by?: InputMaybe<Scalars['String']['input']>;
+  customer_po?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  extended_resell?: InputMaybe<Scalars['numeric']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  manufacturer?: InputMaybe<Scalars['String']['input']>;
+  part_number?: InputMaybe<Scalars['String']['input']>;
+  po?: InputMaybe<Scalars['String']['input']>;
+  post_id?: InputMaybe<Scalars['uuid']['input']>;
+  quantity?: InputMaybe<Scalars['Int']['input']>;
+  so?: InputMaybe<Scalars['String']['input']>;
+  unit_resell?: InputMaybe<Scalars['numeric']['input']>;
+  whs_delivery_date?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** aggregate stddev on columns */
+export type Line_Items_Stddev_Fields = {
+  __typename?: 'line_items_stddev_fields';
+  extended_resell?: Maybe<Scalars['Float']['output']>;
+  id?: Maybe<Scalars['Float']['output']>;
+  quantity?: Maybe<Scalars['Float']['output']>;
+  unit_resell?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev() on columns of table "line_items" */
+export type Line_Items_Stddev_Order_By = {
+  extended_resell?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  quantity?: InputMaybe<Order_By>;
+  unit_resell?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Line_Items_Stddev_Pop_Fields = {
+  __typename?: 'line_items_stddev_pop_fields';
+  extended_resell?: Maybe<Scalars['Float']['output']>;
+  id?: Maybe<Scalars['Float']['output']>;
+  quantity?: Maybe<Scalars['Float']['output']>;
+  unit_resell?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_pop() on columns of table "line_items" */
+export type Line_Items_Stddev_Pop_Order_By = {
+  extended_resell?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  quantity?: InputMaybe<Order_By>;
+  unit_resell?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Line_Items_Stddev_Samp_Fields = {
+  __typename?: 'line_items_stddev_samp_fields';
+  extended_resell?: Maybe<Scalars['Float']['output']>;
+  id?: Maybe<Scalars['Float']['output']>;
+  quantity?: Maybe<Scalars['Float']['output']>;
+  unit_resell?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_samp() on columns of table "line_items" */
+export type Line_Items_Stddev_Samp_Order_By = {
+  extended_resell?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  quantity?: InputMaybe<Order_By>;
+  unit_resell?: InputMaybe<Order_By>;
+};
+
+/** Streaming cursor of the table "line_items" */
+export type Line_Items_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Line_Items_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Line_Items_Stream_Cursor_Value_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  created_by?: InputMaybe<Scalars['String']['input']>;
+  customer_po?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  extended_resell?: InputMaybe<Scalars['numeric']['input']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
+  manufacturer?: InputMaybe<Scalars['String']['input']>;
+  part_number?: InputMaybe<Scalars['String']['input']>;
+  po?: InputMaybe<Scalars['String']['input']>;
+  post_id?: InputMaybe<Scalars['uuid']['input']>;
+  quantity?: InputMaybe<Scalars['Int']['input']>;
+  so?: InputMaybe<Scalars['String']['input']>;
+  unit_resell?: InputMaybe<Scalars['numeric']['input']>;
+  whs_delivery_date?: InputMaybe<Scalars['timestamptz']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Line_Items_Sum_Fields = {
+  __typename?: 'line_items_sum_fields';
+  extended_resell?: Maybe<Scalars['numeric']['output']>;
+  id?: Maybe<Scalars['Int']['output']>;
+  quantity?: Maybe<Scalars['Int']['output']>;
+  unit_resell?: Maybe<Scalars['numeric']['output']>;
+};
+
+/** order by sum() on columns of table "line_items" */
+export type Line_Items_Sum_Order_By = {
+  extended_resell?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  quantity?: InputMaybe<Order_By>;
+  unit_resell?: InputMaybe<Order_By>;
+};
+
+/** update columns of table "line_items" */
+export enum Line_Items_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  CreatedBy = 'created_by',
+  /** column name */
+  CustomerPo = 'customer_po',
+  /** column name */
+  Description = 'description',
+  /** column name */
+  ExtendedResell = 'extended_resell',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Manufacturer = 'manufacturer',
+  /** column name */
+  PartNumber = 'part_number',
+  /** column name */
+  Po = 'po',
+  /** column name */
+  PostId = 'post_id',
+  /** column name */
+  Quantity = 'quantity',
+  /** column name */
+  So = 'so',
+  /** column name */
+  UnitResell = 'unit_resell',
+  /** column name */
+  WhsDeliveryDate = 'whs_delivery_date'
+}
+
+export type Line_Items_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Line_Items_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Line_Items_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Line_Items_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Line_Items_Var_Pop_Fields = {
+  __typename?: 'line_items_var_pop_fields';
+  extended_resell?: Maybe<Scalars['Float']['output']>;
+  id?: Maybe<Scalars['Float']['output']>;
+  quantity?: Maybe<Scalars['Float']['output']>;
+  unit_resell?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by var_pop() on columns of table "line_items" */
+export type Line_Items_Var_Pop_Order_By = {
+  extended_resell?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  quantity?: InputMaybe<Order_By>;
+  unit_resell?: InputMaybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Line_Items_Var_Samp_Fields = {
+  __typename?: 'line_items_var_samp_fields';
+  extended_resell?: Maybe<Scalars['Float']['output']>;
+  id?: Maybe<Scalars['Float']['output']>;
+  quantity?: Maybe<Scalars['Float']['output']>;
+  unit_resell?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by var_samp() on columns of table "line_items" */
+export type Line_Items_Var_Samp_Order_By = {
+  extended_resell?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  quantity?: InputMaybe<Order_By>;
+  unit_resell?: InputMaybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Line_Items_Variance_Fields = {
+  __typename?: 'line_items_variance_fields';
+  extended_resell?: Maybe<Scalars['Float']['output']>;
+  id?: Maybe<Scalars['Float']['output']>;
+  quantity?: Maybe<Scalars['Float']['output']>;
+  unit_resell?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by variance() on columns of table "line_items" */
+export type Line_Items_Variance_Order_By = {
+  extended_resell?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  quantity?: InputMaybe<Order_By>;
+  unit_resell?: InputMaybe<Order_By>;
+};
+
 /** mutation root */
 export type Mutation_Root = {
   __typename?: 'mutation_root';
+  /** delete data from the table: "line_items" */
+  delete_line_items?: Maybe<Line_Items_Mutation_Response>;
+  /** delete single row from the table: "line_items" */
+  delete_line_items_by_pk?: Maybe<Line_Items>;
   /** delete data from the table: "organization_users" */
   delete_organization_users?: Maybe<Organization_Users_Mutation_Response>;
   /** delete single row from the table: "organization_users" */
@@ -107,6 +618,10 @@ export type Mutation_Root = {
   delete_users?: Maybe<Users_Mutation_Response>;
   /** delete single row from the table: "users" */
   delete_users_by_pk?: Maybe<Users>;
+  /** insert data into the table: "line_items" */
+  insert_line_items?: Maybe<Line_Items_Mutation_Response>;
+  /** insert a single row into the table: "line_items" */
+  insert_line_items_one?: Maybe<Line_Items>;
   /** insert data into the table: "organization_users" */
   insert_organization_users?: Maybe<Organization_Users_Mutation_Response>;
   /** insert a single row into the table: "organization_users" */
@@ -139,6 +654,12 @@ export type Mutation_Root = {
   insert_users?: Maybe<Users_Mutation_Response>;
   /** insert a single row into the table: "users" */
   insert_users_one?: Maybe<Users>;
+  /** update data of the table: "line_items" */
+  update_line_items?: Maybe<Line_Items_Mutation_Response>;
+  /** update single row of the table: "line_items" */
+  update_line_items_by_pk?: Maybe<Line_Items>;
+  /** update multiples rows of table: "line_items" */
+  update_line_items_many?: Maybe<Array<Maybe<Line_Items_Mutation_Response>>>;
   /** update data of the table: "organization_users" */
   update_organization_users?: Maybe<Organization_Users_Mutation_Response>;
   /** update single row of the table: "organization_users" */
@@ -187,6 +708,18 @@ export type Mutation_Root = {
   update_users_by_pk?: Maybe<Users>;
   /** update multiples rows of table: "users" */
   update_users_many?: Maybe<Array<Maybe<Users_Mutation_Response>>>;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Line_ItemsArgs = {
+  where: Line_Items_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Line_Items_By_PkArgs = {
+  id: Scalars['Int']['input'];
 };
 
 
@@ -283,6 +816,20 @@ export type Mutation_RootDelete_UsersArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Users_By_PkArgs = {
   id: Scalars['String']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Line_ItemsArgs = {
+  objects: Array<Line_Items_Insert_Input>;
+  on_conflict?: InputMaybe<Line_Items_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Line_Items_OneArgs = {
+  object: Line_Items_Insert_Input;
+  on_conflict?: InputMaybe<Line_Items_On_Conflict>;
 };
 
 
@@ -395,6 +942,28 @@ export type Mutation_RootInsert_UsersArgs = {
 export type Mutation_RootInsert_Users_OneArgs = {
   object: Users_Insert_Input;
   on_conflict?: InputMaybe<Users_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Line_ItemsArgs = {
+  _inc?: InputMaybe<Line_Items_Inc_Input>;
+  _set?: InputMaybe<Line_Items_Set_Input>;
+  where: Line_Items_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Line_Items_By_PkArgs = {
+  _inc?: InputMaybe<Line_Items_Inc_Input>;
+  _set?: InputMaybe<Line_Items_Set_Input>;
+  pk_columns: Line_Items_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Line_Items_ManyArgs = {
+  updates: Array<Line_Items_Updates>;
 };
 
 
@@ -555,6 +1124,19 @@ export type Mutation_RootUpdate_Users_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_Users_ManyArgs = {
   updates: Array<Users_Updates>;
+};
+
+/** Boolean expression to compare columns of type "numeric". All fields are combined with logical 'AND'. */
+export type Numeric_Comparison_Exp = {
+  _eq?: InputMaybe<Scalars['numeric']['input']>;
+  _gt?: InputMaybe<Scalars['numeric']['input']>;
+  _gte?: InputMaybe<Scalars['numeric']['input']>;
+  _in?: InputMaybe<Array<Scalars['numeric']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['numeric']['input']>;
+  _lte?: InputMaybe<Scalars['numeric']['input']>;
+  _neq?: InputMaybe<Scalars['numeric']['input']>;
+  _nin?: InputMaybe<Array<Scalars['numeric']['input']>>;
 };
 
 /** column ordering options */
@@ -1548,11 +2130,15 @@ export type Posts = {
   __typename?: 'posts';
   /** An object relationship */
   author?: Maybe<Users>;
-  body: Scalars['String']['output'];
+  body?: Maybe<Scalars['String']['output']>;
   created_at: Scalars['timestamptz']['output'];
   creator_id: Scalars['String']['output'];
   id: Scalars['uuid']['output'];
-  org_id?: Maybe<Scalars['String']['output']>;
+  /** An array relationship */
+  line_items: Array<Line_Items>;
+  /** An aggregate relationship */
+  line_items_aggregate: Line_Items_Aggregate;
+  org_id: Scalars['String']['output'];
   /** An object relationship */
   organization?: Maybe<Organizations>;
   /** An array relationship */
@@ -1563,8 +2149,28 @@ export type Posts = {
   post_tags: Array<Post_Tags>;
   /** An aggregate relationship */
   post_tags_aggregate: Post_Tags_Aggregate;
-  title: Scalars['String']['output'];
+  title?: Maybe<Scalars['String']['output']>;
   updated_at: Scalars['timestamptz']['output'];
+};
+
+
+/** columns and relationships of "posts" */
+export type PostsLine_ItemsArgs = {
+  distinct_on?: InputMaybe<Array<Line_Items_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Line_Items_Order_By>>;
+  where?: InputMaybe<Line_Items_Bool_Exp>;
+};
+
+
+/** columns and relationships of "posts" */
+export type PostsLine_Items_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Line_Items_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Line_Items_Order_By>>;
+  where?: InputMaybe<Line_Items_Bool_Exp>;
 };
 
 
@@ -1664,6 +2270,8 @@ export type Posts_Bool_Exp = {
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   creator_id?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
+  line_items?: InputMaybe<Line_Items_Bool_Exp>;
+  line_items_aggregate?: InputMaybe<Line_Items_Aggregate_Bool_Exp>;
   org_id?: InputMaybe<String_Comparison_Exp>;
   organization?: InputMaybe<Organizations_Bool_Exp>;
   post_reactions?: InputMaybe<Post_Reactions_Bool_Exp>;
@@ -1687,6 +2295,7 @@ export type Posts_Insert_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   creator_id?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
+  line_items?: InputMaybe<Line_Items_Arr_Rel_Insert_Input>;
   org_id?: InputMaybe<Scalars['String']['input']>;
   organization?: InputMaybe<Organizations_Obj_Rel_Insert_Input>;
   post_reactions?: InputMaybe<Post_Reactions_Arr_Rel_Insert_Input>;
@@ -1771,6 +2380,7 @@ export type Posts_Order_By = {
   created_at?: InputMaybe<Order_By>;
   creator_id?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  line_items_aggregate?: InputMaybe<Line_Items_Aggregate_Order_By>;
   org_id?: InputMaybe<Order_By>;
   organization?: InputMaybe<Organizations_Order_By>;
   post_reactions_aggregate?: InputMaybe<Post_Reactions_Aggregate_Order_By>;
@@ -1859,6 +2469,12 @@ export type Posts_Updates = {
 
 export type Query_Root = {
   __typename?: 'query_root';
+  /** An array relationship */
+  line_items: Array<Line_Items>;
+  /** An aggregate relationship */
+  line_items_aggregate: Line_Items_Aggregate;
+  /** fetch data from the table: "line_items" using primary key columns */
+  line_items_by_pk?: Maybe<Line_Items>;
   /** fetch data from the table: "organization_users" */
   organization_users: Array<Organization_Users>;
   /** fetch aggregated fields from the table: "organization_users" */
@@ -1907,6 +2523,29 @@ export type Query_Root = {
   users_aggregate: Users_Aggregate;
   /** fetch data from the table: "users" using primary key columns */
   users_by_pk?: Maybe<Users>;
+};
+
+
+export type Query_RootLine_ItemsArgs = {
+  distinct_on?: InputMaybe<Array<Line_Items_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Line_Items_Order_By>>;
+  where?: InputMaybe<Line_Items_Bool_Exp>;
+};
+
+
+export type Query_RootLine_Items_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Line_Items_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Line_Items_Order_By>>;
+  where?: InputMaybe<Line_Items_Bool_Exp>;
+};
+
+
+export type Query_RootLine_Items_By_PkArgs = {
+  id: Scalars['Int']['input'];
 };
 
 
@@ -2095,6 +2734,14 @@ export type Query_RootUsers_By_PkArgs = {
 
 export type Subscription_Root = {
   __typename?: 'subscription_root';
+  /** An array relationship */
+  line_items: Array<Line_Items>;
+  /** An aggregate relationship */
+  line_items_aggregate: Line_Items_Aggregate;
+  /** fetch data from the table: "line_items" using primary key columns */
+  line_items_by_pk?: Maybe<Line_Items>;
+  /** fetch data from the table in a streaming manner: "line_items" */
+  line_items_stream: Array<Line_Items>;
   /** fetch data from the table: "organization_users" */
   organization_users: Array<Organization_Users>;
   /** fetch aggregated fields from the table: "organization_users" */
@@ -2159,6 +2806,36 @@ export type Subscription_Root = {
   users_by_pk?: Maybe<Users>;
   /** fetch data from the table in a streaming manner: "users" */
   users_stream: Array<Users>;
+};
+
+
+export type Subscription_RootLine_ItemsArgs = {
+  distinct_on?: InputMaybe<Array<Line_Items_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Line_Items_Order_By>>;
+  where?: InputMaybe<Line_Items_Bool_Exp>;
+};
+
+
+export type Subscription_RootLine_Items_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Line_Items_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Line_Items_Order_By>>;
+  where?: InputMaybe<Line_Items_Bool_Exp>;
+};
+
+
+export type Subscription_RootLine_Items_By_PkArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type Subscription_RootLine_Items_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Line_Items_Stream_Cursor_Input>>;
+  where?: InputMaybe<Line_Items_Bool_Exp>;
 };
 
 
@@ -2893,7 +3570,7 @@ export type Uuid_Comparison_Exp = {
 export type GetPostsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetPostsQuery = { __typename?: 'query_root', posts: Array<{ __typename?: 'posts', id: any, body: string, created_at: any, creator_id: string, title: string, updated_at: any, author?: { __typename?: 'users', name: string, id: string } | null, post_reactions: Array<{ __typename?: 'post_reactions', author_id: string, type: Post_Reaction_Types_Enum, id: any }>, post_reactions_aggregate: { __typename?: 'post_reactions_aggregate', aggregate?: { __typename?: 'post_reactions_aggregate_fields', count: number } | null }, post_tags: Array<{ __typename?: 'post_tags', tag: { __typename?: 'tags', id: string } }> }> };
+export type GetPostsQuery = { __typename?: 'query_root', posts: Array<{ __typename?: 'posts', id: any, body?: string | null, created_at: any, creator_id: string, title?: string | null, updated_at: any, author?: { __typename?: 'users', name: string, id: string } | null, post_reactions: Array<{ __typename?: 'post_reactions', author_id: string, type: Post_Reaction_Types_Enum, id: any }>, post_reactions_aggregate: { __typename?: 'post_reactions_aggregate', aggregate?: { __typename?: 'post_reactions_aggregate_fields', count: number } | null }, post_tags: Array<{ __typename?: 'post_tags', tag: { __typename?: 'tags', id: string } }>, line_items: Array<{ __typename?: 'line_items', customer_po: string, description: string, extended_resell: any, id: number, manufacturer: string, part_number: string, po: string, quantity: number, so: string, unit_resell: any, whs_delivery_date?: any | null }> }> };
 
 export type DeletePostMutationVariables = Exact<{
   id?: InputMaybe<Scalars['uuid']['input']>;
@@ -2907,17 +3584,19 @@ export type UpdatePostMutationVariables = Exact<{
   body?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
   tags?: InputMaybe<Array<Post_Tags_Insert_Input> | Post_Tags_Insert_Input>;
+  line_items_data?: InputMaybe<Array<Line_Items_Insert_Input> | Line_Items_Insert_Input>;
 }>;
 
 
-export type UpdatePostMutation = { __typename?: 'mutation_root', update_posts_by_pk?: { __typename?: 'posts', id: any } | null, delete_post_tags?: { __typename?: 'post_tags_mutation_response', returning: Array<{ __typename?: 'post_tags', id: any }> } | null, insert_post_tags?: { __typename?: 'post_tags_mutation_response', returning: Array<{ __typename?: 'post_tags', id: any }> } | null };
+export type UpdatePostMutation = { __typename?: 'mutation_root', update_posts_by_pk?: { __typename?: 'posts', id: any } | null, delete_post_tags?: { __typename?: 'post_tags_mutation_response', returning: Array<{ __typename?: 'post_tags', id: any }> } | null, insert_post_tags?: { __typename?: 'post_tags_mutation_response', returning: Array<{ __typename?: 'post_tags', id: any }> } | null, delete_line_items?: { __typename?: 'line_items_mutation_response', returning: Array<{ __typename?: 'line_items', id: number }> } | null, insert_line_items?: { __typename?: 'line_items_mutation_response', returning: Array<{ __typename?: 'line_items', id: number }> } | null };
 
 export type CreatePostMutationVariables = Exact<{
   body?: InputMaybe<Scalars['String']['input']>;
   creator_id?: InputMaybe<Scalars['String']['input']>;
   org_id?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
-  data?: InputMaybe<Array<Post_Tags_Insert_Input> | Post_Tags_Insert_Input>;
+  tags_data?: InputMaybe<Array<Post_Tags_Insert_Input> | Post_Tags_Insert_Input>;
+  line_items_data?: InputMaybe<Array<Line_Items_Insert_Input> | Line_Items_Insert_Input>;
 }>;
 
 
@@ -2951,7 +3630,7 @@ export type SearchPostsQueryVariables = Exact<{
 }>;
 
 
-export type SearchPostsQuery = { __typename?: 'query_root', posts: Array<{ __typename?: 'posts', id: any, body: string, created_at: any, creator_id: string, title: string, updated_at: any, author?: { __typename?: 'users', name: string, id: string } | null, post_reactions: Array<{ __typename?: 'post_reactions', author_id: string, type: Post_Reaction_Types_Enum, id: any }>, post_reactions_aggregate: { __typename?: 'post_reactions_aggregate', aggregate?: { __typename?: 'post_reactions_aggregate_fields', count: number } | null }, post_tags: Array<{ __typename?: 'post_tags', tag: { __typename?: 'tags', id: string } }> }> };
+export type SearchPostsQuery = { __typename?: 'query_root', posts: Array<{ __typename?: 'posts', id: any, body?: string | null, created_at: any, creator_id: string, title?: string | null, updated_at: any, author?: { __typename?: 'users', name: string, id: string } | null, post_reactions: Array<{ __typename?: 'post_reactions', author_id: string, type: Post_Reaction_Types_Enum, id: any }>, post_reactions_aggregate: { __typename?: 'post_reactions_aggregate', aggregate?: { __typename?: 'post_reactions_aggregate_fields', count: number } | null }, post_tags: Array<{ __typename?: 'post_tags', tag: { __typename?: 'tags', id: string } }>, line_items: Array<{ __typename?: 'line_items', customer_po: string, description: string, extended_resell: any, id: number, manufacturer: string, part_number: string, po: string, quantity: number, so: string, unit_resell: any, whs_delivery_date?: any | null }> }> };
 
 export type CreateUserMutationVariables = Exact<{
   id?: InputMaybe<Scalars['String']['input']>;
@@ -2973,13 +3652,13 @@ export type CreateOrganizationMutationVariables = Exact<{
 export type CreateOrganizationMutation = { __typename?: 'mutation_root', insert_organizations_one?: { __typename?: 'organizations', id: string } | null };
 
 
-export const GetPostsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPosts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"posts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10"}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"creator_id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_reactions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"author_id"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_reactions_aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_tags"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tag"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetPostsQuery, GetPostsQueryVariables>;
+export const GetPostsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPosts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"posts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10"}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"creator_id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_reactions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"author_id"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_reactions_aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_tags"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tag"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"line_items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"customer_po"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"extended_resell"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"manufacturer"}},{"kind":"Field","name":{"kind":"Name","value":"part_number"}},{"kind":"Field","name":{"kind":"Name","value":"po"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"so"}},{"kind":"Field","name":{"kind":"Name","value":"unit_resell"}},{"kind":"Field","name":{"kind":"Name","value":"whs_delivery_date"}}]}}]}}]}}]} as unknown as DocumentNode<GetPostsQuery, GetPostsQueryVariables>;
 export const DeletePostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeletePost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_posts_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"creator_id"}}]}}]}}]} as unknown as DocumentNode<DeletePostMutation, DeletePostMutationVariables>;
-export const UpdatePostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdatePost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"body"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"title"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tags"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"post_tags_insert_input"}}}},"defaultValue":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"post_id"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"tag_id"},"value":{"kind":"StringValue","value":"","block":false}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_posts_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"body"},"value":{"kind":"Variable","name":{"kind":"Name","value":"body"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"title"},"value":{"kind":"Variable","name":{"kind":"Name","value":"title"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"delete_post_tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"post_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"insert_post_tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tags"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<UpdatePostMutation, UpdatePostMutationVariables>;
-export const CreatePostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreatePost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"body"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"creator_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"org_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"title"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"post_tags_insert_input"}}}},"defaultValue":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"post_id"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"tag_id"},"value":{"kind":"StringValue","value":"","block":false}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_posts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"org_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"org_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"body"},"value":{"kind":"Variable","name":{"kind":"Name","value":"body"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"creator_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"creator_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"title"},"value":{"kind":"Variable","name":{"kind":"Name","value":"title"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"post_tags"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<CreatePostMutation, CreatePostMutationVariables>;
+export const UpdatePostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdatePost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"body"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"title"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tags"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"post_tags_insert_input"}}}},"defaultValue":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"post_id"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"tag_id"},"value":{"kind":"StringValue","value":"","block":false}}]}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"line_items_data"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"line_items_insert_input"}}}},"defaultValue":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_by"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"customer_po"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"description"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"extended_resell"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"manufacturer"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"part_number"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"po"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"quantity"},"value":{"kind":"IntValue","value":"0"}},{"kind":"ObjectField","name":{"kind":"Name","value":"so"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"unit_resell"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"whs_delivery_date"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"post_id"},"value":{"kind":"StringValue","value":"","block":false}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_posts_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"body"},"value":{"kind":"Variable","name":{"kind":"Name","value":"body"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"title"},"value":{"kind":"Variable","name":{"kind":"Name","value":"title"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"delete_post_tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"post_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"insert_post_tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tags"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"delete_line_items"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"post_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"insert_line_items"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"Variable","name":{"kind":"Name","value":"line_items_data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<UpdatePostMutation, UpdatePostMutationVariables>;
+export const CreatePostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreatePost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"body"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"creator_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"org_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"title"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"tags_data"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"post_tags_insert_input"}}}},"defaultValue":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tag_id"},"value":{"kind":"StringValue","value":"","block":false}}]}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"line_items_data"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"line_items_insert_input"}}}},"defaultValue":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_by"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"customer_po"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"description"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"extended_resell"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"manufacturer"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"part_number"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"po"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"quantity"},"value":{"kind":"IntValue","value":"0"}},{"kind":"ObjectField","name":{"kind":"Name","value":"so"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"unit_resell"},"value":{"kind":"StringValue","value":"","block":false}},{"kind":"ObjectField","name":{"kind":"Name","value":"whs_delivery_date"},"value":{"kind":"StringValue","value":"","block":false}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_posts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"org_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"org_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"body"},"value":{"kind":"Variable","name":{"kind":"Name","value":"body"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"creator_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"creator_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"title"},"value":{"kind":"Variable","name":{"kind":"Name","value":"title"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"post_tags"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"tags_data"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"line_items"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"line_items_data"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<CreatePostMutation, CreatePostMutationVariables>;
 export const CreateReactionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateReaction"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"author_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"post_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"type"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"post_reaction_types_enum"}},"defaultValue":{"kind":"EnumValue","value":"THUMBS_UP"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_post_reactions_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"author_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"author_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"post_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"post_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"type"},"value":{"kind":"Variable","name":{"kind":"Name","value":"type"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateReactionMutation, CreateReactionMutationVariables>;
 export const DeleteReactionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteReaction"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_post_reactions_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<DeleteReactionMutation, DeleteReactionMutationVariables>;
 export const SearchTagsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchTags"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"_regex"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_regex"},"value":{"kind":"Variable","name":{"kind":"Name","value":"_regex"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<SearchTagsQuery, SearchTagsQueryVariables>;
-export const SearchPostsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchPosts"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"_regex"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"posts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_or"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"author"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_ilike"},"value":{"kind":"Variable","name":{"kind":"Name","value":"_regex"}}}]}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"body"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_ilike"},"value":{"kind":"Variable","name":{"kind":"Name","value":"_regex"}}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"title"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_ilike"},"value":{"kind":"Variable","name":{"kind":"Name","value":"_regex"}}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"post_tags"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tag_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_ilike"},"value":{"kind":"Variable","name":{"kind":"Name","value":"_regex"}}}]}}]}}]}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"creator_id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_reactions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"author_id"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_reactions_aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_tags"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tag"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}}]} as unknown as DocumentNode<SearchPostsQuery, SearchPostsQueryVariables>;
+export const SearchPostsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchPosts"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"_regex"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"posts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_or"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"author"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_ilike"},"value":{"kind":"Variable","name":{"kind":"Name","value":"_regex"}}}]}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"body"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_ilike"},"value":{"kind":"Variable","name":{"kind":"Name","value":"_regex"}}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"title"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_ilike"},"value":{"kind":"Variable","name":{"kind":"Name","value":"_regex"}}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"post_tags"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"tag_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_ilike"},"value":{"kind":"Variable","name":{"kind":"Name","value":"_regex"}}}]}}]}}]}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"creator_id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_reactions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"author_id"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_reactions_aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_tags"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tag"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"line_items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"customer_po"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"extended_resell"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"manufacturer"}},{"kind":"Field","name":{"kind":"Name","value":"part_number"}},{"kind":"Field","name":{"kind":"Name","value":"po"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"so"}},{"kind":"Field","name":{"kind":"Name","value":"unit_resell"}},{"kind":"Field","name":{"kind":"Name","value":"whs_delivery_date"}}]}}]}}]}}]} as unknown as DocumentNode<SearchPostsQuery, SearchPostsQueryVariables>;
 export const CreateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_users_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateUserMutation, CreateUserMutationVariables>;
 export const CreateOrganizationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateOrganization"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"created_by"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"organization_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_organizations_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_by"},"value":{"kind":"Variable","name":{"kind":"Name","value":"created_by"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"organization_users"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"data"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"organization_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"organization_id"}}}]}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateOrganizationMutation, CreateOrganizationMutationVariables>;

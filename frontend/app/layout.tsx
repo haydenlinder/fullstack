@@ -13,6 +13,8 @@ import { SignIn } from "@clerk/clerk-react";
 import { useAuth } from "@clerk/nextjs";
 import { Modal, Paper } from "@mui/material";
 import { ReactNode, useEffect } from "react";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
 export default function RootLayout({
   children,
@@ -26,10 +28,12 @@ export default function RootLayout({
           <div className="container">
             <ApolloWrapper>
               <AppRouterCacheProvider options={{}}>
-                <ThemeProvider theme={theme}>
-                  <Header />
-                  <App>{children}</App>
-                </ThemeProvider>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <ThemeProvider theme={theme}>
+                    <Header />
+                    <App>{children}</App>
+                  </ThemeProvider>
+                </LocalizationProvider>
               </AppRouterCacheProvider>
             </ApolloWrapper>
           </div>

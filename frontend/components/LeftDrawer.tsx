@@ -58,7 +58,7 @@ export const Header = () => {
         ml: { sm: `${drawerWidth}px` },
       }
     : {};
-  console.log({ isApp });
+
   return (
     <AppBar position="fixed" sx={styles}>
       <Toolbar className="flex justify-between container">
@@ -98,7 +98,6 @@ export const Header = () => {
 
 export const SideBar = ({}) => {
   const { openModal, update } = useModalStore();
-  console.log({ openModal });
   return (
     <Box
       component="nav"

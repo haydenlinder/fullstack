@@ -6,18 +6,17 @@ import {
   useFormApi,
 } from "@data-driven-forms/react-form-renderer";
 import { componentMapper } from "@data-driven-forms/mui-component-mapper";
-import { Autocomplete, Button, Card, FormLabel } from "@mui/material";
+import { Button, Card, FormLabel } from "@mui/material";
 import FormTemplateCommonProps from "@data-driven-forms/common/form-template";
 import FormSpy from "@data-driven-forms/react-form-renderer/form-spy";
 import {
   CreatePostMutation,
   CreatePostMutationVariables,
-  SearchTagsQuery,
-  SearchTagsQueryVariables,
+  Line_Items_Insert_Input,
   UpdatePostMutation,
   UpdatePostMutationVariables,
 } from "@/src/gql/graphql";
-import { useApolloClient, useMutation, useQuery } from "@apollo/client";
+import { useApolloClient, useMutation } from "@apollo/client";
 import { useAuth } from "@clerk/nextjs";
 import { CREATE_POST, GET_POSTS, SEARCH_TAGS, UPDATE_POST } from "@/gql/posts";
 import { ComponentType } from "react";
@@ -96,8 +95,9 @@ type Props = {
   after?: () => void;
 };
 
-const usePost = ({ type, after }: Props) => {
+const usePost = ({ type, after, initialValues }: Props) => {
   const { userId, orgId } = useAuth();
+  console.log(initialValues);
 
   const [createPost, { loading: posting }] = useMutation<
     CreatePostMutation,
@@ -125,38 +125,57 @@ const usePost = ({ type, after }: Props) => {
   };
 
   const onSubmit: FormRendererProps<{
-    tags: string[];
+    tags?: string[];
     body: string;
     title: string;
     id?: string;
-  }>["onSubmit"] = async ({ tags, body, title, id }, api) => {
+    products: (Line_Items_Insert_Input & { __typename?: string })[];
+  }>["onSubmit"] = async ({ tags, body, title, id, products }, api) => {
     // return
-    type === "New"
-      ? createPost({
-          variables: {
-            creator_id: userId,
-            org_id: orgId || userId,
-            body,
-            title,
-            data: tags.map((tag) => ({
-              tag_id: tag,
-            })),
-          },
-          refetchQueries: [GET_POSTS],
-          onCompleted: () => api.reset(),
-        })
-      : updatePost({
-          variables: {
-            body,
-            title,
-            id,
-            tags: tags.map((tag) => ({
-              tag_id: tag,
-              post_id: id,
-            })),
-          },
-          refetchQueries: [GET_POSTS],
-        });
+    const lineItemsData = products.map((p) => {
+      delete p.id;
+      // delete p.__typename
+      console.log(p);
+      return { ...p, created_by: userId };
+    });
+    try {
+      type === "New"
+        ? await createPost({
+            variables: {
+              creator_id: userId,
+              org_id: orgId || userId,
+              body,
+              title,
+              tags_data:
+                tags?.map((tag) => ({
+                  tag_id: tag,
+                })) || [],
+              line_items_data: lineItemsData,
+            },
+            refetchQueries: [GET_POSTS],
+            onCompleted: () => api.reset(),
+            onError: (e) => console.log(e),
+          })
+        : await updatePost({
+            variables: {
+              body,
+              title,
+              id,
+              tags:
+                tags?.map((tag) => ({
+                  tag_id: tag,
+                  post_id: id,
+                })) || [],
+              line_items_data: lineItemsData.map((i) => {
+                delete i.__typename;
+                return { ...i, post_id: id };
+              }),
+            },
+            refetchQueries: [GET_POSTS],
+          });
+    } catch (e) {
+      console.log(e);
+    }
     after && after();
   };
 
@@ -173,16 +192,16 @@ const usePost = ({ type, after }: Props) => {
         label: "Product section",
         validate: [{ type: "required" }],
         initialValue: [""],
-        class: {
-          form: "flex",
-        },
+        FieldContainerProps: { spacing: 0 },
+        GridContainerProps: { spacing: 0 },
+        BodyGridProps: { spacing: 0 },
         fields: [
           {
             FormFieldGridProps: { xs: 2.4 },
             component: "text-field",
-            name: "partNumber",
-            label: "Part Number",
-            placeholder: "Part Number",
+            name: "part_number",
+            label: "part_number",
+            placeholder: "part_number",
             isRequired: true,
             validate: [
               {
@@ -254,9 +273,9 @@ const usePost = ({ type, after }: Props) => {
             ],
             component: "text-field",
             type: "number",
-            name: "extend_resell",
-            label: "extend_resell",
-            placeholder: "extend_resell",
+            name: "extended_resell",
+            label: "extended_resell",
+            placeholder: "extended_resell",
           },
           {
             FormFieldGridProps: { xs: 2.4 },
@@ -299,13 +318,14 @@ const usePost = ({ type, after }: Props) => {
           },
           {
             FormFieldGridProps: { xs: 2.4 },
+            DatePickerProps: { sx: { m: 0 } },
             isRequired: true,
             validate: [
               {
                 type: "required",
               },
             ],
-            component: "text-field",
+            component: componentTypes.DATE_PICKER,
             name: "whs_delivery_date",
             label: "whs_delivery_date",
             placeholder: "whs_delivery_date",
@@ -313,23 +333,71 @@ const usePost = ({ type, after }: Props) => {
         ],
       },
       {
-        classes: {
-          root: "mb-10 ",
-        },
-        component: componentTypes.TEXT_FIELD,
-        name: "title",
-        label: "title",
+        component: componentTypes.DATE_PICKER,
+        FormFieldGridProps: { xs: 6 },
+
+        name: "delivery_date",
+        label: "delivery_date",
         validate: [{ type: "required" }],
-        // validateOnMount: true,
-        helperText: "Title",
+      },
+      {
+        component: componentTypes.TEXT_FIELD,
+        name: "psr",
+        label: "psr",
+        validate: [{ type: "required" }],
+        FormFieldGridProps: { xs: 6 },
       },
       {
         component: componentTypes.TEXTAREA,
-        name: "body",
-        label: "body",
+        name: "pickup_address",
+        label: "pickup_address",
         validate: [{ type: "required" }],
-        // validateOnMount: true,
-        helperText: "Description",
+      },
+      {
+        component: componentTypes.TEXTAREA,
+        name: "destination_address",
+        label: "destination_address",
+        validate: [{ type: "required" }],
+      },
+      {
+        component: componentTypes.TEXTAREA,
+        name: "destination_poc",
+        label: "destination_poc",
+        validate: [{ type: "required" }],
+      },
+      {
+        component: componentTypes.TEXTAREA,
+        name: "delivery_instructions",
+        label: "delivery_instructions",
+        validate: [{ type: "required" }],
+        helperText:
+          "Ticket #, loading dock needed, white glove, clear the debris, etc. ",
+      },
+      {
+        component: componentTypes.TEXTAREA,
+        name: "billing_so",
+        label: "billing_so",
+        validate: [{ type: "required" }],
+      },
+      {
+        component: componentTypes.TEXTAREA,
+        name: "resale_values",
+        label: "resale_values",
+        validate: [{ type: "required" }],
+        helperText:
+          "Please provide the resale values for the IOR & intenational FRT lines.  The estimated costs for these lines can be found on the GIDS quote.",
+      },
+      {
+        component: componentTypes.TEXTAREA,
+        name: "ior_complience_resale",
+        label: "ior_complience_resale",
+        validate: [{ type: "required" }],
+      },
+      {
+        component: componentTypes.TEXTAREA,
+        name: "international_frt_resale",
+        label: "international_frt_resale",
+        validate: [{ type: "required" }],
       },
       {
         component: componentTypes.SELECT,
@@ -338,8 +406,6 @@ const usePost = ({ type, after }: Props) => {
         loadOptions: getTags,
         name: "tags",
         label: "tags",
-        validate: [{ type: "required" }],
-        // validateOnMount: true,
         helperText: "tags",
         isMulti: true,
         isSearchable: true,

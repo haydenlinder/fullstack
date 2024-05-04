@@ -5,6 +5,13 @@ import {
   Chip,
   CircularProgress,
   IconButton,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
   Typography,
 } from "@mui/material";
 
@@ -108,11 +115,17 @@ const Post = ({ post }: Props) => {
   } = usePost({ post });
 
   const initialValues = {
-    body: post.body,
-    title: post.title,
+    body: post.body || undefined,
+    title: post.title || undefined,
     id: post.id,
-    tags: post.post_tags.map(({ tag }) => tag.id),
+    tags: post.post_tags.map(({ tag }) => tag.id) || undefined,
+    products: post.line_items.map((i) => ({
+      ...i,
+      whs_delivery_date: new Date(i.whs_delivery_date),
+    })),
   };
+
+  console.log(post.line_items);
 
   if (edit)
     return (
@@ -131,8 +144,34 @@ const Post = ({ post }: Props) => {
           <Typography fontSize={16}>{parse(post?.author?.name)}</Typography>
         </div>
         <div className="my-4">
-          <Typography fontSize={24}>{parse(post?.title)}</Typography>
-          <Typography>{parse(post.body)}</Typography>
+          <Typography fontSize={24}>{parse(post.id)}</Typography>
+          <TableContainer component={Paper}>
+            <Table size="small" aria-label="a dense table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Part Number</TableCell>
+                  <TableCell align="right">Description</TableCell>
+                  <TableCell align="right">Quantity</TableCell>
+                  <TableCell align="right">Customer PO</TableCell>
+                  <TableCell align="right">SO</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {post.line_items.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell scope="row">{row.part_number}</TableCell>
+                    <TableCell align="right">{row.description}</TableCell>
+                    <TableCell align="right">{row.quantity}</TableCell>
+                    <TableCell align="right">{row.customer_po}</TableCell>
+                    <TableCell align="right">{row.so}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
         </div>
         <div className="my-5">
           {post.post_tags.map(({ tag }, i) => (
