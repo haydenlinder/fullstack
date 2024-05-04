@@ -66,7 +66,7 @@ function App({ children }: { children: ReactNode }) {
           }}
           className="absolute inset-0 m-auto w-fit h-fit p-2 "
         >
-          <SignIn afterSignInUrl={"/app"} afterSignUpUrl={"/app"} />
+          <SignIn afterSignInUrl={"/"} afterSignUpUrl={"/"} />
         </Paper>
       </Modal>
       <div className={"sm:mx-16 sm:ml-[300px] flex justify-center"}>
