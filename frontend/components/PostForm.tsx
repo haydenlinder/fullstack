@@ -116,7 +116,7 @@ const usePost = ({ type, after, initialValues }: Props) => {
       query: SEARCH_TAGS,
       variables: { _regex: search },
     });
-    const ar = res.data.tags.map((t) => ({
+    const ar = res.data?.tags.map((t) => ({
       label: t.id,
       value: t.id,
       key: t.id,
