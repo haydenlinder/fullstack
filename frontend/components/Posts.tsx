@@ -214,7 +214,7 @@ export const Post = ({ post }: Props) => {
                 {post.id}
               </Link>
               <IconButton onClick={copy} size="small">
-                <Tooltip title={didCopy ? "Copied" : "Copy Link"}>
+                <Tooltip title={didCopy ? "Copied Link!" : "Copy Link"}>
                   {didCopy ? <CheckIcon /> : <ContentCopyIcon />}
                 </Tooltip>
               </IconButton>
