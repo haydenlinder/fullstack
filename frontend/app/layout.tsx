@@ -70,7 +70,7 @@ function App({ children }: { children: ReactNode }) {
         </Paper>
       </Modal>
       <div className={"sm:mx-16 sm:ml-[300px] flex justify-center"}>
-        <div className="container">{children}</div>
+        <div className="container pb-96">{children}</div>
       </div>
     </>
   );
