@@ -4,8 +4,13 @@ import {
   CardContent,
   Chip,
   CircularProgress,
+  FormControl,
   IconButton,
+  InputLabel,
+  MenuItem,
   Paper,
+  Select,
+  SelectProps,
   Table,
   TableBody,
   TableCell,
@@ -29,9 +34,11 @@ import {
   DeleteReactionMutation,
   DeleteReactionMutationVariables,
   GetPostsQuery,
+  GetPostsQueryVariables,
   Post_Reaction_Types_Enum,
   SearchPostsQuery,
   SearchPostsQueryVariables,
+  Status_Types_Enum,
 } from "../src/gql/graphql";
 import {
   CREATE_REACTION,
@@ -39,6 +46,7 @@ import {
   DELETE_REACTION,
   GET_POSTS,
   SEARCH_POSTS,
+  UPDATE_POST_STATUS,
 } from "@/gql/posts";
 import { PostForm } from "./PostForm";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
@@ -51,12 +59,25 @@ import UserIcon from "@mui/icons-material/AccountCircle";
 import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
-import { ModalTypes, useModalStore, useStore } from "@/state/store";
+import {
+  ModalTypes,
+  useFilterStore,
+  useModalStore,
+  useStore,
+} from "@/state/store";
 import debounce from "lodash/debounce";
 
 export const Posts = () => {
   const { query } = useStore();
-  const { data, loading } = useQuery<GetPostsQuery>(GET_POSTS);
+  const { type } = useFilterStore();
+  const { data, loading } = useQuery<GetPostsQuery, GetPostsQueryVariables>(
+    GET_POSTS,
+    {
+      variables: {
+        _eq: type,
+      },
+    },
+  );
   const [search, { data: searchResults, loading: searching }] = useLazyQuery<
     SearchPostsQuery,
     SearchPostsQueryVariables
@@ -118,6 +139,9 @@ const Post = ({ post }: Props) => {
   delete p.post_tags;
   delete p.__typename;
 
+  const [loading, setLoading] = useState(false);
+  const client = useApolloClient();
+
   const initialValues = {
     ...post,
     customer_facing_po_document: post.customer_facing_po_document || "",
@@ -142,17 +166,59 @@ const Post = ({ post }: Props) => {
       />
     );
 
+  const handleStatusChange: SelectProps["onChange"] = async (e) => {
+    setLoading(true);
+    try {
+      await client.mutate({
+        mutation: UPDATE_POST_STATUS,
+        variables: {
+          id: post.id,
+          status: e.target.value as Status_Types_Enum,
+        },
+        refetchQueries: [
+          { query: GET_POSTS, variables: { _eq: e.target.value } },
+          { query: GET_POSTS, variables: { _eq: post.status } },
+          SEARCH_POSTS,
+        ],
+      });
+    } catch (e) {
+      console.error(e);
+    }
+    setLoading(false);
+  };
+
   return (
-    <Card className="flex justify-center my-10 w-full">
+    <Card className="flex justify-center my-10 w-full relative">
       <CardContent className="w-full">
         <div className="flex items-center mb-2">
           <UserIcon className="mr-2" />
           <Typography fontSize={16}>{parse(post?.author?.name)}</Typography>
         </div>
+
+        <FormControl
+          className="right-4 absolute w-fit top-6"
+          sx={{ position: "absolute" }}
+        >
+          <InputLabel id="demo-simple-select-label">Status</InputLabel>
+          <Select
+            disabled={loading}
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={post.status}
+            label="Status"
+            onChange={handleStatusChange}
+          >
+            <MenuItem value={"NEW"}>New</MenuItem>
+            <MenuItem value={"IN_PROGRESS"}>In Progress</MenuItem>
+            <MenuItem value={"IN_TRANSIT"}>In Transit</MenuItem>
+            <MenuItem value={"DELIVERED"}>Delivered</MenuItem>
+          </Select>
+        </FormControl>
+
         <Typography fontSize={16}>
           Created: {new Date(post.created_at).toLocaleString()}
         </Typography>
-        {/* PARTS */}
+        {/* LINE_ITEMS */}
         <div className="my-4">
           <Typography fontSize={24}>{parse(post.id)}</Typography>
           <TableContainer component={Paper}>

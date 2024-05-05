@@ -1,8 +1,12 @@
 import { graphql } from "@/src/gql";
 
 export const GET_POSTS = graphql(`
-  query GetPosts {
-    posts(limit: 10, order_by: { created_at: desc }) {
+  query GetPosts($_eq: status_types_enum = NEW) {
+    posts(
+      limit: 10
+      order_by: { created_at: desc }
+      where: { status: { _eq: $_eq } }
+    ) {
       id
       body
       created_at
@@ -11,6 +15,7 @@ export const GET_POSTS = graphql(`
       updated_at
       billing_so
       delivery_date
+      status
       delivery_instructions
       destination_poc
       international_frt_resale
@@ -152,6 +157,7 @@ export const CREATE_POST = graphql(`
     $pickup_address: String = ""
     $psr: String = ""
     $customer_facing_po_document: String = ""
+    $status: status_types_enum = NEW
     $tags_data: [post_tags_insert_input!] = { tag_id: "" }
     $line_items_data: [line_items_insert_input!] = {
       created_by: ""
@@ -216,6 +222,14 @@ export const DELETE_REACTION = graphql(`
   }
 `);
 
+export const UPDATE_POST_STATUS = graphql(`
+  mutation UpdatePostStatus($id: uuid = "", $status: status_types_enum = NEW) {
+    update_posts_by_pk(pk_columns: { id: $id }, _set: { status: $status }) {
+      id
+    }
+  }
+`);
+
 export const SEARCH_TAGS = graphql(`
   query SearchTags($_regex: String = "") {
     tags(limit: 10, where: { id: { _regex: $_regex } }) {
@@ -242,6 +256,7 @@ export const SEARCH_POSTS = graphql(`
       body
       created_at
       creator_id
+      status
       title
       updated_at
       customer_facing_po_document

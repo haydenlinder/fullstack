@@ -375,6 +375,7 @@ export const usePost = ({ type, after, initialValues }: UsePostProps) => {
         class: "mb-8",
         name: "ior_compliance_resale",
         label: "ior_compliance_resale",
+        type: "number",
         helperText:
           "Please provide the resale values for the IOR & intenational FRT lines.  The estimated costs for these lines can be found on the GIDS quote.",
       },
@@ -383,6 +384,7 @@ export const usePost = ({ type, after, initialValues }: UsePostProps) => {
         class: "mb-8",
         name: "international_frt_resale",
         label: "international_frt_resale",
+        type: "number",
       },
       {
         component: "file-upload",

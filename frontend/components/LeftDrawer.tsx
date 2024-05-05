@@ -23,10 +23,17 @@ import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
 import { Button } from "@mui/material";
 import Search from "./Search";
 import Link from "next/link";
-import { ModalTypes, useModalStore, useStore } from "@/state/store";
+import {
+  ModalTypes,
+  useFilterStore,
+  useModalStore,
+  useStore,
+} from "@/state/store";
 import { usePathname } from "next/navigation";
 import { OrganizationSwitcher, useAuth } from "@clerk/nextjs";
 import { useApolloClient } from "@apollo/client";
+import { Status_Types_Enum } from "@/src/gql/graphql";
+import { GET_POSTS, SEARCH_POSTS } from "@/gql/posts";
 
 export const drawerWidth = 240;
 
@@ -122,7 +129,7 @@ export const SideBar = ({}) => {
           },
         }}
       >
-        {drawerInner}
+        <DrawerInner />
       </Drawer>
       <Drawer
         variant="permanent"
@@ -135,7 +142,7 @@ export const SideBar = ({}) => {
         }}
         open
       >
-        {drawerInner}
+        <DrawerInner />
       </Drawer>
     </Box>
   );
@@ -144,45 +151,56 @@ export const SideBar = ({}) => {
 const listMap = [
   {
     title: "New",
-    route: "/",
+    route: Status_Types_Enum.New,
     icon: <NewIcon />,
   },
   {
     title: "In Progress",
-    route: "/in-progress",
+    route: Status_Types_Enum.InProgress,
     icon: <WorkIcon />,
   },
   {
     title: "In Transit",
-    route: "/in-transit",
+    route: Status_Types_Enum.InTransit,
     icon: <ShipIcon />,
   },
   {
     title: "Delivered",
-    route: "/delivered",
+    route: Status_Types_Enum.Delivered,
     icon: <DeliveredIcon />,
   },
 ];
 
-const drawerInner = (
-  <div>
-    <Toolbar>
-      <Link className="-ml-2" href="/">
-        <Typography variant="h6">Ship</Typography>
-      </Link>
-    </Toolbar>
-    <Divider />
-    <List>
-      {listMap.map(({ title, icon, route }) => (
-        <Link href={route} key={title}>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>{icon}</ListItemIcon>
-              <ListItemText primary={title} />
-            </ListItemButton>
-          </ListItem>
+const DrawerInner = () => {
+  const { type, update } = useFilterStore();
+  const client = useApolloClient();
+  const onClick = (route: Status_Types_Enum) => {
+    update(route);
+  };
+  return (
+    <div>
+      <Toolbar>
+        <Link className="-ml-2" href="/">
+          <Typography variant="h6">Ship</Typography>
         </Link>
-      ))}
-    </List>
-  </div>
-);
+      </Toolbar>
+      <Divider />
+      <List>
+        {listMap.map(({ title, icon, route }) => (
+          <button
+            className={type === route ? "bg-gray-500 w-full" : "w-full"}
+            onClick={() => onClick(route)}
+            key={title}
+          >
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>{icon}</ListItemIcon>
+                <ListItemText primary={title} />
+              </ListItemButton>
+            </ListItem>
+          </button>
+        ))}
+      </List>
+    </div>
+  );
+};
