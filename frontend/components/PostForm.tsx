@@ -116,7 +116,7 @@ const usePost = ({ type, after, initialValues }: Props) => {
       query: SEARCH_TAGS,
       variables: { _regex: search },
     });
-    const ar = res.data?.tags.map((t) => ({
+    const ar = res?.data?.tags.map((t) => ({
       label: t.id,
       value: t.id,
       key: t.id,
@@ -414,7 +414,6 @@ const usePost = ({ type, after, initialValues }: Props) => {
         class: "mb-8",
         name: "ior_compliance_resale",
         label: "ior_compliance_resale",
-        validate: [{ type: "required" }],
         helperText:
           "Please provide the resale values for the IOR & intenational FRT lines.  The estimated costs for these lines can be found on the GIDS quote.",
       },
@@ -423,7 +422,6 @@ const usePost = ({ type, after, initialValues }: Props) => {
         class: "mb-8",
         name: "international_frt_resale",
         label: "international_frt_resale",
-        validate: [{ type: "required" }],
       },
       {
         component: componentTypes.SELECT,

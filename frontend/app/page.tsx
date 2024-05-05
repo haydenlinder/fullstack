@@ -5,6 +5,7 @@ import { Posts } from "@/components/Posts";
 import { ModalTypes, useModalStore } from "@/state/store";
 import { SignIn, SignedIn, useAuth } from "@clerk/nextjs";
 import AddIcon from "@mui/icons-material/Add";
+import CloseIcon from "@mui/icons-material/Close";
 import { Button, Modal, Paper } from "@mui/material";
 import { useState } from "react";
 
@@ -22,9 +23,19 @@ export default function Home() {
   return (
     <div className="w-full flex flex-col items-center">
       <Button variant="contained" onClick={handleClick}>
-        <AddIcon /> Create New Shipment
+        {isFormOpen ? (
+          <>
+            <CloseIcon /> Cancel
+          </>
+        ) : (
+          <>
+            <AddIcon /> Create New Shipment
+          </>
+        )}
       </Button>
-      <SignedIn>{isFormOpen && <PostForm />}</SignedIn>
+      <SignedIn>
+        {isFormOpen && <PostForm after={() => setIsFormOpen(false)} />}
+      </SignedIn>
       <Posts />
     </div>
   );
