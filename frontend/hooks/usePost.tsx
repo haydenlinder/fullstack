@@ -176,6 +176,8 @@ export const usePost = ({ type, after, initialValues }: UsePostProps) => {
         name: "products",
         label: "Product section",
         validate: [{ type: "required" }],
+        RemoveButtonProps: { sx: { mb: 3.5 }, variant: "outlined" },
+        AddButtonProps: { sx: { mb: 1, ml: 2 }, variant: "outlined" },
         initialValue: [""],
         fields: [
           {
