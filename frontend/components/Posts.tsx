@@ -41,7 +41,7 @@ import {
   SEARCH_POSTS,
 } from "@/gql/posts";
 import { PostForm } from "./PostForm";
-
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { useCallback, useEffect, useState } from "react";
@@ -215,10 +215,12 @@ const Post = ({ post }: Props) => {
           <div>
             PO document:{" "}
             <a
-              className="text-blue-300 underline"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-300 hover:underline"
               href={post.customer_facing_po_document || ""}
             >
-              {post.customer_facing_po_document}
+              View Document <OpenInNewIcon fontSize="inherit" />
             </a>
           </div>
         </div>

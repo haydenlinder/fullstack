@@ -6,7 +6,7 @@ import {
 } from "@data-driven-forms/react-form-renderer";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import CloseIcon from "@mui/icons-material/Close";
-
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { componentMapper as componentMapperI } from "@data-driven-forms/mui-component-mapper";
 import {
   Button,
@@ -71,8 +71,13 @@ const FileUploadComponent = (props: UseFieldApiConfig) => {
         </>
       )}
       {currentFile && !file && (
-        <a className="text-blue-300 underline" href={currentFile}>
-          {currentFile}
+        <a
+          className="text-blue-300 hover:underline"
+          target="_blank"
+          rel="noopener noreferrer"
+          href={currentFile}
+        >
+          View Current Document <OpenInNewIcon fontSize="inherit" />
         </a>
       )}
     </div>
