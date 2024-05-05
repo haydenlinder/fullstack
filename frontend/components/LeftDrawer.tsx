@@ -5,15 +5,17 @@ import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
-import HomeIcon from "@mui/icons-material/Home";
-import MessageIcon from "@mui/icons-material/AddAlert";
+import DeliveredIcon from "@mui/icons-material/Done";
+import NewIcon from "@mui/icons-material/AddBox";
+import MenuIcon from "@mui/icons-material/Menu";
+import WorkIcon from "@mui/icons-material/Loop";
+import ShipIcon from "@mui/icons-material/LocalShipping";
+import ListItemIcon from "@mui/material/ListItemIcon";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 
-import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { SignInButton } from "@clerk/nextjs";
@@ -141,14 +143,24 @@ export const SideBar = ({}) => {
 
 const listMap = [
   {
-    title: "Home",
+    title: "New",
     route: "/",
-    icon: <HomeIcon />,
+    icon: <NewIcon />,
   },
   {
-    title: "New",
-    route: "/new",
-    icon: <MessageIcon />,
+    title: "In Progress",
+    route: "/in-progress",
+    icon: <WorkIcon />,
+  },
+  {
+    title: "In Transit",
+    route: "/in-transit",
+    icon: <ShipIcon />,
+  },
+  {
+    title: "Delivered",
+    route: "/delivered",
+    icon: <DeliveredIcon />,
   },
 ];
 
