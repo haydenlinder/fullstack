@@ -60,6 +60,62 @@ export const GET_POSTS = graphql(`
   }
 `);
 
+export const GET_POST_BY_ID = graphql(`
+  query GetPostsById($id: uuid = "") {
+    posts_by_pk(id: $id) {
+      id
+      body
+      created_at
+      creator_id
+      title
+      updated_at
+      billing_so
+      delivery_date
+      status
+      delivery_instructions
+      destination_poc
+      international_frt_resale
+      destination_address
+      ior_compliance_resale
+      pickup_address
+      customer_facing_po_document
+      psr
+      author {
+        name
+        id
+      }
+      post_reactions {
+        author_id
+        type
+        id
+      }
+      post_reactions_aggregate {
+        aggregate {
+          count
+        }
+      }
+      post_tags {
+        tag {
+          id
+        }
+      }
+      line_items {
+        customer_po
+        description
+        extended_resell
+        id
+        manufacturer
+        part_number
+        po
+        quantity
+        so
+        unit_resell
+        whs_delivery_date
+      }
+    }
+  }
+`);
+
 export const DELETE_POST = graphql(`
   mutation DeletePost($id: uuid = "") {
     delete_posts_by_pk(id: $id) {

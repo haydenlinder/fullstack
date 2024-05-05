@@ -59,6 +59,7 @@ import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import UserIcon from "@mui/icons-material/AccountCircle";
 import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
 import {
   ModalTypes,
@@ -67,6 +68,7 @@ import {
   useStore,
 } from "@/state/store";
 import debounce from "lodash/debounce";
+import Link from "next/link";
 
 export const Posts = () => {
   const { query } = useStore();
@@ -122,7 +124,7 @@ type Props = {
   post: GetPostsQuery["posts"][0];
 };
 
-const Post = ({ post }: Props) => {
+export const Post = ({ post }: Props) => {
   const {
     userId,
     creating,
@@ -188,39 +190,60 @@ const Post = ({ post }: Props) => {
     setLoading(false);
   };
 
+  const copy = async () => {
+    await navigator.clipboard.writeText(window.location.href);
+  };
+
   return (
-    <Card className="flex justify-center my-10 w-full relative">
+    <Card className="flex justify-center my-10 w-full">
       <CardContent className="w-full">
-        <div className="flex items-center mb-2">
-          <UserIcon className="mr-2" />
-          <Typography fontSize={16}>{parse(post?.author?.name)}</Typography>
+        {/* HEADER */}
+        <div className="flex justify-between w-full items-center">
+          {/* LINK ad CREATOR */}
+          <div>
+            {/* Copy and link */}
+            <div className="flex items-center mb-2">
+              <Link
+                className="text-blue-300 hover:underline mr-2"
+                href={`/shipments/${post.id}`}
+              >
+                {post.id}
+              </Link>
+              <IconButton onClick={copy} size="small">
+                <ContentCopyIcon />
+              </IconButton>
+            </div>
+            {/* CREATOR */}
+            <div className="flex items-center mb-2">
+              <UserIcon className="mr-2" />
+              <Typography fontSize={16}>{parse(post?.author?.name)}</Typography>
+              &nbsp;
+              <Typography sx={{ mr: 0.5 }}>
+                {" "}
+                created {new Date(post.created_at).toLocaleString()}
+              </Typography>
+            </div>
+          </div>
+          <FormControl className="w-fit">
+            <InputLabel id="demo-simple-select-label">Status</InputLabel>
+            <Select
+              disabled={loading}
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={post.status}
+              label="Status"
+              onChange={handleStatusChange}
+            >
+              <MenuItem value={"NEW"}>New</MenuItem>
+              <MenuItem value={"IN_PROGRESS"}>In Progress</MenuItem>
+              <MenuItem value={"IN_TRANSIT"}>In Transit</MenuItem>
+              <MenuItem value={"DELIVERED"}>Delivered</MenuItem>
+            </Select>
+          </FormControl>
         </div>
-        <Typography fontSize={24}>{parse(post.id)}</Typography>
-
-        <Typography fontSize={16}>
-          Created: {new Date(post.created_at).toLocaleString()}
-        </Typography>
-        <FormControl
-          className="right-4 absolute w-fit top-6"
-          sx={{ position: "absolute" }}
-        >
-          <InputLabel id="demo-simple-select-label">Status</InputLabel>
-          <Select
-            disabled={loading}
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={post.status}
-            label="Status"
-            onChange={handleStatusChange}
-          >
-            <MenuItem value={"NEW"}>New</MenuItem>
-            <MenuItem value={"IN_PROGRESS"}>In Progress</MenuItem>
-            <MenuItem value={"IN_TRANSIT"}>In Transit</MenuItem>
-            <MenuItem value={"DELIVERED"}>Delivered</MenuItem>
-          </Select>
-        </FormControl>
-
-        <Typography variant="h5" sx={{ my: 4 }}>
+        <Divider sx={{ my: 4 }} />
+        {/* LINE ITEMS */}
+        <Typography className="underline" variant="h5" sx={{ my: 4 }}>
           Line Items
         </Typography>
         <div className="my-4">
@@ -266,8 +289,8 @@ const Post = ({ post }: Props) => {
           </TableContainer>
         </div>
         {/* MAIN */}
-        <Typography variant="h5" sx={{ my: 4 }}>
-          Shipment
+        <Typography className="underline" variant="h5" sx={{ my: 4 }}>
+          Request
         </Typography>
         <div>
           <TableContainer className="max-w-fit" component={Paper}>

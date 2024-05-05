@@ -29,11 +29,10 @@ import {
   useModalStore,
   useStore,
 } from "@/state/store";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { OrganizationSwitcher, useAuth } from "@clerk/nextjs";
 import { useApolloClient } from "@apollo/client";
 import { Status_Types_Enum } from "@/src/gql/graphql";
-import { GET_POSTS, SEARCH_POSTS } from "@/gql/posts";
 
 export const drawerWidth = 240;
 
@@ -173,10 +172,15 @@ const listMap = [
 
 const DrawerInner = () => {
   const { type, update } = useFilterStore();
-  const client = useApolloClient();
+
+  const router = useRouter();
+  const path = usePathname();
+
   const onClick = (route: Status_Types_Enum) => {
+    router.push("/");
     update(route);
   };
+
   return (
     <div>
       <Toolbar>
@@ -188,7 +192,9 @@ const DrawerInner = () => {
       <List>
         {listMap.map(({ title, icon, route }) => (
           <button
-            className={type === route ? "bg-gray-500 w-full" : "w-full"}
+            className={
+              type === route && path === "/" ? "bg-gray-500 w-full" : "w-full"
+            }
             onClick={() => onClick(route)}
             key={title}
           >
