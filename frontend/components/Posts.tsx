@@ -360,21 +360,22 @@ export const Post = ({ post }: Props) => {
                     {post.international_frt_resale}
                   </TableCell>
                 </TableRow>
+                <TableRow>
+                  <TableCell align="left">PO document</TableCell>
+                  <TableCell align="left" className="whitespace-pre-wrap">
+                    <a
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-300 hover:underline"
+                      href={post.customer_facing_po_document || ""}
+                    >
+                      View Document <OpenInNewIcon fontSize="inherit" />
+                    </a>{" "}
+                  </TableCell>
+                </TableRow>
               </TableBody>
             </Table>
           </TableContainer>
-
-          <div>
-            PO document:{" "}
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-300 hover:underline"
-              href={post.customer_facing_po_document || ""}
-            >
-              View Document <OpenInNewIcon fontSize="inherit" />
-            </a>
-          </div>
         </div>
         <div className="my-5">
           {post.post_tags.map(({ tag }, i) => (
