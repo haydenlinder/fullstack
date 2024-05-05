@@ -18,8 +18,34 @@ import {
 import FormTemplateCommonProps from "@data-driven-forms/common/form-template";
 import FormSpy from "@data-driven-forms/react-form-renderer/form-spy";
 
-import { ChangeEventHandler, ComponentType, useState } from "react";
+import { ChangeEventHandler, ComponentType, useEffect, useState } from "react";
 import { UsePostProps, usePost } from "@/hooks/usePost";
+import { Line_Items } from "@/src/gql/graphql";
+
+const FieldListener = () => {
+  const { getState, change } = useFormApi();
+  const { products } = getState().values as { products?: Line_Items[] };
+  let total = 0;
+  products?.forEach(
+    (p) => (total += Number(p?.quantity) + Number(p?.unit_resell)),
+    0,
+  );
+
+  useEffect(() => {
+    products?.forEach((p, i) => {
+      change(
+        `products[${i}].extended_resell`,
+        Number(p?.unit_resell || 0) * Number(p?.quantity || 0),
+      );
+    });
+  }, [total]);
+
+  return null;
+};
+
+const FieldListenerWrapper = () => (
+  <FormSpy subscription={{ values: true }}>{() => <FieldListener />}</FormSpy>
+);
 
 const FileUploadComponent = (props: UseFieldApiConfig) => {
   const { input, label, meta } = useFieldApi(props);
@@ -87,6 +113,7 @@ const FileUploadComponent = (props: UseFieldApiConfig) => {
 const componentMapper = {
   ...componentMapperI,
   "file-upload": FileUploadComponent,
+  "field-listener": FieldListenerWrapper,
 };
 
 export const PostForm = ({
@@ -130,6 +157,7 @@ const FormTemplate: ComponentType<
         {(r) => {
           return (
             <>
+              <FieldListener />
               <Button
                 style={{ marginRight: "15px" }}
                 disabled={submitting}

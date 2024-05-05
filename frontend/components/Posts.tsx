@@ -162,9 +162,9 @@ const Post = ({ post }: Props) => {
                   <TableCell>Part Number</TableCell>
                   <TableCell align="right">Description</TableCell>
                   <TableCell align="right">Quantity</TableCell>
-                  <TableCell align="right">Customer PO</TableCell>
                   <TableCell align="right">Unit Resell</TableCell>
                   <TableCell align="right">Extended Resell</TableCell>
+                  <TableCell align="right">Customer PO</TableCell>
                   <TableCell align="right">Manufacturer</TableCell>
                   <TableCell align="right">SO</TableCell>
                   <TableCell align="right">PO</TableCell>
@@ -180,11 +180,11 @@ const Post = ({ post }: Props) => {
                     <TableCell scope="row">{row.part_number}</TableCell>
                     <TableCell align="right">{row.description}</TableCell>
                     <TableCell align="right">{row.quantity}</TableCell>
-                    <TableCell align="right">{row.customer_po}</TableCell>
                     <TableCell align="right">{row.unit_resell}</TableCell>
                     <TableCell align="right">
                       {row.unit_resell * row.quantity}
                     </TableCell>
+                    <TableCell align="right">{row.customer_po}</TableCell>
                     <TableCell align="right">{row.manufacturer}</TableCell>
                     <TableCell align="right">{row.so}</TableCell>
                     <TableCell align="right">{row.po}</TableCell>

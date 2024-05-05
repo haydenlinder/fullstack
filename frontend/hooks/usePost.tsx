@@ -13,12 +13,13 @@ import {
   FormRendererProps,
   Schema,
   componentTypes,
+  useFormApi,
 } from "@data-driven-forms/react-form-renderer";
 import { FormLabel } from "@mui/material";
 import { put } from "@vercel/blob";
 import { revalidatePath } from "next/cache";
 import { upload } from "@vercel/blob/client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export type UsePostProps = {
   type?: "New" | "Edit";
@@ -260,6 +261,7 @@ export const usePost = ({ type, after, initialValues }: UsePostProps) => {
             name: "extended_resell",
             label: "extended_resell",
             placeholder: "extended_resell",
+            disabled: true,
           },
           {
             FormFieldGridProps: { xs: 2.4 },
@@ -391,6 +393,11 @@ export const usePost = ({ type, after, initialValues }: UsePostProps) => {
         name: "customer_facing_po_document_file",
         label: "customer_facing_po_document_file",
         type: "file",
+      },
+      {
+        component: "field-listener",
+        name: "listener",
+        hideField: true,
       },
       // {
       //   component: componentTypes.SELECT,
