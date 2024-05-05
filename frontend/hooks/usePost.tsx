@@ -4,6 +4,7 @@ import {
   CreatePostMutationVariables,
   GetPostsQuery,
   Line_Items_Insert_Input,
+  Status_Types_Enum,
   UpdatePostMutation,
   UpdatePostMutationVariables,
 } from "@/src/gql/graphql";

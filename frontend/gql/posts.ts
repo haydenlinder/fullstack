@@ -189,6 +189,7 @@ export const CREATE_POST = graphql(`
         customer_facing_po_document: $customer_facing_po_document
         pickup_address: $pickup_address
         psr: $psr
+        status: $status
         post_tags: { data: $tags_data }
         line_items: { data: $line_items_data }
       }
