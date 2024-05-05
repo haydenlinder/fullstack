@@ -18,6 +18,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Tooltip,
   Typography,
 } from "@mui/material";
 
@@ -60,6 +61,7 @@ import UserIcon from "@mui/icons-material/AccountCircle";
 import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import CheckIcon from "@mui/icons-material/Check";
 import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
 import {
   ModalTypes,
@@ -143,6 +145,7 @@ export const Post = ({ post }: Props) => {
   delete p.__typename;
 
   const [loading, setLoading] = useState(false);
+  const [didCopy, setDidCopy] = useState(false);
   const client = useApolloClient();
 
   const initialValues = {
@@ -192,6 +195,7 @@ export const Post = ({ post }: Props) => {
 
   const copy = async () => {
     await navigator.clipboard.writeText(window.location.href);
+    setDidCopy(true);
   };
 
   return (
@@ -210,7 +214,9 @@ export const Post = ({ post }: Props) => {
                 {post.id}
               </Link>
               <IconButton onClick={copy} size="small">
-                <ContentCopyIcon />
+                <Tooltip title={didCopy ? "Copied" : "Copy Link"}>
+                  {didCopy ? <CheckIcon /> : <ContentCopyIcon />}
+                </Tooltip>
               </IconButton>
             </div>
             {/* CREATOR */}
