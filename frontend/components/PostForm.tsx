@@ -399,8 +399,7 @@ const usePost = ({ type, after, initialValues }: Props) => {
         name: "delivery_instructions",
         label: "delivery_instructions",
         validate: [{ type: "required" }],
-        helperText:
-          "Ticket #, loading dock needed, white glove, clear the debris, etc. ",
+        helperText: "Loading dock needed, white glove, clear the debris, etc. ",
       },
       {
         component: componentTypes.TEXTAREA,

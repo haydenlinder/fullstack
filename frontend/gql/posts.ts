@@ -71,8 +71,8 @@ export const UPDATE_POST = graphql(`
     $delivery_date: timestamptz = ""
     $delivery_instructions: String = ""
     $destination_poc: String = ""
-    $international_frt_resale: numeric = ""
-    $ior_compliance_resale: numeric = ""
+    $international_frt_resale: numeric = 0
+    $ior_compliance_resale: numeric = 0
     $pickup_address: String = ""
     $psr: String = ""
     $title: String = ""
@@ -144,8 +144,8 @@ export const CREATE_POST = graphql(`
     $delivery_instructions: String = ""
     $destination_poc: String = ""
     $destination_address: String = ""
-    $international_frt_resale: numeric = ""
-    $ior_compliance_resale: numeric = ""
+    $international_frt_resale: numeric = 0
+    $ior_compliance_resale: numeric = 0
     $pickup_address: String = ""
     $psr: String = ""
     $tags_data: [post_tags_insert_input!] = { tag_id: "" }
@@ -169,6 +169,15 @@ export const CREATE_POST = graphql(`
         body: $body
         creator_id: $creator_id
         title: $title
+        billing_so: $billing_so
+        destination_address: $destination_address
+        delivery_date: $delivery_date
+        delivery_instructions: $delivery_instructions
+        destination_poc: $destination_poc
+        international_frt_resale: $international_frt_resale
+        ior_compliance_resale: $ior_compliance_resale
+        pickup_address: $pickup_address
+        psr: $psr
         post_tags: { data: $tags_data }
         line_items: { data: $line_items_data }
       }
