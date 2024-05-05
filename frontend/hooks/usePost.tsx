@@ -15,6 +15,10 @@ import {
   componentTypes,
 } from "@data-driven-forms/react-form-renderer";
 import { FormLabel } from "@mui/material";
+import { put } from "@vercel/blob";
+import { revalidatePath } from "next/cache";
+import { upload } from "@vercel/blob/client";
+import { useState } from "react";
 
 export type UsePostProps = {
   type?: "New" | "Edit";
@@ -23,12 +27,15 @@ export type UsePostProps = {
     id?: string;
     title?: string;
     tags?: string[];
+    customer_facing_po_document: string;
   };
   after?: () => void;
 };
 
 export const usePost = ({ type, after, initialValues }: UsePostProps) => {
   const { userId, orgId } = useAuth();
+
+  const [loading, setLoading] = useState(false);
 
   const [createPost, { loading: posting }] = useMutation<
     CreatePostMutation,
@@ -62,72 +69,98 @@ export const usePost = ({ type, after, initialValues }: UsePostProps) => {
       title: string;
       id?: string;
       products: (Line_Items_Insert_Input & { __typename?: string })[];
+      customer_facing_po_document: string;
+      customer_facing_po_document_file: {
+        inputValue: string;
+        inputFiles: File[];
+      };
     } & GetPostsQuery["posts"]["0"]
-  >["onSubmit"] = async ({ tags, body, title, id, products, ...rest }, api) => {
-    // return
-    const lineItemsData = products.map((p) => {
-      delete p.id;
-      return { ...p, created_by: userId };
-    });
-
-    const variables = {
-      pickup_address: rest.pickup_address,
-      delivery_date: rest.delivery_date,
-      psr: rest.psr,
-      destination_address: rest.destination_address,
-      destination_poc: rest.destination_poc,
-      delivery_instructions: rest.delivery_instructions,
-      billing_so: rest.billing_so,
-      ior_compliance_resale: rest.ior_compliance_resale,
-      international_frt_resale: rest.international_frt_resale,
+  >["onSubmit"] = async (
+    {
+      tags,
       body,
       title,
       id,
-      tags:
-        tags?.map((tag) => ({
-          tag_id: tag,
-          post_id: id,
-        })) || [],
-      line_items_data: lineItemsData.map((i) => {
-        delete i.__typename;
-        return { ...i, post_id: id };
-      }),
-    };
+      products,
+      customer_facing_po_document_file,
+      customer_facing_po_document,
+      ...rest
+    },
+    api,
+  ) => {
+    setLoading(true);
+
     try {
+      let fileUrl = customer_facing_po_document;
+
+      const file = customer_facing_po_document_file?.inputFiles?.[0];
+      if (file) {
+        const response = await fetch(`/api/upload?filename=${file.name}`, {
+          method: "POST",
+          body: file,
+        });
+        const data = await response.json();
+        fileUrl = data.url;
+      }
+
+      const commonVariables = {
+        pickup_address: rest.pickup_address,
+        delivery_date: rest.delivery_date,
+        psr: rest.psr,
+        destination_address: rest.destination_address,
+        destination_poc: rest.destination_poc,
+        delivery_instructions: rest.delivery_instructions,
+        billing_so: rest.billing_so,
+        ior_compliance_resale: rest.ior_compliance_resale,
+        international_frt_resale: rest.international_frt_resale,
+        body,
+        title,
+        customer_facing_po_document: fileUrl,
+      };
+
       type === "New"
         ? await createPost({
             variables: {
+              ...commonVariables,
               creator_id: userId,
-              pickup_address: rest.pickup_address,
-              delivery_date: rest.delivery_date,
-              psr: rest.psr,
-              destination_address: rest.destination_address,
-              destination_poc: rest.destination_poc,
-              delivery_instructions: rest.delivery_instructions,
-              billing_so: rest.billing_so,
-              ior_compliance_resale: rest.ior_compliance_resale,
-              international_frt_resale: rest.international_frt_resale,
               org_id: orgId || userId,
-              body,
-              title,
               tags_data:
                 tags?.map((tag) => ({
                   tag_id: tag,
                 })) || [],
-              line_items_data: lineItemsData,
+              line_items_data: products.map((p) => {
+                delete p.id;
+                return { ...p, created_by: userId };
+              }),
             },
             refetchQueries: [GET_POSTS],
-            onCompleted: () => api.reset(),
+            // onCompleted: () => api.reset(),
             onError: (e) => console.error(e),
           })
         : await updatePost({
-            variables,
+            variables: {
+              ...commonVariables,
+              id,
+              tags:
+                tags?.map((tag) => ({
+                  tag_id: tag,
+                  post_id: id,
+                })) || [],
+              line_items_data: products.map((p) => {
+                delete p.__typename;
+                delete p.id;
+                return { ...p, post_id: id, created_by: userId };
+              }),
+            },
             refetchQueries: [GET_POSTS],
+            onError: (e) => console.error(e),
           });
     } catch (e) {
       console.error(e);
     }
+
     after && after();
+    setLoading(false);
   };
 
   const schema: Schema = {
@@ -139,14 +172,11 @@ export const usePost = ({ type, after, initialValues }: UsePostProps) => {
     fields: [
       {
         component: "field-array",
-        class: "mb-8",
+        className: "mb-8",
         name: "products",
         label: "Product section",
         validate: [{ type: "required" }],
         initialValue: [""],
-        FieldContainerProps: { spacing: 0 },
-        GridContainerProps: { spacing: 0 },
-        BodyGridProps: { spacing: 0 },
         fields: [
           {
             FormFieldGridProps: { xs: 2.4 },
@@ -286,7 +316,7 @@ export const usePost = ({ type, after, initialValues }: UsePostProps) => {
       },
       {
         component: componentTypes.DATE_PICKER,
-        class: "mb-8",
+        className: "mb-8",
         FormFieldGridProps: { xs: 6, mb: 3 },
         name: "delivery_date",
         label: "delivery_date",
@@ -294,7 +324,7 @@ export const usePost = ({ type, after, initialValues }: UsePostProps) => {
       },
       {
         component: componentTypes.TEXT_FIELD,
-        class: "mb-8",
+        className: "mb-8",
         name: "psr",
         label: "psr",
         validate: [{ type: "required" }],
@@ -302,28 +332,28 @@ export const usePost = ({ type, after, initialValues }: UsePostProps) => {
       },
       {
         component: componentTypes.TEXTAREA,
-        class: "mb-8",
+        className: "mb-8",
         name: "pickup_address",
         label: "pickup_address",
         validate: [{ type: "required" }],
       },
       {
         component: componentTypes.TEXTAREA,
-        class: "mb-8",
+        className: "mb-8",
         name: "destination_address",
         label: "destination_address",
         validate: [{ type: "required" }],
       },
       {
         component: componentTypes.TEXTAREA,
-        class: "mb-8",
+        className: "mb-8",
         name: "destination_poc",
         label: "destination_poc",
         validate: [{ type: "required" }],
       },
       {
         component: componentTypes.TEXTAREA,
-        class: "mb-8",
+        className: "mb-8",
         name: "delivery_instructions",
         label: "delivery_instructions",
         validate: [{ type: "required" }],
@@ -331,14 +361,14 @@ export const usePost = ({ type, after, initialValues }: UsePostProps) => {
       },
       {
         component: componentTypes.TEXTAREA,
-        class: "mb-8",
+        className: "mb-8",
         name: "billing_so",
         label: "billing_so",
         validate: [{ type: "required" }],
       },
       {
         component: componentTypes.TEXTAREA,
-        class: "mb-8",
+        className: "mb-8",
         name: "ior_compliance_resale",
         label: "ior_compliance_resale",
         helperText:
@@ -346,20 +376,23 @@ export const usePost = ({ type, after, initialValues }: UsePostProps) => {
       },
       {
         component: componentTypes.TEXTAREA,
-        class: "mb-8",
+        className: "mb-8",
         name: "international_frt_resale",
         label: "international_frt_resale",
       },
       {
         component: "file-upload",
-        class: "mb-8",
-        validate: [{ type: "required" }],
-        name: "customer_facing_po_document",
-        label: "customer_facing_po_document",
+        className: "mb-8",
+        validate: initialValues?.customer_facing_po_document
+          ? undefined
+          : [{ type: "required" }],
+        name: "customer_facing_po_document_file",
+        label: "customer_facing_po_document_file",
+        type: "file",
       },
       // {
       //   component: componentTypes.SELECT,
-      //   class: "mb-8",
+      //   className: "mb-8",
       //   noOptionsMessage: "No results",
       //   options: [],
       //   loadOptions: getTags,
@@ -374,5 +407,11 @@ export const usePost = ({ type, after, initialValues }: UsePostProps) => {
     ],
   };
 
-  return { userId, updatePost, updating, posting, onSubmit, schema };
+  return {
+    userId,
+    updatePost,
+    onSubmit,
+    schema,
+    loading: loading || posting || updating,
+  };
 };

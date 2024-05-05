@@ -120,6 +120,8 @@ const Post = ({ post }: Props) => {
 
   const initialValues = {
     ...post,
+    customer_facing_po_document: post.customer_facing_po_document || "",
+    customer_facing_po_document_file: "",
     delivery_date: new Date(post.delivery_date),
     body: post.body || undefined,
     title: post.title || undefined,
@@ -209,6 +211,15 @@ const Post = ({ post }: Props) => {
           <div>IOR Compliance Resale: {post.ior_compliance_resale}</div>
           <div>
             International FRT Compliance Resale: {post.international_frt_resale}
+          </div>
+          <div>
+            PO document:{" "}
+            <a
+              className="text-blue-300 underline"
+              href={post.customer_facing_po_document || ""}
+            >
+              {post.customer_facing_po_document}
+            </a>
           </div>
         </div>
         <div className="my-5">

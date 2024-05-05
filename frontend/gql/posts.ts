@@ -17,6 +17,7 @@ export const GET_POSTS = graphql(`
       destination_address
       ior_compliance_resale
       pickup_address
+      customer_facing_po_document
       psr
       author {
         name
@@ -68,6 +69,7 @@ export const UPDATE_POST = graphql(`
     $body: String = ""
     $billing_so: String = ""
     $destination_address: String = ""
+    $customer_facing_po_document: String = ""
     $delivery_date: timestamptz = ""
     $delivery_instructions: String = ""
     $destination_poc: String = ""
@@ -106,6 +108,7 @@ export const UPDATE_POST = graphql(`
         ior_compliance_resale: $ior_compliance_resale
         pickup_address: $pickup_address
         psr: $psr
+        customer_facing_po_document: $customer_facing_po_document
       }
     ) {
       id
@@ -148,6 +151,7 @@ export const CREATE_POST = graphql(`
     $ior_compliance_resale: numeric = 0
     $pickup_address: String = ""
     $psr: String = ""
+    $customer_facing_po_document: String = ""
     $tags_data: [post_tags_insert_input!] = { tag_id: "" }
     $line_items_data: [line_items_insert_input!] = {
       created_by: ""
@@ -176,6 +180,7 @@ export const CREATE_POST = graphql(`
         destination_poc: $destination_poc
         international_frt_resale: $international_frt_resale
         ior_compliance_resale: $ior_compliance_resale
+        customer_facing_po_document: $customer_facing_po_document
         pickup_address: $pickup_address
         psr: $psr
         post_tags: { data: $tags_data }
@@ -239,6 +244,7 @@ export const SEARCH_POSTS = graphql(`
       creator_id
       title
       updated_at
+      customer_facing_po_document
       author {
         name
         id

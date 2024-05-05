@@ -1,47 +1,43 @@
 import {
   FormRenderer,
-  componentTypes,
-  Schema,
-  FormRendererProps,
   useFormApi,
   useFieldApi,
   UseFieldApiConfig,
-  ValidatorFunction,
 } from "@data-driven-forms/react-form-renderer";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import CloseIcon from "@mui/icons-material/Close";
 
 import { componentMapper as componentMapperI } from "@data-driven-forms/mui-component-mapper";
-import { Button, Card, FormLabel, IconButton } from "@mui/material";
+import {
+  Button,
+  Card,
+  CircularProgress,
+  FormLabel,
+  IconButton,
+} from "@mui/material";
 import FormTemplateCommonProps from "@data-driven-forms/common/form-template";
 import FormSpy from "@data-driven-forms/react-form-renderer/form-spy";
 
-import {
-  ChangeEventHandler,
-  ComponentType,
-  EventHandler,
-  useEffect,
-  useState,
-} from "react";
+import { ChangeEventHandler, ComponentType, useState } from "react";
 import { UsePostProps, usePost } from "@/hooks/usePost";
 
 const FileUploadComponent = (props: UseFieldApiConfig) => {
-  const { input, label } = useFieldApi(props);
-  const { change, getState } = useFormApi();
+  const { input, label, meta } = useFieldApi(props);
+  const { change, getState, ...api } = useFormApi();
 
   const state = getState();
 
-  const [file, setFile] = useState<File | null>(null);
-
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const file = e.target.files?.[0] || null;
-    setFile(file);
-    change("customer_facing_po_document", file?.name);
+    change("customer_facing_po_document_file", { inputFiles: [file] });
   };
+
+  const file = state.values.customer_facing_po_document_file?.inputFiles?.[0];
+  const currentFile = state.values.customer_facing_po_document;
 
   return (
     <div className="mb-8">
-      <FormLabel className="mr-2" htmlFor={"customer_facing_po_new"}>
+      <FormLabel className="mr-2" htmlFor={input.name}>
         {label}
       </FormLabel>
       <Button
@@ -52,34 +48,32 @@ const FileUploadComponent = (props: UseFieldApiConfig) => {
         tabIndex={-1}
       >
         <CloudUploadIcon />
-        {/* Empty initial value is required */}
+        {/* Empty initial value is required to prevent error. Handle change manually */}
         <input
-          type="file"
           accept="application/pdf, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-          id={"customer_facing_po_new"}
-          onChange={onChange}
-          className="hidden"
-        />
-        <input
           id={input.name}
-          {...{ value: file?.name || "" }}
+          {...{ ...input, value: "", onChange }}
+          // onChange={onChange}
           className="hidden"
         />
       </Button>
-      {state.errors?.["customer_facing_po_document"] && (
+      {meta.error && (
         <div>
-          <span style={{ color: "red" }}>
-            {state.errors?.["customer_facing_po_document"]}
-          </span>
+          <span style={{ color: "red" }}>{meta.error}</span>
         </div>
       )}
       {file && (
         <>
           {file?.name}
-          <IconButton onClick={() => setFile(null)}>
+          <IconButton onClick={() => change(input.name, null)}>
             <CloseIcon />
           </IconButton>
         </>
+      )}
+      {currentFile && !file && (
+        <a className="text-blue-300 underline" href={currentFile}>
+          {currentFile}
+        </a>
       )}
     </div>
   );
@@ -95,9 +89,10 @@ export const PostForm = ({
   initialValues,
   after,
 }: UsePostProps) => {
-  const { posting, schema, onSubmit, updating } = usePost({
+  const { schema, onSubmit, loading } = usePost({
     type,
     after,
+    initialValues,
   });
 
   return (
@@ -105,11 +100,7 @@ export const PostForm = ({
       <FormRenderer
         {...{
           FormTemplate: (props) => (
-            <FormTemplate
-              after={after}
-              submitting={posting || updating}
-              {...props}
-            />
+            <FormTemplate after={after} submitting={loading} {...props} />
           ),
           componentMapper,
           schema,
@@ -124,9 +115,7 @@ export const PostForm = ({
 const FormTemplate: ComponentType<
   FormTemplateCommonProps & { submitting: boolean; after?: () => void }
 > = ({ schema, formFields, submitting, after }) => {
-  const { handleSubmit, getState } = useFormApi();
-
-  const s = getState();
+  const { handleSubmit } = useFormApi();
 
   return (
     <form className="w-full" onSubmit={handleSubmit}>
@@ -142,7 +131,13 @@ const FormTemplate: ComponentType<
                 type="submit"
                 variant="contained"
               >
-                Submit
+                {submitting ? (
+                  <>
+                    <CircularProgress /> Saving
+                  </>
+                ) : (
+                  "Save"
+                )}
               </Button>
               {after && (
                 <Button onClick={after} variant="contained">
