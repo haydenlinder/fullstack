@@ -4,6 +4,7 @@ import {
   CardContent,
   Chip,
   CircularProgress,
+  Divider,
   FormControl,
   IconButton,
   InputLabel,
@@ -194,7 +195,11 @@ const Post = ({ post }: Props) => {
           <UserIcon className="mr-2" />
           <Typography fontSize={16}>{parse(post?.author?.name)}</Typography>
         </div>
+        <Typography fontSize={24}>{parse(post.id)}</Typography>
 
+        <Typography fontSize={16}>
+          Created: {new Date(post.created_at).toLocaleString()}
+        </Typography>
         <FormControl
           className="right-4 absolute w-fit top-6"
           sx={{ position: "absolute" }}
@@ -215,12 +220,10 @@ const Post = ({ post }: Props) => {
           </Select>
         </FormControl>
 
-        <Typography fontSize={16}>
-          Created: {new Date(post.created_at).toLocaleString()}
+        <Typography variant="h5" sx={{ my: 4 }}>
+          Line Items
         </Typography>
-        {/* LINE_ITEMS */}
         <div className="my-4">
-          <Typography fontSize={24}>{parse(post.id)}</Typography>
           <TableContainer component={Paper}>
             <Table size="small" aria-label="a dense table">
               <TableHead>
@@ -239,12 +242,11 @@ const Post = ({ post }: Props) => {
               </TableHead>
               <TableBody>
                 {post.line_items.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
+                  <TableRow key={row.id}>
                     <TableCell scope="row">{row.part_number}</TableCell>
-                    <TableCell align="right">{row.description}</TableCell>
+                    <TableCell align="right" className="whitespace-pre-wrap">
+                      {row.description}
+                    </TableCell>
                     <TableCell align="right">{row.quantity}</TableCell>
                     <TableCell align="right">{row.unit_resell}</TableCell>
                     <TableCell align="right">
@@ -264,20 +266,75 @@ const Post = ({ post }: Props) => {
           </TableContainer>
         </div>
         {/* MAIN */}
+        <Typography variant="h5" sx={{ my: 4 }}>
+          Shipment
+        </Typography>
         <div>
-          <div>
-            Delivery Date: {new Date(post.delivery_date).toLocaleDateString()}
-          </div>
-          <div>PSR: {post.psr}</div>
-          <div>Pickup Address: {post.pickup_address}</div>
-          <div>Destination Address: {post.destination_address}</div>
-          <div>Destination POC: {post.destination_poc}</div>
-          <div>Delivery Instructions: {post.delivery_instructions}</div>
-          <div>Billing SO: {post.billing_so}</div>
-          <div>IOR Compliance Resale: {post.ior_compliance_resale}</div>
-          <div>
-            International FRT Compliance Resale: {post.international_frt_resale}
-          </div>
+          <TableContainer className="max-w-fit" component={Paper}>
+            <Table size="small" aria-label="a dense table">
+              <TableBody>
+                <TableRow>
+                  <TableCell align="left" scope="row">
+                    Delivery Date
+                  </TableCell>
+                  <TableCell align="left">
+                    {new Date(post.delivery_date).toLocaleDateString()}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell align="left">PSR</TableCell>
+                  <TableCell align="left" className="whitespace-pre-wrap">
+                    {post.psr}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell align="left">Pickup Address</TableCell>
+                  <TableCell align="left" className="whitespace-pre-wrap">
+                    {post.pickup_address}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell align="left">Destination Address</TableCell>
+                  <TableCell align="left" className="whitespace-pre-wrap">
+                    {post.pickup_address}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell align="left">Destination POC</TableCell>
+                  <TableCell align="left" className="whitespace-pre-wrap">
+                    {post.destination_poc}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell align="left">Delivery Instructions</TableCell>
+                  <TableCell align="left" className="whitespace-pre-wrap">
+                    {post.delivery_instructions}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell align="left">Billing SO</TableCell>
+                  <TableCell align="left" className="whitespace-pre-wrap">
+                    {post.billing_so}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell align="left">IOR Compliance Resale</TableCell>
+                  <TableCell align="left" className="whitespace-pre-wrap">
+                    {post.ior_compliance_resale}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell align="left">
+                    International FRT Compliance Resale
+                  </TableCell>
+                  <TableCell align="left" className="whitespace-pre-wrap">
+                    {post.international_frt_resale}
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+
           <div>
             PO document:{" "}
             <a
