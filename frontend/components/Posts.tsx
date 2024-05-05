@@ -45,7 +45,7 @@ import { PostForm } from "./PostForm";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { useCallback, useEffect, useState } from "react";
-import { useAuth } from "@clerk/nextjs";
+import { UserButton, useAuth } from "@clerk/nextjs";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import UserIcon from "@mui/icons-material/AccountCircle";
 import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
@@ -143,10 +143,13 @@ const Post = ({ post }: Props) => {
   return (
     <Card className="flex justify-center my-10 w-full">
       <CardContent className="w-full">
-        <div className="flex items-center">
+        <div className="flex items-center mb-2">
           <UserIcon className="mr-2" />
           <Typography fontSize={16}>{parse(post?.author?.name)}</Typography>
         </div>
+        <Typography fontSize={16}>
+          Created: {new Date(post.created_at).toLocaleString()}
+        </Typography>
         {/* PARTS */}
         <div className="my-4">
           <Typography fontSize={24}>{parse(post.id)}</Typography>
