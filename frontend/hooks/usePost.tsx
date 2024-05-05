@@ -172,7 +172,7 @@ export const usePost = ({ type, after, initialValues }: UsePostProps) => {
     fields: [
       {
         component: "field-array",
-        className: "mb-8",
+        class: "mb-8",
         name: "products",
         label: "Product section",
         validate: [{ type: "required" }],
@@ -316,7 +316,7 @@ export const usePost = ({ type, after, initialValues }: UsePostProps) => {
       },
       {
         component: componentTypes.DATE_PICKER,
-        className: "mb-8",
+        class: "mb-8",
         FormFieldGridProps: { xs: 6, mb: 3 },
         name: "delivery_date",
         label: "delivery_date",
@@ -324,7 +324,7 @@ export const usePost = ({ type, after, initialValues }: UsePostProps) => {
       },
       {
         component: componentTypes.TEXT_FIELD,
-        className: "mb-8",
+        class: "mb-8",
         name: "psr",
         label: "psr",
         validate: [{ type: "required" }],
@@ -332,28 +332,28 @@ export const usePost = ({ type, after, initialValues }: UsePostProps) => {
       },
       {
         component: componentTypes.TEXTAREA,
-        className: "mb-8",
+        class: "mb-8",
         name: "pickup_address",
         label: "pickup_address",
         validate: [{ type: "required" }],
       },
       {
         component: componentTypes.TEXTAREA,
-        className: "mb-8",
+        class: "mb-8",
         name: "destination_address",
         label: "destination_address",
         validate: [{ type: "required" }],
       },
       {
         component: componentTypes.TEXTAREA,
-        className: "mb-8",
+        class: "mb-8",
         name: "destination_poc",
         label: "destination_poc",
         validate: [{ type: "required" }],
       },
       {
         component: componentTypes.TEXTAREA,
-        className: "mb-8",
+        class: "mb-8",
         name: "delivery_instructions",
         label: "delivery_instructions",
         validate: [{ type: "required" }],
@@ -361,14 +361,14 @@ export const usePost = ({ type, after, initialValues }: UsePostProps) => {
       },
       {
         component: componentTypes.TEXTAREA,
-        className: "mb-8",
+        class: "mb-8",
         name: "billing_so",
         label: "billing_so",
         validate: [{ type: "required" }],
       },
       {
         component: componentTypes.TEXTAREA,
-        className: "mb-8",
+        class: "mb-8",
         name: "ior_compliance_resale",
         label: "ior_compliance_resale",
         helperText:
@@ -376,13 +376,13 @@ export const usePost = ({ type, after, initialValues }: UsePostProps) => {
       },
       {
         component: componentTypes.TEXTAREA,
-        className: "mb-8",
+        class: "mb-8",
         name: "international_frt_resale",
         label: "international_frt_resale",
       },
       {
         component: "file-upload",
-        className: "mb-8",
+        class: "mb-8",
         validate: initialValues?.customer_facing_po_document
           ? undefined
           : [{ type: "required" }],
@@ -392,7 +392,7 @@ export const usePost = ({ type, after, initialValues }: UsePostProps) => {
       },
       // {
       //   component: componentTypes.SELECT,
-      //   className: "mb-8",
+      //   class: "mb-8",
       //   noOptionsMessage: "No results",
       //   options: [],
       //   loadOptions: getTags,
