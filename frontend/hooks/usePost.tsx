@@ -324,7 +324,7 @@ export const usePost = ({ type, after, initialValues }: UsePostProps) => {
         FormFieldGridProps: { mb: 2 },
 
         name: "delivery_date",
-        label: "delivery_date",
+        label: "requested_delivery_date",
         validate: [{ type: "required" }],
       },
       {

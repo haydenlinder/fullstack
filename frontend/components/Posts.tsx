@@ -496,7 +496,7 @@ const Request = ({ post }: Props) => {
             <TableBody>
               <TableRow>
                 <TableCell align="left" scope="row">
-                  Delivery Date
+                  Requested Delivery Date
                 </TableCell>
                 <TableCell align="left">
                   {new Date(post.delivery_date).toLocaleDateString()}
