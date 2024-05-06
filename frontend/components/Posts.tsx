@@ -115,7 +115,7 @@ export const Posts = () => {
       {loading || noResults ? (
         <div className="w-full flex justify-center h-20 my-5">
           {(loading || searching) && <CircularProgress />}
-          {noResults && <>No Resuts</>}
+          {noResults && <>No Results</>}
         </div>
       ) : (
         posts?.map((p) => (
