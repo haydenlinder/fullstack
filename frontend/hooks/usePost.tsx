@@ -1,4 +1,11 @@
-import { CREATE_POST, GET_POSTS, SEARCH_TAGS, UPDATE_POST } from "@/gql/posts";
+import {
+  CREATE_POST,
+  GET_POSTS,
+  GET_POST_BY_ID,
+  SEARCH_POSTS,
+  SEARCH_TAGS,
+  UPDATE_POST,
+} from "@/gql/posts";
 import {
   CreatePostMutation,
   CreatePostMutationVariables,
@@ -136,7 +143,7 @@ export const usePost = ({ type, after, initialValues }: UsePostProps) => {
                 return { ...p, created_by: userId };
               }),
             },
-            refetchQueries: [GET_POSTS],
+            refetchQueries: [GET_POSTS, GET_POST_BY_ID, SEARCH_POSTS],
             // onCompleted: () => api.reset(),
             onError: (e) => console.error(e),
           })
@@ -155,7 +162,7 @@ export const usePost = ({ type, after, initialValues }: UsePostProps) => {
                 return { ...p, post_id: id, created_by: userId };
               }),
             },
-            refetchQueries: [GET_POSTS],
+            refetchQueries: [GET_POSTS, GET_POST_BY_ID, SEARCH_POSTS],
             onError: (e) => console.error(e),
           });
     } catch (e) {
