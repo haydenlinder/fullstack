@@ -156,6 +156,7 @@ export const Post = ({ post }: Props) => {
 
   const initialValues = {
     ...post,
+    actual_delivery_date: new Date(post.actual_delivery_date),
     customer_facing_po_document: post.customer_facing_po_document || "",
     customer_facing_po_document_file: "",
     delivery_date: new Date(post.delivery_date),
