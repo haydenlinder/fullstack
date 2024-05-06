@@ -106,6 +106,7 @@ export const usePost = ({ type, after, initialValues }: UsePostProps) => {
       }
 
       const commonVariables = {
+        ...rest,
         pickup_address: rest.pickup_address,
         delivery_date: rest.delivery_date,
         psr: rest.psr,

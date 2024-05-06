@@ -596,24 +596,24 @@ ticket_number
                 <TableCell align="left" scope="row">
                   Tracking Number
                 </TableCell>
-                <TableCell align="left">{post.id}</TableCell>
+                <TableCell align="left">{post.tracking_number}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell align="left">Carrier</TableCell>
                 <TableCell align="left" className="whitespace-pre-wrap">
-                  {post.psr}
+                  {post.carrier}
                 </TableCell>
               </TableRow>
               <TableRow>
                 <TableCell align="left">Actual_delivery_date</TableCell>
                 <TableCell align="left" className="whitespace-pre-wrap">
-                  {new Date(post.delivery_date).toLocaleDateString()}
+                  {new Date(post.actual_delivery_date).toLocaleDateString()}
                 </TableCell>
               </TableRow>
               <TableRow>
                 <TableCell align="left">ticket_number</TableCell>
                 <TableCell align="left" className="whitespace-pre-wrap">
-                  {post.pickup_address}
+                  {post.ticket_number}
                 </TableCell>
               </TableRow>
               <TableRow>
@@ -623,7 +623,7 @@ ticket_number
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-blue-300 hover:underline"
-                    href={post.customer_facing_po_document || ""}
+                    href={post.proof_of_delivery_document || ""}
                   >
                     View Document <OpenInNewIcon fontSize="inherit" />
                   </a>{" "}

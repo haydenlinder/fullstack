@@ -24,6 +24,11 @@ export const GET_POSTS = graphql(`
       pickup_address
       customer_facing_po_document
       psr
+      tracking_number
+      carrier
+      actual_delivery_date
+      ticket_number
+      proof_of_delivery_document
       author {
         name
         id
@@ -80,6 +85,11 @@ export const GET_POST_BY_ID = graphql(`
       pickup_address
       customer_facing_po_document
       psr
+      tracking_number
+      carrier
+      actual_delivery_date
+      ticket_number
+      proof_of_delivery_document
       author {
         name
         id
@@ -137,6 +147,11 @@ export const UPDATE_POST = graphql(`
     $international_frt_resale: numeric = 0
     $ior_compliance_resale: numeric = 0
     $pickup_address: String = ""
+    $tracking_number: String = ""
+    $carrier: String = ""
+    $actual_delivery_date: timestamptz = null
+    $ticket_number: String = ""
+    $proof_of_delivery_document: String = ""
     $psr: String = ""
     $title: String = ""
     $tags: [post_tags_insert_input!] = { post_id: "", tag_id: "" }
@@ -158,6 +173,11 @@ export const UPDATE_POST = graphql(`
     update_posts_by_pk(
       pk_columns: { id: $id }
       _set: {
+        tracking_number: $tracking_number
+        carrier: $carrier
+        actual_delivery_date: $actual_delivery_date
+        ticket_number: $ticket_number
+        proof_of_delivery_document: $proof_of_delivery_document
         body: $body
         title: $title
         billing_so: $billing_so
@@ -214,6 +234,11 @@ export const CREATE_POST = graphql(`
     $psr: String = ""
     $customer_facing_po_document: String = ""
     $status: status_types_enum = NEW
+    $tracking_number: String = ""
+    $carrier: String = ""
+    $actual_delivery_date: timestamptz = null
+    $ticket_number: String = ""
+    $proof_of_delivery_document: String = ""
     $tags_data: [post_tags_insert_input!] = { tag_id: "" }
     $line_items_data: [line_items_insert_input!] = {
       created_by: ""
@@ -246,6 +271,11 @@ export const CREATE_POST = graphql(`
         pickup_address: $pickup_address
         psr: $psr
         status: $status
+        tracking_number: $tracking_number
+        carrier: $carrier
+        actual_delivery_date: $actual_delivery_date
+        ticket_number: $ticket_number
+        proof_of_delivery_document: $proof_of_delivery_document
         post_tags: { data: $tags_data }
         line_items: { data: $line_items_data }
       }
@@ -317,6 +347,12 @@ export const SEARCH_POSTS = graphql(`
       title
       updated_at
       customer_facing_po_document
+      tracking_number
+      carrier
+      actual_delivery_date
+      ticket_number
+      proof_of_delivery_document
+      psr
       author {
         name
         id
