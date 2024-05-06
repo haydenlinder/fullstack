@@ -311,10 +311,12 @@ export const Post = ({ post }: Props) => {
                 color="primary"
                 disabled={deleting}
                 onClick={async () => {
-                  await deletePost({
-                    variables: { id: post.id },
-                    refetchQueries: [GET_POSTS],
-                  });
+                  if (window.confirm("Are you sure you want to delete this?")) {
+                    await deletePost({
+                      variables: { id: post.id },
+                      refetchQueries: [GET_POSTS],
+                    });
+                  }
                 }}
               >
                 <DeleteIcon />
