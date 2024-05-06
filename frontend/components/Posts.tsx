@@ -249,134 +249,13 @@ export const Post = ({ post }: Props) => {
         </div>
         <Divider sx={{ my: 4 }} />
         {/* LINE ITEMS */}
-        <Typography className="underline" variant="h5" sx={{ my: 4 }}>
-          Line Items
-        </Typography>
-        <div className="my-4">
-          <TableContainer component={Paper}>
-            <Table size="small" aria-label="a dense table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>Part Number</TableCell>
-                  <TableCell align="right">Description</TableCell>
-                  <TableCell align="right">Quantity</TableCell>
-                  <TableCell align="right">Unit Resell</TableCell>
-                  <TableCell align="right">Extended Resell</TableCell>
-                  <TableCell align="right">Customer PO</TableCell>
-                  <TableCell align="right">Manufacturer</TableCell>
-                  <TableCell align="right">SO</TableCell>
-                  <TableCell align="right">PO</TableCell>
-                  <TableCell align="right">Whs delivery date</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {post.line_items.map((row) => (
-                  <TableRow key={row.id}>
-                    <TableCell scope="row">{row.part_number}</TableCell>
-                    <TableCell align="right" className="whitespace-pre-wrap">
-                      {row.description}
-                    </TableCell>
-                    <TableCell align="right">{row.quantity}</TableCell>
-                    <TableCell align="right">{row.unit_resell}</TableCell>
-                    <TableCell align="right">
-                      {row.unit_resell * row.quantity}
-                    </TableCell>
-                    <TableCell align="right">{row.customer_po}</TableCell>
-                    <TableCell align="right">{row.manufacturer}</TableCell>
-                    <TableCell align="right">{row.so}</TableCell>
-                    <TableCell align="right">{row.po}</TableCell>
-                    <TableCell align="right">
-                      {new Date(row.whs_delivery_date).toLocaleDateString()}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </div>
+        <LineItems post={post} />
         {/* MAIN */}
-        <Typography className="underline" variant="h5" sx={{ my: 4 }}>
-          Request
-        </Typography>
-        <div>
-          <TableContainer className="max-w-fit" component={Paper}>
-            <Table size="small" aria-label="a dense table">
-              <TableBody>
-                <TableRow>
-                  <TableCell align="left" scope="row">
-                    Delivery Date
-                  </TableCell>
-                  <TableCell align="left">
-                    {new Date(post.delivery_date).toLocaleDateString()}
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">PSR</TableCell>
-                  <TableCell align="left" className="whitespace-pre-wrap">
-                    {post.psr}
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">Pickup Address</TableCell>
-                  <TableCell align="left" className="whitespace-pre-wrap">
-                    {post.pickup_address}
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">Destination Address</TableCell>
-                  <TableCell align="left" className="whitespace-pre-wrap">
-                    {post.pickup_address}
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">Destination POC</TableCell>
-                  <TableCell align="left" className="whitespace-pre-wrap">
-                    {post.destination_poc}
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">Delivery Instructions</TableCell>
-                  <TableCell align="left" className="whitespace-pre-wrap">
-                    {post.delivery_instructions}
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">Billing SO</TableCell>
-                  <TableCell align="left" className="whitespace-pre-wrap">
-                    {post.billing_so}
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">IOR Compliance Resale</TableCell>
-                  <TableCell align="left" className="whitespace-pre-wrap">
-                    {post.ior_compliance_resale}
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">
-                    International FRT Compliance Resale
-                  </TableCell>
-                  <TableCell align="left" className="whitespace-pre-wrap">
-                    {post.international_frt_resale}
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">PO document</TableCell>
-                  <TableCell align="left" className="whitespace-pre-wrap">
-                    <a
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-300 hover:underline"
-                      href={post.customer_facing_po_document || ""}
-                    >
-                      View Document <OpenInNewIcon fontSize="inherit" />
-                    </a>{" "}
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
+        <div className="flex justify-between">
+          <Request post={post} />
+          <Shipment post={post} />
         </div>
+        {/* TAGS */}
         <div className="my-5">
           {post.post_tags.map(({ tag }, i) => (
             <span key={tag.id + i}>
@@ -527,4 +406,209 @@ const usePost = ({ post }: Props) => {
     userId,
     parse,
   };
+};
+
+const LineItems = ({ post }: Props) => {
+  return (
+    <>
+      <Typography className="underline" variant="h5" sx={{ my: 4 }}>
+        Line Items
+      </Typography>
+      <div className="my-4">
+        <TableContainer component={Paper}>
+          <Table size="small" aria-label="a dense table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Part Number</TableCell>
+                <TableCell align="right">Description</TableCell>
+                <TableCell align="right">Quantity</TableCell>
+                <TableCell align="right">Unit Resell</TableCell>
+                <TableCell align="right">Extended Resell</TableCell>
+                <TableCell align="right">Customer PO</TableCell>
+                <TableCell align="right">Manufacturer</TableCell>
+                <TableCell align="right">SO</TableCell>
+                <TableCell align="right">PO</TableCell>
+                <TableCell align="right">Whs delivery date</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {post.line_items.map((row) => (
+                <TableRow key={row.id}>
+                  <TableCell scope="row">{row.part_number}</TableCell>
+                  <TableCell align="right" className="whitespace-pre-wrap">
+                    {row.description}
+                  </TableCell>
+                  <TableCell align="right">{row.quantity}</TableCell>
+                  <TableCell align="right">{row.unit_resell}</TableCell>
+                  <TableCell align="right">
+                    {row.unit_resell * row.quantity}
+                  </TableCell>
+                  <TableCell align="right">{row.customer_po}</TableCell>
+                  <TableCell align="right">{row.manufacturer}</TableCell>
+                  <TableCell align="right">{row.so}</TableCell>
+                  <TableCell align="right">{row.po}</TableCell>
+                  <TableCell align="right">
+                    {new Date(row.whs_delivery_date).toLocaleDateString()}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
+    </>
+  );
+};
+
+const Request = ({ post }: Props) => {
+  return (
+    <div>
+      <Typography className="underline" variant="h5" sx={{ my: 4 }}>
+        Request
+      </Typography>
+      <div>
+        <TableContainer className="max-w-fit" component={Paper}>
+          <Table size="small" aria-label="a dense table">
+            <TableBody>
+              <TableRow>
+                <TableCell align="left" scope="row">
+                  Delivery Date
+                </TableCell>
+                <TableCell align="left">
+                  {new Date(post.delivery_date).toLocaleDateString()}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell align="left">PSR</TableCell>
+                <TableCell align="left" className="whitespace-pre-wrap">
+                  {post.psr}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell align="left">Pickup Address</TableCell>
+                <TableCell align="left" className="whitespace-pre-wrap">
+                  {post.pickup_address}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell align="left">Destination Address</TableCell>
+                <TableCell align="left" className="whitespace-pre-wrap">
+                  {post.pickup_address}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell align="left">Destination POC</TableCell>
+                <TableCell align="left" className="whitespace-pre-wrap">
+                  {post.destination_poc}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell align="left">Delivery Instructions</TableCell>
+                <TableCell align="left" className="whitespace-pre-wrap">
+                  {post.delivery_instructions}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell align="left">Billing SO</TableCell>
+                <TableCell align="left" className="whitespace-pre-wrap">
+                  {post.billing_so}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell align="left">IOR Compliance Resale</TableCell>
+                <TableCell align="left" className="whitespace-pre-wrap">
+                  {post.ior_compliance_resale}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell align="left">
+                  International FRT Compliance Resale
+                </TableCell>
+                <TableCell align="left" className="whitespace-pre-wrap">
+                  {post.international_frt_resale}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell align="left">PO document</TableCell>
+                <TableCell align="left" className="whitespace-pre-wrap">
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-300 hover:underline"
+                    href={post.customer_facing_po_document || ""}
+                  >
+                    View Document <OpenInNewIcon fontSize="inherit" />
+                  </a>{" "}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
+    </div>
+  );
+};
+
+const Shipment = ({ post }: Props) => {
+  /**
+   * Tracking number
+Carrier
+Actual_delivery_date
+pickup_date
+Proof_of_delivery_document: pdf document
+ticket_number
+
+   */
+  return (
+    <div>
+      <Typography className="underline" variant="h5" sx={{ my: 4 }}>
+        Shipment
+      </Typography>
+      <div>
+        <TableContainer className="max-w-fit" component={Paper}>
+          <Table size="small" aria-label="a dense table">
+            <TableBody>
+              <TableRow>
+                <TableCell align="left" scope="row">
+                  Tracking Number
+                </TableCell>
+                <TableCell align="left">{post.id}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell align="left">Carrier</TableCell>
+                <TableCell align="left" className="whitespace-pre-wrap">
+                  {post.psr}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell align="left">Actual_delivery_date</TableCell>
+                <TableCell align="left" className="whitespace-pre-wrap">
+                  {new Date(post.delivery_date).toLocaleDateString()}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell align="left">ticket_number</TableCell>
+                <TableCell align="left" className="whitespace-pre-wrap">
+                  {post.pickup_address}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell align="left">Proof_of_delivery_document</TableCell>
+                <TableCell align="left" className="whitespace-pre-wrap">
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-300 hover:underline"
+                    href={post.customer_facing_po_document || ""}
+                  >
+                    View Document <OpenInNewIcon fontSize="inherit" />
+                  </a>{" "}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
+    </div>
+  );
 };
