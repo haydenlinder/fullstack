@@ -18,7 +18,7 @@ import {
 import FormTemplateCommonProps from "@data-driven-forms/common/form-template";
 import FormSpy from "@data-driven-forms/react-form-renderer/form-spy";
 
-import { ChangeEventHandler, ComponentType, useEffect, useState } from "react";
+import { ChangeEventHandler, ComponentType, useEffect } from "react";
 import { UsePostProps, usePost } from "@/hooks/usePost";
 import { Line_Items } from "@/src/gql/graphql";
 
@@ -55,11 +55,11 @@ const FileUploadComponent = (props: UseFieldApiConfig) => {
 
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const file = e.target.files?.[0] || null;
-    change("customer_facing_po_document_file", { inputFiles: [file] });
+    change(input.name, { inputFiles: [file] });
   };
 
-  const file = state.values.customer_facing_po_document_file?.inputFiles?.[0];
-  const currentFile = state.values.customer_facing_po_document;
+  const file = state.values?.[input.name]?.inputFiles?.[0];
+  const currentFile = state.values?.[input.name.replace("_file", "")];
 
   return (
     <div className="mb-8">
@@ -79,7 +79,6 @@ const FileUploadComponent = (props: UseFieldApiConfig) => {
           accept="application/pdf, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
           id={input.name}
           {...{ ...input, value: "", onChange }}
-          // onChange={onChange}
           className="hidden"
         />
       </Button>
@@ -118,13 +117,14 @@ const componentMapper = {
 
 export const PostForm = ({
   type = "New",
-  initialValues,
+  formRenderProps,
   after,
 }: UsePostProps) => {
+  const initialValues = formRenderProps?.initialValues;
   const { schema, onSubmit, loading } = usePost({
     type,
     after,
-    initialValues,
+    formRenderProps,
   });
 
   return (

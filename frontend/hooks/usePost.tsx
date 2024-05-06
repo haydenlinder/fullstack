@@ -11,7 +11,6 @@ import {
   CreatePostMutationVariables,
   GetPostsQuery,
   Line_Items_Insert_Input,
-  Status_Types_Enum,
   UpdatePostMutation,
   UpdatePostMutationVariables,
 } from "@/src/gql/graphql";
@@ -21,27 +20,43 @@ import {
   FormRendererProps,
   Schema,
   componentTypes,
-  useFormApi,
 } from "@data-driven-forms/react-form-renderer";
 import { FormLabel } from "@mui/material";
-import { put } from "@vercel/blob";
-import { revalidatePath } from "next/cache";
-import { upload } from "@vercel/blob/client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+
+export type InitialValues = {
+  tags: string[];
+  // body: string;
+  // title: string;
+  // id?: string;
+  products: (Line_Items_Insert_Input & { __typename?: string })[];
+  customer_facing_po_document: string;
+  proof_of_delivery_document: string;
+  customer_facing_po_document_file: {
+    inputValue: string;
+    inputFiles: File[];
+  };
+  proof_of_delivery_document_file: {
+    inputValue: string;
+    inputFiles: File[];
+  };
+} & GetPostsQuery["posts"]["0"];
 
 export type UsePostProps = {
   type?: "New" | "Edit";
-  initialValues?: {
-    body?: string;
-    id?: string;
-    title?: string;
-    tags?: string[];
-    customer_facing_po_document: string;
-  };
+  formRenderProps?: Omit<
+    FormRendererProps<InitialValues, Partial<InitialValues>>,
+    "schema" | "componentMapper"
+  >;
   after?: () => void;
 };
 
-export const usePost = ({ type, after, initialValues }: UsePostProps) => {
+export const usePost = ({
+  type,
+  after,
+  formRenderProps,
+}: Partial<UsePostProps>) => {
+  const initialValues = formRenderProps?.initialValues;
   const { userId, orgId } = useAuth();
 
   const [loading, setLoading] = useState(false);
@@ -72,18 +87,7 @@ export const usePost = ({ type, after, initialValues }: UsePostProps) => {
   };
 
   const onSubmit: FormRendererProps<
-    {
-      tags?: string[];
-      body: string;
-      title: string;
-      id?: string;
-      products: (Line_Items_Insert_Input & { __typename?: string })[];
-      customer_facing_po_document: string;
-      customer_facing_po_document_file: {
-        inputValue: string;
-        inputFiles: File[];
-      };
-    } & GetPostsQuery["posts"]["0"]
+    Exclude<InitialValues, undefined>
   >["onSubmit"] = async (
     {
       tags,
@@ -100,16 +104,26 @@ export const usePost = ({ type, after, initialValues }: UsePostProps) => {
     setLoading(true);
 
     try {
-      let fileUrl = customer_facing_po_document;
+      let poDocUrl = customer_facing_po_document;
+      let podDocUrl = rest.proof_of_delivery_document || "";
 
-      const file = customer_facing_po_document_file?.inputFiles?.[0];
-      if (file) {
+      const poDoc = customer_facing_po_document_file?.inputFiles?.[0];
+      const podDoc = rest.proof_of_delivery_document_file?.inputFiles?.[0];
+      /**Returns the blos url */
+      const uploadFile = async (file: File) => {
         const response = await fetch(`/api/upload?filename=${file.name}`, {
           method: "POST",
           body: file,
         });
         const data = await response.json();
-        fileUrl = data.url;
+        return data.url;
+      };
+
+      if (poDoc) {
+        poDocUrl = await uploadFile(poDoc);
+      }
+      if (podDoc) {
+        podDocUrl = await uploadFile(podDoc);
       }
 
       const commonVariables = {
@@ -125,7 +139,8 @@ export const usePost = ({ type, after, initialValues }: UsePostProps) => {
         international_frt_resale: rest.international_frt_resale,
         body,
         title,
-        customer_facing_po_document: fileUrl,
+        customer_facing_po_document: poDocUrl,
+        proof_of_delivery_document: podDocUrl,
       };
 
       type === "New"
@@ -144,7 +159,6 @@ export const usePost = ({ type, after, initialValues }: UsePostProps) => {
               }),
             },
             refetchQueries: [GET_POSTS, GET_POST_BY_ID, SEARCH_POSTS],
-            // onCompleted: () => api.reset(),
             onError: (e) => console.error(e),
           })
         : await updatePost({
@@ -435,11 +449,11 @@ export const usePost = ({ type, after, initialValues }: UsePostProps) => {
         type: "number",
       },
       {
-        component: componentTypes.TEXTAREA,
+        component: "file-upload",
         FormFieldGridProps: { mb: 2 },
-        name: "proof_of_delivery_document",
-        label: "proof_of_delivery_document",
-        type: "number",
+        name: "proof_of_delivery_document_file",
+        label: "proof_of_delivery_document_file",
+        type: "file",
       },
       // {
       //   component: componentTypes.SELECT,

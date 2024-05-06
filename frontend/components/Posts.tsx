@@ -77,6 +77,7 @@ import {
 } from "@/state/store";
 import debounce from "lodash/debounce";
 import Link from "next/link";
+import { InitialValues } from "@/hooks/usePost";
 
 export const Posts = () => {
   const { query } = useStore();
@@ -154,15 +155,22 @@ export const Post = ({ post }: Props) => {
   const [didCopy, setDidCopy] = useState(false);
   const client = useApolloClient();
 
-  const initialValues = {
+  const initialValues: InitialValues = {
     ...post,
     actual_delivery_date: new Date(post.actual_delivery_date),
     customer_facing_po_document: post.customer_facing_po_document || "",
-    customer_facing_po_document_file: "",
+    proof_of_delivery_document: post.proof_of_delivery_document || "",
+    customer_facing_po_document_file: {
+      inputFiles: [],
+      inputValue: "",
+    },
+    proof_of_delivery_document_file: {
+      inputFiles: [],
+      inputValue: "",
+    },
     delivery_date: new Date(post.delivery_date),
     body: post.body || undefined,
     title: post.title || undefined,
-    // id: post.id,
     tags: post.post_tags.map(({ tag }) => tag.id) || undefined,
     products: post.line_items.map((i) => ({
       ...i,
@@ -174,7 +182,7 @@ export const Post = ({ post }: Props) => {
     return (
       <PostForm
         after={() => setEdit(false)}
-        initialValues={initialValues}
+        formRenderProps={{ initialValues }}
         type="Edit"
       />
     );
@@ -575,15 +583,6 @@ const Request = ({ post }: Props) => {
 };
 
 const Shipment = ({ post }: Props) => {
-  /**
-   * Tracking number
-Carrier
-Actual_delivery_date
-pickup_date
-Proof_of_delivery_document: pdf document
-ticket_number
-
-   */
   return (
     <div>
       <Typography className="underline" variant="h5" sx={{ my: 4 }}>
@@ -620,14 +619,16 @@ ticket_number
               <TableRow>
                 <TableCell align="left">Proof_of_delivery_document</TableCell>
                 <TableCell align="left" className="whitespace-pre-wrap">
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-300 hover:underline"
-                    href={post.proof_of_delivery_document || ""}
-                  >
-                    View Document <OpenInNewIcon fontSize="inherit" />
-                  </a>{" "}
+                  {post.proof_of_delivery_document && (
+                    <a
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-300 hover:underline"
+                      href={post.proof_of_delivery_document || ""}
+                    >
+                      View Document <OpenInNewIcon fontSize="inherit" />
+                    </a>
+                  )}
                 </TableCell>
               </TableRow>
             </TableBody>
