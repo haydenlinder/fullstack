@@ -174,7 +174,7 @@ export const usePost = ({ type, after, initialValues }: UsePostProps) => {
     fields: [
       {
         component: "field-array",
-        class: "mb-8",
+        FormFieldGridProps: { mb: 2 },
         name: "products",
         label: "Product section",
         validate: [{ type: "required" }],
@@ -321,44 +321,43 @@ export const usePost = ({ type, after, initialValues }: UsePostProps) => {
       },
       {
         component: componentTypes.DATE_PICKER,
-        class: "mb-8",
-        FormFieldGridProps: { xs: 6, mb: 3 },
+        FormFieldGridProps: { mb: 2 },
+
         name: "delivery_date",
         label: "delivery_date",
         validate: [{ type: "required" }],
       },
       {
         component: componentTypes.TEXT_FIELD,
-        class: "mb-8",
+        FormFieldGridProps: { mb: 2 },
         name: "psr",
         label: "psr",
         validate: [{ type: "required" }],
-        FormFieldGridProps: { xs: 6 },
       },
       {
         component: componentTypes.TEXTAREA,
-        class: "mb-8",
+        FormFieldGridProps: { mb: 2 },
         name: "pickup_address",
         label: "pickup_address",
         validate: [{ type: "required" }],
       },
       {
         component: componentTypes.TEXTAREA,
-        class: "mb-8",
+        FormFieldGridProps: { mb: 2 },
         name: "destination_address",
         label: "destination_address",
         validate: [{ type: "required" }],
       },
       {
         component: componentTypes.TEXTAREA,
-        class: "mb-8",
+        FormFieldGridProps: { mb: 2 },
         name: "destination_poc",
         label: "destination_poc",
         validate: [{ type: "required" }],
       },
       {
         component: componentTypes.TEXTAREA,
-        class: "mb-8",
+        FormFieldGridProps: { mb: 2 },
         name: "delivery_instructions",
         label: "delivery_instructions",
         validate: [{ type: "required" }],
@@ -366,14 +365,14 @@ export const usePost = ({ type, after, initialValues }: UsePostProps) => {
       },
       {
         component: componentTypes.TEXTAREA,
-        class: "mb-8",
+        FormFieldGridProps: { mb: 2 },
         name: "billing_so",
         label: "billing_so",
         validate: [{ type: "required" }],
       },
       {
         component: componentTypes.TEXTAREA,
-        class: "mb-8",
+        FormFieldGridProps: { mb: 2 },
         name: "ior_compliance_resale",
         label: "ior_compliance_resale",
         type: "number",
@@ -382,14 +381,14 @@ export const usePost = ({ type, after, initialValues }: UsePostProps) => {
       },
       {
         component: componentTypes.TEXTAREA,
-        class: "mb-8",
+        FormFieldGridProps: { mb: 2 },
         name: "international_frt_resale",
         label: "international_frt_resale",
         type: "number",
       },
       {
         component: "file-upload",
-        class: "mb-8",
+        FormFieldGridProps: { mb: 2 },
         validate: initialValues?.customer_facing_po_document
           ? undefined
           : [{ type: "required" }],
@@ -404,7 +403,7 @@ export const usePost = ({ type, after, initialValues }: UsePostProps) => {
       },
       // {
       //   component: componentTypes.SELECT,
-      //   class: "mb-8",
+      //   FormFieldGridProps: { mb: 2 },
       //   noOptionsMessage: "No results",
       //   options: [],
       //   loadOptions: getTags,
