@@ -160,7 +160,7 @@ const FormTemplate: ComponentType<
       >
         {submitting ? (
           <>
-            <CircularProgress /> Saving
+            <CircularProgress className="mr-4" /> Saving
           </>
         ) : (
           "Save"
