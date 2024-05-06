@@ -149,37 +149,46 @@ const FormTemplate: ComponentType<
 > = ({ schema, formFields, submitting, after }) => {
   const { handleSubmit } = useFormApi();
 
+  const Buttons = () => (
+    <div className="my-8">
+      <FieldListener />
+      <Button
+        style={{ marginRight: "15px" }}
+        disabled={submitting}
+        type="submit"
+        variant="contained"
+      >
+        {submitting ? (
+          <>
+            <CircularProgress /> Saving
+          </>
+        ) : (
+          "Save"
+        )}
+      </Button>
+      {after && (
+        <Button onClick={after} variant="contained">
+          Cancel
+        </Button>
+      )}
+    </div>
+  );
+
   return (
     <form className="w-full" onSubmit={handleSubmit}>
-      {schema.title}
-      <>{formFields}</>
       <FormSpy subscription={{ values: true }}>
-        {(r) => {
-          return (
-            <>
-              <FieldListener />
-              <Button
-                style={{ marginRight: "15px" }}
-                disabled={submitting}
-                type="submit"
-                variant="contained"
-              >
-                {submitting ? (
-                  <>
-                    <CircularProgress /> Saving
-                  </>
-                ) : (
-                  "Save"
-                )}
-              </Button>
-              {after && (
-                <Button onClick={after} variant="contained">
-                  Cancel
-                </Button>
-              )}
-            </>
-          );
-        }}
+        {() => (
+          <div>
+            <div className="w-full flex justify-center">
+              <Buttons />
+            </div>
+            <div>
+              {schema.title}
+              <>{formFields}</>
+            </div>
+            <Buttons />
+          </div>
+        )}
       </FormSpy>
     </form>
   );

@@ -401,6 +401,38 @@ export const usePost = ({ type, after, initialValues }: UsePostProps) => {
         name: "listener",
         hideField: true,
       },
+      {
+        component: componentTypes.TEXT_FIELD,
+        FormFieldGridProps: { mb: 2 },
+        name: "tracking_number",
+        label: "tracking_number",
+      },
+      {
+        component: componentTypes.TEXT_FIELD,
+        FormFieldGridProps: { mb: 2 },
+        name: "carrier",
+        label: "carrier",
+      },
+      {
+        component: componentTypes.DATE_PICKER,
+        FormFieldGridProps: { mb: 2 },
+        name: "actual_delivery_date",
+        label: "actual_delivery_date",
+      },
+      {
+        component: componentTypes.TEXTAREA,
+        FormFieldGridProps: { mb: 2 },
+        name: "ticket_number",
+        label: "ticket_number",
+        type: "number",
+      },
+      {
+        component: componentTypes.TEXTAREA,
+        FormFieldGridProps: { mb: 2 },
+        name: "proof_of_delivery_document",
+        label: "proof_of_delivery_document",
+        type: "number",
+      },
       // {
       //   component: componentTypes.SELECT,
       //   FormFieldGridProps: { mb: 2 },

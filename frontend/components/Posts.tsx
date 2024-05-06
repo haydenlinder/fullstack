@@ -63,6 +63,12 @@ import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import CheckIcon from "@mui/icons-material/Check";
 import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
+
+import NewIcon from "@mui/icons-material/AddBox";
+import WorkIcon from "@mui/icons-material/Loop";
+import ShipIcon from "@mui/icons-material/LocalShipping";
+import DeliveredIcon from "@mui/icons-material/Done";
+
 import {
   ModalTypes,
   useFilterStore,
@@ -198,6 +204,36 @@ export const Post = ({ post }: Props) => {
     setDidCopy(true);
   };
 
+  const EditButtons = () => {
+    return (
+      post.creator_id === userId && (
+        <div className="">
+          <IconButton
+            color="primary"
+            disabled={deleting}
+            onClick={() => setEdit(!edit)}
+          >
+            <EditIcon />
+          </IconButton>
+          <IconButton
+            color="primary"
+            disabled={deleting}
+            onClick={async () => {
+              if (window.confirm("Are you sure you want to delete this?")) {
+                await deletePost({
+                  variables: { id: post.id },
+                  refetchQueries: [GET_POSTS],
+                });
+              }
+            }}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </div>
+      )
+    );
+  };
+
   return (
     <Card className="flex justify-center my-10 w-full">
       <CardContent className="w-full">
@@ -226,10 +262,11 @@ export const Post = ({ post }: Props) => {
               &nbsp;
               <Typography sx={{ mr: 0.5 }}>
                 {" "}
-                created {new Date(post.created_at).toLocaleString()}
+                at {new Date(post.created_at).toLocaleString()}
               </Typography>
             </div>
           </div>
+          <EditButtons />
           <FormControl className="w-fit">
             <InputLabel id="demo-simple-select-label">Status</InputLabel>
             <Select
@@ -240,10 +277,18 @@ export const Post = ({ post }: Props) => {
               label="Status"
               onChange={handleStatusChange}
             >
-              <MenuItem value={"NEW"}>New</MenuItem>
-              <MenuItem value={"IN_PROGRESS"}>In Progress</MenuItem>
-              <MenuItem value={"IN_TRANSIT"}>In Transit</MenuItem>
-              <MenuItem value={"DELIVERED"}>Delivered</MenuItem>
+              <MenuItem value={"NEW"}>
+                <NewIcon className="mr-6" /> New
+              </MenuItem>
+              <MenuItem value={"IN_PROGRESS"}>
+                <WorkIcon className="mr-6" /> In Progress
+              </MenuItem>
+              <MenuItem value={"IN_TRANSIT"}>
+                <ShipIcon className="mr-6" /> In Transit
+              </MenuItem>
+              <MenuItem value={"DELIVERED"}>
+                <DeliveredIcon className="mr-6" /> Delivered
+              </MenuItem>
             </Select>
           </FormControl>
         </div>
@@ -251,6 +296,7 @@ export const Post = ({ post }: Props) => {
         {/* LINE ITEMS */}
         <LineItems post={post} />
         {/* MAIN */}
+        <Divider sx={{ mt: 10 }} />
         <div className="flex justify-between">
           <Request post={post} />
           <Shipment post={post} />
@@ -298,31 +344,7 @@ export const Post = ({ post }: Props) => {
             </div>
           </div>
           {/* ACTIONS */}
-          {post.creator_id === userId && (
-            <div className="">
-              <IconButton
-                color="primary"
-                disabled={deleting}
-                onClick={() => setEdit(!edit)}
-              >
-                <EditIcon />
-              </IconButton>
-              <IconButton
-                color="primary"
-                disabled={deleting}
-                onClick={async () => {
-                  if (window.confirm("Are you sure you want to delete this?")) {
-                    await deletePost({
-                      variables: { id: post.id },
-                      refetchQueries: [GET_POSTS],
-                    });
-                  }
-                }}
-              >
-                <DeleteIcon />
-              </IconButton>
-            </div>
-          )}
+          <EditButtons />
         </div>
       </CardContent>
     </Card>
@@ -417,9 +439,9 @@ const LineItems = ({ post }: Props) => {
         Line Items
       </Typography>
       <div className="my-4">
-        <TableContainer component={Paper}>
+        <TableContainer className="border rounded" component={Paper}>
           <Table size="small" aria-label="a dense table">
-            <TableHead>
+            <TableHead className="bg-gray-700">
               <TableRow>
                 <TableCell>Part Number</TableCell>
                 <TableCell align="right">Description</TableCell>
