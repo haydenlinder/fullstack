@@ -8,9 +8,15 @@ const secret =
     .find((i) => i.startsWith("HASURA_SECRET"))
     ?.split("=")[1] || "";
 
+  const url =
+  readFileSync(".env.local", "utf-8")
+    .split("\n")
+    .find((i) => i.startsWith("NEXT_PUBLIC_HASURA_GRAPHQL_API"))
+    ?.split("=")[1] || "";
+
 const config: CodegenConfig = {
   schema: {
-    "https://fullstack.hasura.app/v1/graphql": {
+    [url!]: {
       headers: {
         "x-hasura-admin-secret": secret,
       },
