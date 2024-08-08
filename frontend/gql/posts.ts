@@ -14,7 +14,6 @@ export const GET_POSTS = graphql(`
       title
       updated_at
       billing_so
-      delivery_date
       status
       delivery_instructions
       destination_poc
@@ -23,10 +22,8 @@ export const GET_POSTS = graphql(`
       ior_compliance_resale
       pickup_address
       customer_facing_po_document
-      psr
       tracking_number
       carrier
-      actual_delivery_date
       ticket_number
       proof_of_delivery_document
       author {
@@ -47,19 +44,6 @@ export const GET_POSTS = graphql(`
         tag {
           id
         }
-      }
-      line_items {
-        customer_po
-        description
-        extended_resell
-        id
-        manufacturer
-        part_number
-        po
-        quantity
-        so
-        unit_resell
-        whs_delivery_date
       }
     }
   }
@@ -75,7 +59,6 @@ export const GET_POST_BY_ID = graphql(`
       title
       updated_at
       billing_so
-      delivery_date
       status
       delivery_instructions
       destination_poc
@@ -84,10 +67,8 @@ export const GET_POST_BY_ID = graphql(`
       ior_compliance_resale
       pickup_address
       customer_facing_po_document
-      psr
       tracking_number
       carrier
-      actual_delivery_date
       ticket_number
       proof_of_delivery_document
       author {
@@ -108,19 +89,6 @@ export const GET_POST_BY_ID = graphql(`
         tag {
           id
         }
-      }
-      line_items {
-        customer_po
-        description
-        extended_resell
-        id
-        manufacturer
-        part_number
-        po
-        quantity
-        so
-        unit_resell
-        whs_delivery_date
       }
     }
   }
@@ -141,7 +109,6 @@ export const UPDATE_POST = graphql(`
     $billing_so: String = ""
     $destination_address: String = ""
     $customer_facing_po_document: String = ""
-    $delivery_date: timestamptz = ""
     $delivery_instructions: String = ""
     $destination_poc: String = ""
     $international_frt_resale: numeric = 0
@@ -149,46 +116,27 @@ export const UPDATE_POST = graphql(`
     $pickup_address: String = ""
     $tracking_number: String = ""
     $carrier: String = ""
-    $actual_delivery_date: timestamptz = null
     $ticket_number: String = ""
     $proof_of_delivery_document: String = ""
-    $psr: String = ""
     $title: String = ""
     $tags: [post_tags_insert_input!] = { post_id: "", tag_id: "" }
-    $line_items_data: [line_items_insert_input!] = {
-      created_by: ""
-      customer_po: ""
-      description: ""
-      extended_resell: ""
-      manufacturer: ""
-      part_number: ""
-      po: ""
-      quantity: 0
-      so: ""
-      unit_resell: ""
-      whs_delivery_date: ""
-      post_id: ""
-    }
   ) {
     update_posts_by_pk(
       pk_columns: { id: $id }
       _set: {
         tracking_number: $tracking_number
         carrier: $carrier
-        actual_delivery_date: $actual_delivery_date
         ticket_number: $ticket_number
         proof_of_delivery_document: $proof_of_delivery_document
         body: $body
         title: $title
         billing_so: $billing_so
         destination_address: $destination_address
-        delivery_date: $delivery_date
         delivery_instructions: $delivery_instructions
         destination_poc: $destination_poc
         international_frt_resale: $international_frt_resale
         ior_compliance_resale: $ior_compliance_resale
         pickup_address: $pickup_address
-        psr: $psr
         customer_facing_po_document: $customer_facing_po_document
       }
     ) {
@@ -204,16 +152,6 @@ export const UPDATE_POST = graphql(`
         id
       }
     }
-    delete_line_items(where: { post_id: { _eq: $id } }) {
-      returning {
-        id
-      }
-    }
-    insert_line_items(objects: $line_items_data) {
-      returning {
-        id
-      }
-    }
   }
 `);
 
@@ -224,60 +162,40 @@ export const CREATE_POST = graphql(`
     $title: String = ""
     $billing_so: String = ""
     $body: String = ""
-    $delivery_date: timestamptz = ""
     $delivery_instructions: String = ""
     $destination_poc: String = ""
     $destination_address: String = ""
     $international_frt_resale: numeric = 0
     $ior_compliance_resale: numeric = 0
     $pickup_address: String = ""
-    $psr: String = ""
     $customer_facing_po_document: String = ""
     $status: status_types_enum = NEW
     $tracking_number: String = ""
     $carrier: String = ""
-    $actual_delivery_date: timestamptz = null
     $ticket_number: String = ""
     $proof_of_delivery_document: String = ""
     $tags_data: [post_tags_insert_input!] = { tag_id: "" }
-    $line_items_data: [line_items_insert_input!] = {
-      created_by: ""
-      customer_po: ""
-      description: ""
-      extended_resell: ""
-      manufacturer: ""
-      part_number: ""
-      po: ""
-      quantity: 0
-      so: ""
-      unit_resell: ""
-      whs_delivery_date: ""
-    }
   ) {
     insert_posts(
       objects: {
         org_id: $org_id
         body: $body
-        creator_id: $creator_id
         title: $title
+        creator_id: $creator_id
         billing_so: $billing_so
         destination_address: $destination_address
-        delivery_date: $delivery_date
         delivery_instructions: $delivery_instructions
         destination_poc: $destination_poc
         international_frt_resale: $international_frt_resale
         ior_compliance_resale: $ior_compliance_resale
         customer_facing_po_document: $customer_facing_po_document
         pickup_address: $pickup_address
-        psr: $psr
         status: $status
         tracking_number: $tracking_number
         carrier: $carrier
-        actual_delivery_date: $actual_delivery_date
         ticket_number: $ticket_number
         proof_of_delivery_document: $proof_of_delivery_document
         post_tags: { data: $tags_data }
-        line_items: { data: $line_items_data }
       }
     ) {
       returning {
@@ -349,10 +267,8 @@ export const SEARCH_POSTS = graphql(`
       customer_facing_po_document
       tracking_number
       carrier
-      actual_delivery_date
       ticket_number
       proof_of_delivery_document
-      psr
       author {
         name
         id
@@ -371,19 +287,6 @@ export const SEARCH_POSTS = graphql(`
         tag {
           id
         }
-      }
-      line_items {
-        customer_po
-        description
-        extended_resell
-        id
-        manufacturer
-        part_number
-        po
-        quantity
-        so
-        unit_resell
-        whs_delivery_date
       }
     }
   }

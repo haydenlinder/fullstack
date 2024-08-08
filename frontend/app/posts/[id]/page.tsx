@@ -9,7 +9,8 @@ import {
 import { useQuery } from "@apollo/client";
 import { CircularProgress } from "@mui/material";
 import { useParams, usePathname } from "next/navigation";
-export default function Shipments() {
+
+export default function Posts() {
   const params = useParams();
 
   const { data, loading, error } = useQuery<

@@ -29,7 +29,7 @@ export default function Home() {
           </>
         ) : (
           <>
-            <AddIcon /> Create New Shipment
+            <AddIcon /> Create New
           </>
         )}
       </Button>
