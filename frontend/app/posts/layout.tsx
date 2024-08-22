@@ -20,7 +20,7 @@ export default function Layout({ children }: { children: ReactNode }) {
 
       <AnchorTemporaryDrawer />
 
-      <div className={"sm:mx-16 sm:ml-[300px] flex justify-center"}>
+      <div className={"sm:mx-16 sm:ml-[300px] flex justify-center mt-28"}>
         <div className="container pb-96">{children}</div>
       </div>
     </>
