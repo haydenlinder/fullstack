@@ -72,8 +72,7 @@ import {
 import debounce from "lodash/debounce";
 import Link from "next/link";
 import { InitialValues } from "@/hooks/usePost";
-import { parse } from "@/utilities/text";
-import { useParams } from "next/navigation";
+import { useParse } from "@/utilities/text";
 
 type Post = GetPostsQuery["posts"][0];
 
@@ -144,6 +143,8 @@ export const Post = ({ post }: Props) => {
     tags: post.post_tags.map(({ tag }) => tag.id) || undefined,
   };
 
+  const parse = useParse();
+
   return edit ? (
     <PostForm
       after={() => setEdit(false)}
@@ -155,7 +156,7 @@ export const Post = ({ post }: Props) => {
       <CardContent className="w-full">
         <Header {...{ post }} />
         <Divider sx={{ my: 4 }} />
-        <Typography>Title: {post.title}</Typography>
+        <Typography>Title: {parse(post.title)}</Typography>
         <Typography>{post.body}</Typography>
         <Divider sx={{ my: 4 }} />
         {/* TAGS */}
@@ -180,6 +181,8 @@ const Header = ({ post }: { post: Post }) => {
   const [loading, setLoading] = useState(false);
   const [didCopy, setDidCopy] = useState(false);
   const client = useApolloClient();
+
+  const parse = useParse();
 
   const copy = async () => {
     await navigator.clipboard.writeText(window.location.href);
