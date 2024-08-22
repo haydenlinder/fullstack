@@ -1,13 +1,12 @@
 "use client";
-import { ClerkProvider } from "@clerk/nextjs";
+import { ClerkProvider, SignedIn } from "@clerk/nextjs";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "../src/theme";
-import "./globals.css";
 import { ApolloWrapper } from "@/src/client";
 import { Header } from "@/components/LeftDrawer";
-import { dark } from "@clerk/themes";
-import AnchorTemporaryDrawer, { SideBar } from "@/components/LeftDrawer";
+import { dark, neobrutalism, shadesOfPurple } from "@clerk/themes";
+import AnchorTemporaryDrawer from "@/components/LeftDrawer";
 import { useModalStore } from "@/state/store";
 import { SignIn } from "@clerk/clerk-react";
 import { useAuth } from "@clerk/nextjs";
@@ -15,6 +14,7 @@ import { Modal, Paper } from "@mui/material";
 import { ReactNode, useEffect } from "react";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import "./globals.css";
 
 export default function RootLayout({
   children,
@@ -30,7 +30,6 @@ export default function RootLayout({
               <AppRouterCacheProvider options={{}}>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <ThemeProvider theme={theme}>
-                    <Header />
                     <App>{children}</App>
                   </ThemeProvider>
                 </LocalizationProvider>
@@ -53,23 +52,17 @@ function App({ children }: { children: ReactNode }) {
 
   return (
     <>
-      <AnchorTemporaryDrawer />
       <Modal
         open={openModal === "LOGIN"}
         onClose={() => update(null)}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Paper
-          sx={{
-            ml: { sm: `calc(50% - ${120}px)` },
-          }}
-          className="absolute inset-0 m-auto w-fit h-fit p-2 "
-        >
-          <SignIn afterSignInUrl={"/"} afterSignUpUrl={"/"} />
-        </Paper>
+        <div className="absolute inset-0 m-auto w-fit h-fit p-2 ">
+          <SignIn afterSignInUrl={"/posts"} afterSignUpUrl={"/posts"} />
+        </div>
       </Modal>
-      <div className={"sm:mx-16 sm:ml-[300px] flex justify-center"}>
+      <div className={"sm:mx-16 flex justify-center"}>
         <div className="container pb-96">{children}</div>
       </div>
     </>

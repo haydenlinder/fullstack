@@ -1,19 +1,22 @@
 "use client";
 
-import { PostForm } from "@/components/PostForm";
-import { Posts } from "@/components/Posts";
 import { ModalTypes, useModalStore } from "@/state/store";
-import { SignIn, SignedIn, useAuth } from "@clerk/nextjs";
-import AddIcon from "@mui/icons-material/Add";
-import CloseIcon from "@mui/icons-material/Close";
-import { Button, Modal, Paper } from "@mui/material";
-import { useState } from "react";
+import { useAuth } from "@clerk/nextjs";
+import { Button, Paper, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import "./globals.css";
 
 export default function Home() {
   const [isFormOpen, setIsFormOpen] = useState(false);
 
+  const router = useRouter();
   const { update } = useModalStore();
   const { userId } = useAuth();
+
+  useEffect(() => {
+    if (userId) router.replace("/posts");
+  }, [userId]);
 
   const handleClick = () => {
     if (!userId) return update(ModalTypes.LOGIN);
@@ -21,22 +24,26 @@ export default function Home() {
   };
 
   return (
-    <div className="w-full flex flex-col items-center">
-      <Button variant="contained" onClick={handleClick}>
-        {isFormOpen ? (
-          <>
-            <CloseIcon /> Cancel
-          </>
-        ) : (
-          <>
-            <AddIcon /> Create New
-          </>
-        )}
-      </Button>
-      <SignedIn>
-        {isFormOpen && <PostForm after={() => setIsFormOpen(false)} />}
-      </SignedIn>
-      <Posts />
-    </div>
+    <>
+      <section className="flex flex-col justify-center items-center text-center font-bold">
+        <div className="mb-10">
+          <Typography variant="h2">The best platform for</Typography>
+          <Typography variant="h2">for matching</Typography>
+          <Typography variant="h2">talent with jobs.</Typography>
+        </div>
+        <div className="flex justify-between w-72">
+          <Button variant="contained" onClick={handleClick}>
+            <div className="px-5">Sign in</div>
+          </Button>
+          <Button
+            variant="contained"
+            classes={{}}
+            onClick={() => router.push("/posts")}
+          >
+            Browse Jobs
+          </Button>
+        </div>
+      </section>
+    </>
   );
 }

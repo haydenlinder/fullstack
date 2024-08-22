@@ -32,10 +32,20 @@ body {
   }
 }
 
-/* Override clerk dark theme */
-[class*="cl-internal"] {
-  background-color: #272727;
-  color: white !important;
-  fill: white !important;
+[class*="cl-internal"],
+[class$="Button"],
+[class$="Footer"] {
+  /* background-color: #272727; */
+  /* color: white !important; */
+  /* fill: white !important; */
   border-color: white;
+}
+
+svg[class*="cl-internal"] {
+  color: white;
+  fill: black;
+}
+
+a[aria-label="Clerk logo"] svg[class*="cl-internal"] {
+  color: inherit !important;
 }

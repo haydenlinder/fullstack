@@ -72,7 +72,7 @@ import {
 import debounce from "lodash/debounce";
 import Link from "next/link";
 import { InitialValues } from "@/hooks/usePost";
-import { useParse } from "@/utilities/text";
+import { useParse } from "@/hooks/text";
 
 type Post = GetPostsQuery["posts"][0];
 
@@ -157,7 +157,7 @@ export const Post = ({ post }: Props) => {
         <Header {...{ post }} />
         <Divider sx={{ my: 4 }} />
         <Typography>Title: {parse(post.title)}</Typography>
-        <Typography>{post.body}</Typography>
+        <Typography>{parse(post.body)}</Typography>
         <Divider sx={{ my: 4 }} />
         {/* TAGS */}
         <div className="my-5">

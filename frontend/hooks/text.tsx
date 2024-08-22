@@ -1,5 +1,6 @@
 import { useStore } from "@/state/store";
 
+import "../app/globals.css";
 /** Highlights text that is part of the current search */
 export const useParse = () => {
   const { query } = useStore();
@@ -12,15 +13,13 @@ export const useParse = () => {
     const regex = new RegExp(regEscape(query), "ig");
     return chunks?.map((chunk, i) => {
       return (
-        <>
+        <span key={`${text}-${chunk}-${Math.random()}`}>
           {regex.test(chunk) ? (
-            <span key={`${chunk}-${Math.random()}`} className="bg-yellow-800">
-              {chunk}
-            </span>
+            <span className="bg-yellow-800">{chunk}</span>
           ) : (
-            <span key={`${chunk}-${Math.random()}`}>{chunk}</span>
+            <span>{chunk}</span>
           )}
-        </>
+        </span>
       );
     });
   };

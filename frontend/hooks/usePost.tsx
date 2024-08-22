@@ -103,7 +103,6 @@ export const usePost = ({
         customer_facing_po_document: poDocUrl,
         proof_of_delivery_document: podDocUrl,
       };
-      console.log({ title });
 
       type === "New"
         ? await createPost({
