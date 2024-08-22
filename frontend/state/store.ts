@@ -6,9 +6,11 @@ interface QueryState {
   query: string;
   update: (query: string) => void;
 }
+
 export enum ModalTypes {
   LOGIN = "LOGIN",
   MENU = "MENU",
+  EDIT_POST = "EDIT_POST",
 }
 
 export const useStore = create<QueryState>()(

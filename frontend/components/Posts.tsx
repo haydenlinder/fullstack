@@ -73,6 +73,7 @@ import debounce from "lodash/debounce";
 import Link from "next/link";
 import { InitialValues } from "@/hooks/usePost";
 import { parse } from "@/utilities/text";
+import { useParams } from "next/navigation";
 
 type Post = GetPostsQuery["posts"][0];
 
@@ -209,7 +210,7 @@ const Header = ({ post }: { post: Post }) => {
   return (
     <div className="flex justify-between w-full items-center">
       {/* LINK, CREATOR, UPDATE STATUS */}
-      <div> 
+      <div>
         {/* Copy and link */}
         <div className="flex items-center mb-2">
           <Link
@@ -357,7 +358,13 @@ const usePost = ({ post }: Props) => {
     refetchQueries: [GET_POSTS],
   });
 
-  const [edit, setEdit] = useState(false);
+  const { openModal, update: setModal } = useModalStore();
+
+  const edit = openModal === ModalTypes.EDIT_POST;
+
+  const setEdit = (open: boolean) => {
+    setModal(open ? ModalTypes.EDIT_POST : null);
+  };
 
   const getReaction = (type?: Post_Reaction_Types_Enum) => {
     return post.post_reactions.find((r) => r.author_id === userId);
