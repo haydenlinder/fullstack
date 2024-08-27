@@ -45,25 +45,17 @@ import {
   UPDATE_POST_STATUS,
 } from "@/gql/posts";
 import { PostForm } from "./PostForm";
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import React, { useCallback, useEffect, useState } from "react";
-import {
-  UserButton,
-  useAuth,
-  useOrganization,
-  useOrganizationList,
-  useUser,
-} from "@clerk/nextjs";
-import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
+import { useAuth } from "@clerk/nextjs";
+
 import UserIcon from "@mui/icons-material/AccountCircle";
-import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
-import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
+
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import CheckIcon from "@mui/icons-material/Check";
-import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
 
+import BusinessIcon from "@mui/icons-material/Business";
 import NewIcon from "@mui/icons-material/AddBox";
 import WorkIcon from "@mui/icons-material/Loop";
 import ShipIcon from "@mui/icons-material/LocalShipping";
@@ -79,15 +71,17 @@ import debounce from "lodash/debounce";
 import Link from "next/link";
 import { InitialValues } from "@/hooks/usePost";
 import { useParse } from "@/hooks/text";
-import { useOrganizations } from "@clerk/nextjs/app-beta/client";
 import { Organization } from "@clerk/nextjs/server";
 import Image from "next/image";
+import { useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 type Post = GetPostsQuery["posts"][0];
 
 export const Posts = () => {
   const { query } = useStore();
   const { type } = useFilterStore();
+  const router = useRouter();
   const { data, loading } = useQuery<GetPostsQuery, GetPostsQueryVariables>(
     GET_POSTS,
     {
@@ -126,7 +120,11 @@ export const Posts = () => {
         </div>
       ) : (
         posts?.map((p) => (
-          <div key={p.id + query}>
+          <div
+            key={p.id + query}
+            className="cursor-pointer"
+            onClick={() => router.push(`/posts/${p.id}`)}
+          >
             <Post post={p} />
           </div>
         ))
@@ -140,7 +138,6 @@ type Props = {
 };
 
 export const Post = ({ post }: Props) => {
-  const { edit, setEdit } = usePost({ post });
   const p: Partial<typeof post> = { ...post };
   delete p.post_tags;
   delete p.__typename;
@@ -152,6 +149,8 @@ export const Post = ({ post }: Props) => {
     tags: post.post_tags.map(({ tag }) => tag.id) || undefined,
   };
 
+  const { edit, setEdit } = usePost({ post });
+  const { id: expanded } = useParams();
   const parse = useParse();
 
   return edit ? (
@@ -164,10 +163,10 @@ export const Post = ({ post }: Props) => {
     <Card className="flex justify-center my-10 w-full">
       <CardContent className="w-full">
         <Header {...{ post }} />
+        <Typography variant="h4">{parse(post.title)}</Typography>
         <Divider sx={{ my: 4 }} />
-        <Typography variant="h2">Title: {parse(post.title)}</Typography>
-        <Typography>{parse(post.body)}</Typography>
-        <Divider sx={{ my: 4 }} />
+        {expanded && <Typography>{parse(post.body)}</Typography>}
+        {expanded && <Divider sx={{ my: 4 }} />}
         {/* TAGS */}
         <div className="my-5">
           {post.post_tags.map(({ tag }, i) => (
@@ -189,10 +188,12 @@ export const Post = ({ post }: Props) => {
 const Header = ({ post }: { post: Post }) => {
   const [loading, setLoading] = useState(false);
   const [didCopy, setDidCopy] = useState(false);
-  const client = useApolloClient();
 
+  const client = useApolloClient();
   const parse = useParse();
+
   const { orgId } = useAuth();
+  const { id: expanded } = useParams();
   // TODO: create custom useOrg hook for viewing org profiles
   const [org, setOrg] = useState<Organization>();
   useEffect(() => {
@@ -250,21 +251,29 @@ const Header = ({ post }: { post: Post }) => {
         </div>
         {/* CREATOR AND ORG */}
         <div>
-          <div className="flex items-center mb-2">
-            <Image
-              className="rounded-full mr-2"
-              src={org?.imageUrl || ""}
-              height="50"
-              width="50"
-              alt="organization logo"
-            />
+          <div className="flex items-center my-4">
+            {org ? (
+              <Image
+                className="rounded-full mr-2"
+                src={org?.imageUrl || ""}
+                height="50"
+                width="50"
+                alt="organization logo"
+              />
+            ) : (
+              <BusinessIcon
+                fontSize="large"
+                sx={{ height: "50px", width: "50px" }}
+                className="rounded-full mr-2"
+              />
+            )}
             <Typography>
               {post.organization?.name || post.author?.name}
             </Typography>
           </div>
 
           <div className="flex items-center mb-2">
-            {orgId === post.organization?.id && (
+            {orgId === post.organization?.id && expanded && (
               <>
                 <UserIcon className="mr-2" />
                 <Typography fontSize={16}>
@@ -344,34 +353,6 @@ const Footer = ({ post }: { post: Post }) => {
   const { creating, removing, onReact, getReaction } = usePost({ post });
   return (
     <div className="mt-5 w-full flex justify-between">
-      {/* REACTIONS */}
-      <div className="flex items-center">
-        <IconButton
-          color="primary"
-          disabled={creating || removing}
-          onClick={() => onReact(Post_Reaction_Types_Enum.ThumbsUp)}
-        >
-          {getReaction()?.type === Post_Reaction_Types_Enum.ThumbsUp ? (
-            <ThumbUpAltIcon />
-          ) : (
-            <ThumbUpOffAltIcon />
-          )}
-        </IconButton>
-        <IconButton
-          color="primary"
-          disabled={creating || removing}
-          onClick={() => onReact(Post_Reaction_Types_Enum.ThumbsDown)}
-        >
-          {getReaction()?.type == Post_Reaction_Types_Enum.ThumbsDown ? (
-            <ThumbDownAltIcon />
-          ) : (
-            <ThumbDownOffAltIcon />
-          )}
-        </IconButton>
-        <div className="ml-2">
-          {post.post_reactions_aggregate.aggregate?.count}
-        </div>
-      </div>
       {/* ACTIONS */}
       <EditButtons {...{ post }} />
     </div>

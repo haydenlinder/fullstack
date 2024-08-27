@@ -186,7 +186,7 @@ const DrawerInner = () => {
   return (
     <div>
       <Toolbar>
-        <Link className="-ml-2" href="/">
+        <Link className="-ml-2" href="/posts">
           <Typography variant="h6">Jobs</Typography>
         </Link>
       </Toolbar>
