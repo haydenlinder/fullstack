@@ -45,6 +45,10 @@ export const GET_POSTS = graphql(`
           id
         }
       }
+      organization {
+        name
+        id
+      }
     }
   }
 `);
@@ -89,6 +93,10 @@ export const GET_POST_BY_ID = graphql(`
         tag {
           id
         }
+      }
+      organization {
+        name
+        id
       }
     }
   }
@@ -287,6 +295,10 @@ export const SEARCH_POSTS = graphql(`
         tag {
           id
         }
+      }
+      organization {
+        name
+        id
       }
     }
   }

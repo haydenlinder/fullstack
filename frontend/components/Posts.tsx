@@ -49,7 +49,13 @@ import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import React, { useCallback, useEffect, useState } from "react";
-import { UserButton, useAuth } from "@clerk/nextjs";
+import {
+  UserButton,
+  useAuth,
+  useOrganization,
+  useOrganizationList,
+  useUser,
+} from "@clerk/nextjs";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import UserIcon from "@mui/icons-material/AccountCircle";
 import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
@@ -73,6 +79,9 @@ import debounce from "lodash/debounce";
 import Link from "next/link";
 import { InitialValues } from "@/hooks/usePost";
 import { useParse } from "@/hooks/text";
+import { useOrganizations } from "@clerk/nextjs/app-beta/client";
+import { Organization } from "@clerk/nextjs/server";
+import Image from "next/image";
 
 type Post = GetPostsQuery["posts"][0];
 
@@ -156,7 +165,7 @@ export const Post = ({ post }: Props) => {
       <CardContent className="w-full">
         <Header {...{ post }} />
         <Divider sx={{ my: 4 }} />
-        <Typography>Title: {parse(post.title)}</Typography>
+        <Typography variant="h2">Title: {parse(post.title)}</Typography>
         <Typography>{parse(post.body)}</Typography>
         <Divider sx={{ my: 4 }} />
         {/* TAGS */}
@@ -183,6 +192,17 @@ const Header = ({ post }: { post: Post }) => {
   const client = useApolloClient();
 
   const parse = useParse();
+  const { orgId } = useAuth();
+  // TODO: create custom useOrg hook for viewing org profiles
+  const [org, setOrg] = useState<Organization>();
+  useEffect(() => {
+    (async () => {
+      const res = await fetch(`/api/clerk?orgId=${orgId}`);
+      const data = await res.json();
+      setOrg(data.org);
+    })();
+  }, []);
+  //
 
   const copy = async () => {
     await navigator.clipboard.writeText(window.location.href);
@@ -212,7 +232,7 @@ const Header = ({ post }: { post: Post }) => {
 
   return (
     <div className="flex justify-between w-full items-center">
-      {/* LINK, CREATOR, UPDATE STATUS */}
+      {/* LINK, CREATOR, ORG, UPDATE STATUS */}
       <div>
         {/* Copy and link */}
         <div className="flex items-center mb-2">
@@ -228,15 +248,36 @@ const Header = ({ post }: { post: Post }) => {
             </Tooltip>
           </IconButton>
         </div>
-        {/* CREATOR */}
-        <div className="flex items-center mb-2">
-          <UserIcon className="mr-2" />
-          <Typography fontSize={16}>{parse(post?.author?.name)}</Typography>
-          &nbsp;
-          <Typography sx={{ mr: 0.5 }}>
-            {" "}
-            at {new Date(post.created_at).toLocaleString()}
-          </Typography>
+        {/* CREATOR AND ORG */}
+        <div>
+          <div className="flex items-center mb-2">
+            <Image
+              className="rounded-full mr-2"
+              src={org?.imageUrl || ""}
+              height="50"
+              width="50"
+              alt="organization logo"
+            />
+            <Typography>
+              {post.organization?.name || post.author?.name}
+            </Typography>
+          </div>
+
+          <div className="flex items-center mb-2">
+            {orgId === post.organization?.id && (
+              <>
+                <UserIcon className="mr-2" />
+                <Typography fontSize={16}>
+                  {parse(post?.author?.name)}
+                </Typography>
+                &nbsp;
+                <Typography sx={{ mr: 0.5 }}>
+                  {" "}
+                  at {new Date(post.created_at).toLocaleString()}
+                </Typography>
+              </>
+            )}
+          </div>
         </div>
       </div>
       {/* UPDATE STATUS */}
