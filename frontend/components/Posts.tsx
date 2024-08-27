@@ -15,7 +15,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import {
   useApolloClient,
   useLazyQuery,
@@ -75,6 +75,8 @@ import { Organization } from "@clerk/nextjs/server";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
+import Confetti from "react-confetti";
+import { IConfettiOptions } from "react-confetti/dist/types/Confetti";
 
 type Post = GetPostsQuery["posts"][0];
 
@@ -348,13 +350,19 @@ const EditButtons = ({ post }: { post: Post }) => {
     )
   );
 };
-
+type t = IConfettiOptions;
 const Footer = ({ post }: { post: Post }) => {
   const { creating, removing, onReact, getReaction } = usePost({ post });
+  const [didApply, setDidApply] = useState(false);
+
   return (
     <div className="mt-5 w-full flex justify-between">
+      {didApply && <Confetti className="mt-16" recycle={false} />}
       {/* ACTIONS */}
       <EditButtons {...{ post }} />
+      <Button variant="contained" onClick={() => setDidApply(true)}>
+        {didApply ? <CheckCircleOutlineIcon /> : "Apply"}
+      </Button>
     </div>
   );
 };
