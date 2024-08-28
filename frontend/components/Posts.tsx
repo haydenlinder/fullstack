@@ -16,12 +16,7 @@ import {
   Typography,
 } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import {
-  useApolloClient,
-  useLazyQuery,
-  useMutation,
-  useQuery,
-} from "@apollo/client";
+import { useApolloClient, useMutation } from "@apollo/client";
 import {
   CreateReactionMutation,
   CreateReactionMutationVariables,
@@ -30,10 +25,7 @@ import {
   DeleteReactionMutation,
   DeleteReactionMutationVariables,
   GetPostsQuery,
-  GetPostsQueryVariables,
   Post_Reaction_Types_Enum,
-  SearchPostsQuery,
-  SearchPostsQueryVariables,
   Status_Types_Enum,
 } from "../src/gql/graphql";
 import {
@@ -77,40 +69,22 @@ import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import Confetti from "react-confetti";
 import { IConfettiOptions } from "react-confetti/dist/types/Confetti";
+import { CREATE_APPLICATION } from "@/gql/applications";
 
 type Post = GetPostsQuery["posts"][0];
 
-export const Posts = () => {
+export const Posts = ({
+  posts,
+  loading,
+  searching = false,
+}: {
+  posts: GetPostsQuery["posts"] | undefined;
+  loading: boolean;
+  searching?: boolean;
+}) => {
   const { query } = useStore();
-  const { type } = useFilterStore();
   const router = useRouter();
-  const { data, loading } = useQuery<GetPostsQuery, GetPostsQueryVariables>(
-    GET_POSTS,
-    {
-      variables: {
-        _eq: type,
-      },
-    },
-  );
-  const [search, { data: searchResults, loading: searching }] = useLazyQuery<
-    SearchPostsQuery,
-    SearchPostsQueryVariables
-  >(SEARCH_POSTS);
 
-  const debouncer = useCallback(
-    debounce((vars: SearchPostsQueryVariables) => {
-      return search({ variables: vars });
-    }, 300),
-    [],
-  );
-
-  useEffect(() => {
-    debouncer({
-      _regex: `%${query}%`,
-    });
-  }, [query]);
-
-  const posts = (query ? searchResults : data)?.posts;
   const noResults = !loading && !searching && !posts?.length;
 
   return (
@@ -354,14 +328,33 @@ type t = IConfettiOptions;
 const Footer = ({ post }: { post: Post }) => {
   const { creating, removing, onReact, getReaction } = usePost({ post });
   const [didApply, setDidApply] = useState(false);
+  const { userId } = useAuth();
+
+  const { id: expanded } = useParams();
+
+  const [apply, { loading, data: application }] = useMutation(
+    CREATE_APPLICATION,
+    {
+      variables: {
+        post_id: post.id,
+        user_id: userId,
+      },
+    },
+  );
 
   return (
     <div className="mt-5 w-full flex justify-between">
-      {didApply && <Confetti className="mt-16" recycle={false} />}
+      {application && <Confetti className="mt-16" recycle={false} />}
       {/* ACTIONS */}
       <EditButtons {...{ post }} />
-      <Button variant="contained" onClick={() => setDidApply(true)}>
-        {didApply ? <CheckCircleOutlineIcon /> : "Apply"}
+      <Button variant="contained" onClick={() => expanded && apply()}>
+        {loading ? (
+          <CircularProgress color="success" size={20} />
+        ) : application ? (
+          <CheckCircleOutlineIcon color="success" />
+        ) : (
+          "Apply"
+        )}
       </Button>
     </div>
   );

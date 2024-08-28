@@ -25,12 +25,7 @@ import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
 import { Button } from "@mui/material";
 import Search from "./Search";
 import Link from "next/link";
-import {
-  ModalTypes,
-  useFilterStore,
-  useModalStore,
-  useStore,
-} from "@/state/store";
+import { ModalTypes, useModalStore, useStore } from "@/state/store";
 import { usePathname, useRouter } from "next/navigation";
 import { OrganizationSwitcher, useAuth } from "@clerk/nextjs";
 import { useApolloClient } from "@apollo/client";
@@ -151,8 +146,8 @@ export const SideBar = ({}) => {
 
 const listMap = [
   {
-    title: "New",
-    route: Status_Types_Enum.New,
+    title: "Applications",
+    route: "applications",
     icon: <NewIcon />,
   },
   {
@@ -173,14 +168,11 @@ const listMap = [
 ];
 
 const DrawerInner = () => {
-  const { type, update } = useFilterStore();
-
   const router = useRouter();
   const path = usePathname();
 
-  const onClick = (route: Status_Types_Enum) => {
-    router.push("/");
-    update(route);
+  const onClick = (route: string) => {
+    router.push(`/${route}`);
   };
 
   return (
@@ -194,9 +186,7 @@ const DrawerInner = () => {
       <List>
         {listMap.map(({ title, icon, route }) => (
           <button
-            className={
-              type === route && path === "/" ? "bg-gray-500 w-full" : "w-full"
-            }
+            className={path === `/${route}` ? "bg-gray-500 w-full" : "w-full"}
             onClick={() => onClick(route)}
             key={title}
           >

@@ -65,6 +65,231 @@ export type String_Comparison_Exp = {
   _similar?: InputMaybe<Scalars['String']['input']>;
 };
 
+/** columns and relationships of "applications" */
+export type Applications = {
+  __typename?: 'applications';
+  created_at: Scalars['timestamptz']['output'];
+  id: Scalars['uuid']['output'];
+  /** An object relationship */
+  post: Posts;
+  post_id: Scalars['uuid']['output'];
+  updated_at: Scalars['timestamptz']['output'];
+  /** An object relationship */
+  user: Users;
+  user_id: Scalars['String']['output'];
+};
+
+/** aggregated selection of "applications" */
+export type Applications_Aggregate = {
+  __typename?: 'applications_aggregate';
+  aggregate?: Maybe<Applications_Aggregate_Fields>;
+  nodes: Array<Applications>;
+};
+
+export type Applications_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Applications_Aggregate_Bool_Exp_Count>;
+};
+
+export type Applications_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Applications_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Applications_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "applications" */
+export type Applications_Aggregate_Fields = {
+  __typename?: 'applications_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Applications_Max_Fields>;
+  min?: Maybe<Applications_Min_Fields>;
+};
+
+
+/** aggregate fields of "applications" */
+export type Applications_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Applications_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "applications" */
+export type Applications_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Applications_Max_Order_By>;
+  min?: InputMaybe<Applications_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "applications" */
+export type Applications_Arr_Rel_Insert_Input = {
+  data: Array<Applications_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Applications_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "applications". All fields are combined with a logical 'AND'. */
+export type Applications_Bool_Exp = {
+  _and?: InputMaybe<Array<Applications_Bool_Exp>>;
+  _not?: InputMaybe<Applications_Bool_Exp>;
+  _or?: InputMaybe<Array<Applications_Bool_Exp>>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  post?: InputMaybe<Posts_Bool_Exp>;
+  post_id?: InputMaybe<Uuid_Comparison_Exp>;
+  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  user?: InputMaybe<Users_Bool_Exp>;
+  user_id?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "applications" */
+export enum Applications_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  ApplicationsPkey = 'applications_pkey',
+  /** unique or primary key constraint on columns "user_id", "post_id" */
+  ApplicationsUserIdPostIdKey = 'applications_user_id_post_id_key'
+}
+
+/** input type for inserting data into table "applications" */
+export type Applications_Insert_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  post?: InputMaybe<Posts_Obj_Rel_Insert_Input>;
+  post_id?: InputMaybe<Scalars['uuid']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
+  user_id?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate max on columns */
+export type Applications_Max_Fields = {
+  __typename?: 'applications_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  post_id?: Maybe<Scalars['uuid']['output']>;
+  updated_at?: Maybe<Scalars['timestamptz']['output']>;
+  user_id?: Maybe<Scalars['String']['output']>;
+};
+
+/** order by max() on columns of table "applications" */
+export type Applications_Max_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  post_id?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Applications_Min_Fields = {
+  __typename?: 'applications_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  post_id?: Maybe<Scalars['uuid']['output']>;
+  updated_at?: Maybe<Scalars['timestamptz']['output']>;
+  user_id?: Maybe<Scalars['String']['output']>;
+};
+
+/** order by min() on columns of table "applications" */
+export type Applications_Min_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  post_id?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "applications" */
+export type Applications_Mutation_Response = {
+  __typename?: 'applications_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Applications>;
+};
+
+/** on_conflict condition type for table "applications" */
+export type Applications_On_Conflict = {
+  constraint: Applications_Constraint;
+  update_columns?: Array<Applications_Update_Column>;
+  where?: InputMaybe<Applications_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "applications". */
+export type Applications_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  post?: InputMaybe<Posts_Order_By>;
+  post_id?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+  user?: InputMaybe<Users_Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: applications */
+export type Applications_Pk_Columns_Input = {
+  id: Scalars['uuid']['input'];
+};
+
+/** select columns of table "applications" */
+export enum Applications_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  PostId = 'post_id',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** input type for updating data in table "applications" */
+export type Applications_Set_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  post_id?: InputMaybe<Scalars['uuid']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  user_id?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Streaming cursor of the table "applications" */
+export type Applications_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Applications_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Applications_Stream_Cursor_Value_Input = {
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  post_id?: InputMaybe<Scalars['uuid']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  user_id?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** update columns of table "applications" */
+export enum Applications_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  PostId = 'post_id',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UserId = 'user_id'
+}
+
+export type Applications_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Applications_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Applications_Bool_Exp;
+};
+
 /** ordering argument of a cursor */
 export enum Cursor_Ordering {
   /** ascending ordering of the cursor */
@@ -582,6 +807,10 @@ export type Line_Items_Variance_Order_By = {
 /** mutation root */
 export type Mutation_Root = {
   __typename?: 'mutation_root';
+  /** delete data from the table: "applications" */
+  delete_applications?: Maybe<Applications_Mutation_Response>;
+  /** delete single row from the table: "applications" */
+  delete_applications_by_pk?: Maybe<Applications>;
   /** delete data from the table: "line_items" */
   delete_line_items?: Maybe<Line_Items_Mutation_Response>;
   /** delete single row from the table: "line_items" */
@@ -622,6 +851,10 @@ export type Mutation_Root = {
   delete_users?: Maybe<Users_Mutation_Response>;
   /** delete single row from the table: "users" */
   delete_users_by_pk?: Maybe<Users>;
+  /** insert data into the table: "applications" */
+  insert_applications?: Maybe<Applications_Mutation_Response>;
+  /** insert a single row into the table: "applications" */
+  insert_applications_one?: Maybe<Applications>;
   /** insert data into the table: "line_items" */
   insert_line_items?: Maybe<Line_Items_Mutation_Response>;
   /** insert a single row into the table: "line_items" */
@@ -662,6 +895,12 @@ export type Mutation_Root = {
   insert_users?: Maybe<Users_Mutation_Response>;
   /** insert a single row into the table: "users" */
   insert_users_one?: Maybe<Users>;
+  /** update data of the table: "applications" */
+  update_applications?: Maybe<Applications_Mutation_Response>;
+  /** update single row of the table: "applications" */
+  update_applications_by_pk?: Maybe<Applications>;
+  /** update multiples rows of table: "applications" */
+  update_applications_many?: Maybe<Array<Maybe<Applications_Mutation_Response>>>;
   /** update data of the table: "line_items" */
   update_line_items?: Maybe<Line_Items_Mutation_Response>;
   /** update single row of the table: "line_items" */
@@ -722,6 +961,18 @@ export type Mutation_Root = {
   update_users_by_pk?: Maybe<Users>;
   /** update multiples rows of table: "users" */
   update_users_many?: Maybe<Array<Maybe<Users_Mutation_Response>>>;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_ApplicationsArgs = {
+  where: Applications_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Applications_By_PkArgs = {
+  id: Scalars['uuid']['input'];
 };
 
 
@@ -842,6 +1093,20 @@ export type Mutation_RootDelete_UsersArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Users_By_PkArgs = {
   id: Scalars['String']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_ApplicationsArgs = {
+  objects: Array<Applications_Insert_Input>;
+  on_conflict?: InputMaybe<Applications_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Applications_OneArgs = {
+  object: Applications_Insert_Input;
+  on_conflict?: InputMaybe<Applications_On_Conflict>;
 };
 
 
@@ -982,6 +1247,26 @@ export type Mutation_RootInsert_UsersArgs = {
 export type Mutation_RootInsert_Users_OneArgs = {
   object: Users_Insert_Input;
   on_conflict?: InputMaybe<Users_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_ApplicationsArgs = {
+  _set?: InputMaybe<Applications_Set_Input>;
+  where: Applications_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Applications_By_PkArgs = {
+  _set?: InputMaybe<Applications_Set_Input>;
+  pk_columns: Applications_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Applications_ManyArgs = {
+  updates: Array<Applications_Updates>;
 };
 
 
@@ -2880,6 +3165,12 @@ export type Posts_Variance_Order_By = {
 export type Query_Root = {
   __typename?: 'query_root';
   /** An array relationship */
+  applications: Array<Applications>;
+  /** An aggregate relationship */
+  applications_aggregate: Applications_Aggregate;
+  /** fetch data from the table: "applications" using primary key columns */
+  applications_by_pk?: Maybe<Applications>;
+  /** An array relationship */
   line_items: Array<Line_Items>;
   /** An aggregate relationship */
   line_items_aggregate: Line_Items_Aggregate;
@@ -2939,6 +3230,29 @@ export type Query_Root = {
   users_aggregate: Users_Aggregate;
   /** fetch data from the table: "users" using primary key columns */
   users_by_pk?: Maybe<Users>;
+};
+
+
+export type Query_RootApplicationsArgs = {
+  distinct_on?: InputMaybe<Array<Applications_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Applications_Order_By>>;
+  where?: InputMaybe<Applications_Bool_Exp>;
+};
+
+
+export type Query_RootApplications_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Applications_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Applications_Order_By>>;
+  where?: InputMaybe<Applications_Bool_Exp>;
+};
+
+
+export type Query_RootApplications_By_PkArgs = {
+  id: Scalars['uuid']['input'];
 };
 
 
@@ -3312,6 +3626,14 @@ export type Status_Types_Updates = {
 export type Subscription_Root = {
   __typename?: 'subscription_root';
   /** An array relationship */
+  applications: Array<Applications>;
+  /** An aggregate relationship */
+  applications_aggregate: Applications_Aggregate;
+  /** fetch data from the table: "applications" using primary key columns */
+  applications_by_pk?: Maybe<Applications>;
+  /** fetch data from the table in a streaming manner: "applications" */
+  applications_stream: Array<Applications>;
+  /** An array relationship */
   line_items: Array<Line_Items>;
   /** An aggregate relationship */
   line_items_aggregate: Line_Items_Aggregate;
@@ -3391,6 +3713,36 @@ export type Subscription_Root = {
   users_by_pk?: Maybe<Users>;
   /** fetch data from the table in a streaming manner: "users" */
   users_stream: Array<Users>;
+};
+
+
+export type Subscription_RootApplicationsArgs = {
+  distinct_on?: InputMaybe<Array<Applications_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Applications_Order_By>>;
+  where?: InputMaybe<Applications_Bool_Exp>;
+};
+
+
+export type Subscription_RootApplications_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Applications_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Applications_Order_By>>;
+  where?: InputMaybe<Applications_Bool_Exp>;
+};
+
+
+export type Subscription_RootApplications_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootApplications_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Applications_Stream_Cursor_Input>>;
+  where?: InputMaybe<Applications_Bool_Exp>;
 };
 
 
@@ -3880,6 +4232,10 @@ export type Timestamptz_Comparison_Exp = {
 /** For use with Clerk.com integration */
 export type Users = {
   __typename?: 'users';
+  /** An array relationship */
+  applications: Array<Applications>;
+  /** An aggregate relationship */
+  applications_aggregate: Applications_Aggregate;
   email?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
   last_seen: Scalars['timestamptz']['output'];
@@ -3896,6 +4252,26 @@ export type Users = {
   posts: Array<Posts>;
   /** An aggregate relationship */
   posts_aggregate: Posts_Aggregate;
+};
+
+
+/** For use with Clerk.com integration */
+export type UsersApplicationsArgs = {
+  distinct_on?: InputMaybe<Array<Applications_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Applications_Order_By>>;
+  where?: InputMaybe<Applications_Bool_Exp>;
+};
+
+
+/** For use with Clerk.com integration */
+export type UsersApplications_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Applications_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Applications_Order_By>>;
+  where?: InputMaybe<Applications_Bool_Exp>;
 };
 
 
@@ -4010,6 +4386,8 @@ export type Users_Bool_Exp = {
   _and?: InputMaybe<Array<Users_Bool_Exp>>;
   _not?: InputMaybe<Users_Bool_Exp>;
   _or?: InputMaybe<Array<Users_Bool_Exp>>;
+  applications?: InputMaybe<Applications_Bool_Exp>;
+  applications_aggregate?: InputMaybe<Applications_Aggregate_Bool_Exp>;
   email?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<String_Comparison_Exp>;
   last_seen?: InputMaybe<Timestamptz_Comparison_Exp>;
@@ -4032,6 +4410,7 @@ export enum Users_Constraint {
 
 /** input type for inserting data into table "users" */
 export type Users_Insert_Input = {
+  applications?: InputMaybe<Applications_Arr_Rel_Insert_Input>;
   email?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
   last_seen?: InputMaybe<Scalars['timestamptz']['input']>;
@@ -4100,6 +4479,7 @@ export type Users_On_Conflict = {
 
 /** Ordering options when selecting data from "users". */
 export type Users_Order_By = {
+  applications_aggregate?: InputMaybe<Applications_Aggregate_Order_By>;
   email?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   last_seen?: InputMaybe<Order_By>;
@@ -4181,6 +4561,21 @@ export type Uuid_Comparison_Exp = {
   _neq?: InputMaybe<Scalars['uuid']['input']>;
   _nin?: InputMaybe<Array<Scalars['uuid']['input']>>;
 };
+
+export type CreateApplicationMutationVariables = Exact<{
+  user_id?: InputMaybe<Scalars['String']['input']>;
+  post_id?: InputMaybe<Scalars['uuid']['input']>;
+}>;
+
+
+export type CreateApplicationMutation = { __typename?: 'mutation_root', insert_applications_one?: { __typename?: 'applications', id: any } | null };
+
+export type GetUserApplicationsQueryVariables = Exact<{
+  _eq?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type GetUserApplicationsQuery = { __typename?: 'query_root', applications: Array<{ __typename?: 'applications', post: { __typename?: 'posts', id: any, body?: string | null, created_at: any, creator_id: string, title?: string | null, updated_at: any, billing_so?: string | null, status?: Status_Types_Enum | null, delivery_instructions?: string | null, destination_poc?: string | null, international_frt_resale?: any | null, destination_address?: string | null, ior_compliance_resale?: any | null, pickup_address?: string | null, customer_facing_po_document?: string | null, tracking_number?: string | null, carrier?: string | null, ticket_number?: string | null, proof_of_delivery_document?: string | null, author?: { __typename?: 'users', name: string, id: string } | null, post_reactions: Array<{ __typename?: 'post_reactions', author_id: string, type: Post_Reaction_Types_Enum, id: any }>, post_reactions_aggregate: { __typename?: 'post_reactions_aggregate', aggregate?: { __typename?: 'post_reactions_aggregate_fields', count: number } | null }, post_tags: Array<{ __typename?: 'post_tags', tag: { __typename?: 'tags', id: string } }>, organization?: { __typename?: 'organizations', name: string, id: string } | null } }> };
 
 export type GetPostsQueryVariables = Exact<{
   _eq?: InputMaybe<Status_Types_Enum>;
@@ -4307,6 +4702,8 @@ export type CreateOrganizationMutationVariables = Exact<{
 export type CreateOrganizationMutation = { __typename?: 'mutation_root', insert_organizations_one?: { __typename?: 'organizations', id: string } | null };
 
 
+export const CreateApplicationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateApplication"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"post_id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_applications_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"post_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"post_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateApplicationMutation, CreateApplicationMutationVariables>;
+export const GetUserApplicationsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUserApplications"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"_eq"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"applications"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"_eq"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"post"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"creator_id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"billing_so"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"delivery_instructions"}},{"kind":"Field","name":{"kind":"Name","value":"destination_poc"}},{"kind":"Field","name":{"kind":"Name","value":"international_frt_resale"}},{"kind":"Field","name":{"kind":"Name","value":"destination_address"}},{"kind":"Field","name":{"kind":"Name","value":"ior_compliance_resale"}},{"kind":"Field","name":{"kind":"Name","value":"pickup_address"}},{"kind":"Field","name":{"kind":"Name","value":"customer_facing_po_document"}},{"kind":"Field","name":{"kind":"Name","value":"tracking_number"}},{"kind":"Field","name":{"kind":"Name","value":"carrier"}},{"kind":"Field","name":{"kind":"Name","value":"ticket_number"}},{"kind":"Field","name":{"kind":"Name","value":"proof_of_delivery_document"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_reactions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"author_id"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_reactions_aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_tags"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tag"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"organization"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetUserApplicationsQuery, GetUserApplicationsQueryVariables>;
 export const GetPostsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPosts"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"_eq"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"status_types_enum"}},"defaultValue":{"kind":"EnumValue","value":"NEW"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"posts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10"}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"status"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"_eq"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"creator_id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"billing_so"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"delivery_instructions"}},{"kind":"Field","name":{"kind":"Name","value":"destination_poc"}},{"kind":"Field","name":{"kind":"Name","value":"international_frt_resale"}},{"kind":"Field","name":{"kind":"Name","value":"destination_address"}},{"kind":"Field","name":{"kind":"Name","value":"ior_compliance_resale"}},{"kind":"Field","name":{"kind":"Name","value":"pickup_address"}},{"kind":"Field","name":{"kind":"Name","value":"customer_facing_po_document"}},{"kind":"Field","name":{"kind":"Name","value":"tracking_number"}},{"kind":"Field","name":{"kind":"Name","value":"carrier"}},{"kind":"Field","name":{"kind":"Name","value":"ticket_number"}},{"kind":"Field","name":{"kind":"Name","value":"proof_of_delivery_document"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_reactions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"author_id"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_reactions_aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_tags"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tag"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"organization"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<GetPostsQuery, GetPostsQueryVariables>;
 export const GetPostsByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPostsById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"posts_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"body"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"creator_id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"billing_so"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"delivery_instructions"}},{"kind":"Field","name":{"kind":"Name","value":"destination_poc"}},{"kind":"Field","name":{"kind":"Name","value":"international_frt_resale"}},{"kind":"Field","name":{"kind":"Name","value":"destination_address"}},{"kind":"Field","name":{"kind":"Name","value":"ior_compliance_resale"}},{"kind":"Field","name":{"kind":"Name","value":"pickup_address"}},{"kind":"Field","name":{"kind":"Name","value":"customer_facing_po_document"}},{"kind":"Field","name":{"kind":"Name","value":"tracking_number"}},{"kind":"Field","name":{"kind":"Name","value":"carrier"}},{"kind":"Field","name":{"kind":"Name","value":"ticket_number"}},{"kind":"Field","name":{"kind":"Name","value":"proof_of_delivery_document"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_reactions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"author_id"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_reactions_aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"post_tags"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tag"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"organization"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<GetPostsByIdQuery, GetPostsByIdQueryVariables>;
 export const DeletePostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeletePost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_posts_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"creator_id"}}]}}]}}]} as unknown as DocumentNode<DeletePostMutation, DeletePostMutationVariables>;
