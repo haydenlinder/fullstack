@@ -58,20 +58,6 @@ export default function Home() {
 
   return (
     <div className="w-full flex flex-col items-center">
-      <Button variant="contained" onClick={handleClick}>
-        {isFormOpen ? (
-          <>
-            <CloseIcon /> Cancel
-          </>
-        ) : (
-          <>
-            <AddIcon /> Create New
-          </>
-        )}
-      </Button>
-      <SignedIn>
-        {isFormOpen && <PostForm after={() => setIsFormOpen(false)} />}
-      </SignedIn>
       <Posts posts={posts} loading={loading} searching={searching} />
     </div>
   );

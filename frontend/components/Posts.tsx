@@ -99,7 +99,7 @@ export const Posts = ({
           <div
             key={p.id + query}
             className="cursor-pointer"
-            onClick={() => router.push(`/posts/${p.id}`)}
+            onClick={() => router.push(`/app/posts/${p.id}`)}
           >
             <Post post={p} />
           </div>
@@ -140,7 +140,7 @@ export const Post = ({ post }: Props) => {
       <CardContent className="w-full">
         <Header {...{ post }} />
         <Typography variant="h4">{parse(post.title)}</Typography>
-        <Divider sx={{ my: 4 }} />
+        {expanded && <Divider sx={{ my: 4 }} />}
         {expanded && <Typography>{parse(post.body)}</Typography>}
         {expanded && <Divider sx={{ my: 4 }} />}
         {/* TAGS */}
@@ -155,17 +155,19 @@ export const Post = ({ post }: Props) => {
             </span>
           ))}
         </div>
-        <Footer {...{ post }} />
+        {expanded && (
+          <>
+            <Footer {...{ post }} />
+          </>
+        )}
       </CardContent>
     </Card>
   );
 };
 
 const Header = ({ post }: { post: Post }) => {
-  const [loading, setLoading] = useState(false);
   const [didCopy, setDidCopy] = useState(false);
 
-  const client = useApolloClient();
   const parse = useParse();
 
   const { orgId } = useAuth();
@@ -186,27 +188,6 @@ const Header = ({ post }: { post: Post }) => {
     setDidCopy(true);
   };
 
-  const handleStatusChange: SelectProps["onChange"] = async (e) => {
-    setLoading(true);
-    try {
-      await client.mutate({
-        mutation: UPDATE_POST_STATUS,
-        variables: {
-          id: post.id,
-          status: e.target.value as Status_Types_Enum,
-        },
-        refetchQueries: [
-          { query: GET_POSTS, variables: { _eq: e.target.value } },
-          { query: GET_POSTS, variables: { _eq: post.status } },
-          SEARCH_POSTS,
-        ],
-      });
-    } catch (e) {
-      console.error(e);
-    }
-    setLoading(false);
-  };
-
   return (
     <div className="flex justify-between w-full items-center">
       {/* LINK, CREATOR, ORG, UPDATE STATUS */}
@@ -215,7 +196,7 @@ const Header = ({ post }: { post: Post }) => {
         <div className="flex items-center mb-2">
           <Link
             className="text-blue-300 hover:underline mr-2"
-            href={`/posts/${post.id}`}
+            href={`/app/posts/${post.id}`}
           >
             {post.id}
           </Link>
@@ -265,32 +246,61 @@ const Header = ({ post }: { post: Post }) => {
           </div>
         </div>
       </div>
-      {/* UPDATE STATUS */}
-      <FormControl className="w-fit">
-        <InputLabel id="demo-simple-select-label">Status</InputLabel>
-        <Select
-          disabled={loading}
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={post.status}
-          label="Status"
-          onChange={handleStatusChange}
-        >
-          <MenuItem value={"NEW"}>
-            <NewIcon className="mr-6" /> New
-          </MenuItem>
-          <MenuItem value={"IN_PROGRESS"}>
-            <WorkIcon className="mr-6" /> In Progress
-          </MenuItem>
-          <MenuItem value={"IN_TRANSIT"}>
-            <ShipIcon className="mr-6" /> In Transit
-          </MenuItem>
-          <MenuItem value={"DELIVERED"}>
-            <DeliveredIcon className="mr-6" /> Delivered
-          </MenuItem>
-        </Select>
-      </FormControl>
+      {expanded && <UpdateStatus post={post} />}
     </div>
+  );
+};
+
+const UpdateStatus = ({ post }: { post: Post }) => {
+  const [loading, setLoading] = useState(false);
+  const client = useApolloClient();
+
+  const handleStatusChange: SelectProps["onChange"] = async (e) => {
+    setLoading(true);
+    try {
+      await client.mutate({
+        mutation: UPDATE_POST_STATUS,
+        variables: {
+          id: post.id,
+          status: e.target.value as Status_Types_Enum,
+        },
+        refetchQueries: [
+          { query: GET_POSTS, variables: { _eq: e.target.value } },
+          { query: GET_POSTS, variables: { _eq: post.status } },
+          SEARCH_POSTS,
+        ],
+      });
+    } catch (e) {
+      console.error(e);
+    }
+    setLoading(false);
+  };
+
+  return (
+    <FormControl className="w-fit">
+      <InputLabel id="demo-simple-select-label">Status</InputLabel>
+      <Select
+        disabled={loading}
+        labelId="demo-simple-select-label"
+        id="demo-simple-select"
+        value={post.status}
+        label="Status"
+        onChange={handleStatusChange}
+      >
+        <MenuItem value={"NEW"}>
+          <NewIcon className="mr-6" /> New
+        </MenuItem>
+        <MenuItem value={"IN_PROGRESS"}>
+          <WorkIcon className="mr-6" /> In Progress
+        </MenuItem>
+        <MenuItem value={"IN_TRANSIT"}>
+          <ShipIcon className="mr-6" /> In Transit
+        </MenuItem>
+        <MenuItem value={"DELIVERED"}>
+          <DeliveredIcon className="mr-6" /> Delivered
+        </MenuItem>
+      </Select>
+    </FormControl>
   );
 };
 

@@ -53,6 +53,59 @@ export const GET_POSTS = graphql(`
   }
 `);
 
+export const GET_USER_POSTS = graphql(`
+  query GetUserPosts($_eq: String = "") {
+    posts(
+      limit: 10
+      order_by: { created_at: desc }
+      where: { creator_id: { _eq: $_eq } }
+    ) {
+      id
+      body
+      created_at
+      creator_id
+      title
+      updated_at
+      billing_so
+      status
+      delivery_instructions
+      destination_poc
+      international_frt_resale
+      destination_address
+      ior_compliance_resale
+      pickup_address
+      customer_facing_po_document
+      tracking_number
+      carrier
+      ticket_number
+      proof_of_delivery_document
+      author {
+        name
+        id
+      }
+      post_reactions {
+        author_id
+        type
+        id
+      }
+      post_reactions_aggregate {
+        aggregate {
+          count
+        }
+      }
+      post_tags {
+        tag {
+          id
+        }
+      }
+      organization {
+        name
+        id
+      }
+    }
+  }
+`);
+
 export const GET_POST_BY_ID = graphql(`
   query GetPostsById($id: uuid = "") {
     posts_by_pk(id: $id) {

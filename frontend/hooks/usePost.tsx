@@ -151,7 +151,7 @@ export const usePost = ({
   const schema: Schema = {
     title: (
       <div className="mb-5">
-        <FormLabel>{type} Post</FormLabel>
+        <FormLabel>{type} Job Listing</FormLabel>
       </div>
     ),
     fields: [
@@ -159,7 +159,7 @@ export const usePost = ({
         component: componentTypes.TEXT_FIELD,
         FormFieldGridProps: { mb: 2 },
         name: "title",
-        label: "title",
+        label: "Job Title",
         validate: [{ type: "required" }],
       },
       {
@@ -167,7 +167,7 @@ export const usePost = ({
         FormFieldGridProps: { mb: 2 },
         isRequired: true,
         name: "body",
-        label: "body",
+        label: "Job Description",
         validate: [{ type: "required" }],
       },
     ],

@@ -6,12 +6,9 @@ import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-
+import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import NewIcon from "@mui/icons-material/AddBox";
-import WorkIcon from "@mui/icons-material/Loop";
-import ShipIcon from "@mui/icons-material/LocalShipping";
-import DeliveredIcon from "@mui/icons-material/Done";
-
+import OutboundIcon from "@mui/icons-material/Outbound";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -146,24 +143,19 @@ export const SideBar = ({}) => {
 
 const listMap = [
   {
+    title: "Jobs",
+    route: "posts",
+    icon: <WorkOutlineIcon />,
+  },
+  {
     title: "Applications",
     route: "applications",
+    icon: <OutboundIcon />,
+  },
+  {
+    title: "Your Jobs",
+    route: "created",
     icon: <NewIcon />,
-  },
-  {
-    title: "In Progress",
-    route: Status_Types_Enum.InProgress,
-    icon: <WorkIcon />,
-  },
-  {
-    title: "In Transit",
-    route: Status_Types_Enum.InTransit,
-    icon: <ShipIcon />,
-  },
-  {
-    title: "Delivered",
-    route: Status_Types_Enum.Delivered,
-    icon: <DeliveredIcon />,
   },
 ];
 
@@ -172,13 +164,13 @@ const DrawerInner = () => {
   const path = usePathname();
 
   const onClick = (route: string) => {
-    router.push(`/${route}`);
+    router.push(`/app/${route}`);
   };
 
   return (
     <div>
       <Toolbar>
-        <Link className="-ml-2" href="/posts">
+        <Link className="-ml-2" href="/app/posts">
           <Typography variant="h6">Jobs</Typography>
         </Link>
       </Toolbar>
@@ -186,7 +178,9 @@ const DrawerInner = () => {
       <List>
         {listMap.map(({ title, icon, route }) => (
           <button
-            className={path === `/${route}` ? "bg-gray-500 w-full" : "w-full"}
+            className={
+              path === `/app/${route}` ? "bg-gray-500 w-full" : "w-full"
+            }
             onClick={() => onClick(route)}
             key={title}
           >

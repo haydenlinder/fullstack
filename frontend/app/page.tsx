@@ -16,7 +16,7 @@ export default function Home() {
   const { userId } = useAuth();
 
   useEffect(() => {
-    if (userId) router.replace("/posts");
+    if (userId) router.replace("/app/posts");
   }, [userId]);
 
   const handleClick = () => {
@@ -43,7 +43,7 @@ export default function Home() {
           <Button
             variant="contained"
             classes={{}}
-            onClick={() => router.push("/posts")}
+            onClick={() => router.push("/app/posts")}
           >
             Browse Jobs
           </Button>
