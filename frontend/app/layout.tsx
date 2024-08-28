@@ -59,7 +59,7 @@ function App({ children }: { children: ReactNode }) {
         aria-describedby="modal-modal-description"
       >
         <div className="absolute inset-0 m-auto w-fit h-fit p-2 ">
-          <SignIn afterSignInUrl={"/posts"} afterSignUpUrl={"/posts"} />
+          <SignIn afterSignInUrl={"/app/posts"} afterSignUpUrl={"/app/posts"} />
         </div>
       </Modal>
       <div className={"sm:mx-16 flex justify-center"}>
