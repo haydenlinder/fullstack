@@ -41,6 +41,7 @@ export const GET_POSTS = graphql(`
         }
       }
       post_tags {
+        experience
         tag {
           id
         }
@@ -94,6 +95,7 @@ export const GET_USER_POSTS = graphql(`
         }
       }
       post_tags {
+        experience
         tag {
           id
         }
@@ -143,6 +145,7 @@ export const GET_POST_BY_ID = graphql(`
         }
       }
       post_tags {
+        experience
         tag {
           id
         }
@@ -180,7 +183,11 @@ export const UPDATE_POST = graphql(`
     $ticket_number: String = ""
     $proof_of_delivery_document: String = ""
     $title: String = ""
-    $tags: [post_tags_insert_input!] = { post_id: "", tag_id: "" }
+    $tags: [post_tags_insert_input!] = {
+      post_id: ""
+      tag_id: ""
+      experience: 0
+    }
   ) {
     update_posts_by_pk(
       pk_columns: { id: $id }
@@ -235,7 +242,7 @@ export const CREATE_POST = graphql(`
     $carrier: String = ""
     $ticket_number: String = ""
     $proof_of_delivery_document: String = ""
-    $tags_data: [post_tags_insert_input!] = { tag_id: "" }
+    $tags_data: [post_tags_insert_input!] = { tag_id: "", experience: 0 }
   ) {
     insert_posts(
       objects: {
@@ -345,6 +352,7 @@ export const SEARCH_POSTS = graphql(`
         }
       }
       post_tags {
+        experience
         tag {
           id
         }

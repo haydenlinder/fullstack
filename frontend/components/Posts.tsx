@@ -122,7 +122,9 @@ export const Post = ({ post }: Props) => {
     ...post,
     body: post.body || undefined,
     title: post.title || undefined,
-    tags: post.post_tags.map(({ tag }) => tag.id) || undefined,
+    tags: post.post_tags.map(
+      ({ tag, experience }) => ({ id: tag.id, experience }) || undefined,
+    ),
   };
 
   const { edit, setEdit } = usePost({ post });
@@ -145,10 +147,14 @@ export const Post = ({ post }: Props) => {
         {expanded && <Divider sx={{ my: 4 }} />}
         {/* TAGS */}
         <div className="my-5">
-          {post.post_tags.map(({ tag }, i) => (
+          {post.post_tags.map(({ tag, experience }, i) => (
             <span key={tag.id + i}>
               <Chip
-                label={parse(tag.id)}
+                label={
+                  <>
+                    {parse(tag.id)} {experience}
+                  </>
+                }
                 variant="outlined"
                 className="mr-2 mb-2"
               />

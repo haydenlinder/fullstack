@@ -50,6 +50,7 @@ export const GET_USER_APPLICATIONS = graphql(`
           }
         }
         post_tags {
+          experience
           tag {
             id
           }
