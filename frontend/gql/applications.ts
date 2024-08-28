@@ -10,7 +10,11 @@ export const CREATE_APPLICATION = graphql(`
 
 export const GET_USER_APPLICATIONS = graphql(`
   query GetUserApplications($_eq: String = "") {
-    applications(where: { user_id: { _eq: $_eq } }) {
+    applications(
+      where: { user_id: { _eq: $_eq } }
+      limit: 10
+      order_by: { created_at: desc }
+    ) {
       post {
         id
         body

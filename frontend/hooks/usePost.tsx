@@ -170,6 +170,42 @@ export const usePost = ({
         label: "Job Description",
         validate: [{ type: "required" }],
       },
+      {
+        component: componentTypes.FIELD_ARRAY,
+        FormFieldGridProps: { mb: 2 },
+        isRequired: true,
+        name: "skills",
+        label: "Skills",
+        validate: [{ type: "required" }],
+        fields: [
+          {
+            name: "skill",
+            component: componentTypes.SELECT,
+            isSearchable: true,
+            options: [
+              {
+                value: "React",
+                label: "react",
+              },
+              {
+                value: "JavaScript",
+                label: "javascript",
+              },
+            ],
+          },
+          {
+            component: componentTypes.TEXT_FIELD,
+            valueLabelDisplay: "on",
+            type: "number",
+            label: "Years of Experience",
+            name: "experience",
+            inputProps: {
+              min: 1,
+              max: 15,
+            },
+          },
+        ],
+      },
     ],
   };
 
