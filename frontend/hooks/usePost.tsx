@@ -103,7 +103,6 @@ export const usePost = ({
         proof_of_delivery_document: podDocUrl,
       };
 
-      console.log({ tags });
       type === "New"
         ? await createPost({
             variables: {
