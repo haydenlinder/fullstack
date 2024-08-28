@@ -10,7 +10,6 @@ import {
   CreatePostMutation,
   CreatePostMutationVariables,
   GetPostsQuery,
-  Line_Items_Insert_Input,
   UpdatePostMutation,
   UpdatePostMutationVariables,
 } from "@/src/gql/graphql";
@@ -25,10 +24,10 @@ import { FormLabel } from "@mui/material";
 import { useState } from "react";
 
 export type InitialValues = {
-  tags: string[];
-  // body: string;
-  // title: string;
-  // id?: string;
+  tags: { skill: string; experience: number }[];
+  body: string;
+  title: string;
+  id?: string;
   // products: (Line_Items_Insert_Input & { __typename?: string })[];
 } & GetPostsQuery["posts"]["0"];
 
@@ -104,6 +103,7 @@ export const usePost = ({
         proof_of_delivery_document: podDocUrl,
       };
 
+      console.log({ tags });
       type === "New"
         ? await createPost({
             variables: {
@@ -112,7 +112,7 @@ export const usePost = ({
               org_id: orgId || userId,
               tags_data:
                 tags?.map((tag) => ({
-                  tag_id: tag,
+                  tag_id: tag.skill,
                 })) || [],
               // line_items_data: products.map((p) => {
               //   delete p.id;
@@ -128,7 +128,7 @@ export const usePost = ({
               id,
               tags:
                 tags?.map((tag) => ({
-                  tag_id: tag,
+                  tag_id: tag.skill,
                   post_id: id,
                 })) || [],
               // line_items_data: products.map((p) => {
@@ -174,7 +174,7 @@ export const usePost = ({
         component: componentTypes.FIELD_ARRAY,
         FormFieldGridProps: { mb: 2 },
         isRequired: true,
-        name: "skills",
+        name: "tags",
         label: "Skills",
         validate: [{ type: "required" }],
         fields: [
@@ -188,7 +188,7 @@ export const usePost = ({
                 label: "react",
               },
               {
-                value: "JavaScript",
+                value: "bass",
                 label: "javascript",
               },
             ],
